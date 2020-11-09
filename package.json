@@ -10,12 +10,13 @@
   "dependencies": {
     "@babel/runtime": "^7.11.2",
     "jquery": "^3.5.1",
-    "meteor-node-stubs": "^1.0.1"
+    "meteor-node-stubs": "^1.0.1",
+    "simpl-schema": "^1.10.2"
   },
   "meteor": {
     "mainModule": {
       "client": "client/main.js",
-      "server": "server/main.js"
+      "server": "server/fill-tables.js"
     },
     "testModule": "tests/main.js"
   }
