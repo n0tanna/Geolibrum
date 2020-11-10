@@ -1,0 +1,43 @@
+<template name="add">
+    <h3>Add New Log</h3>
+    <ul>
+      <li><a href="{{pathFor route='location'}}">Add Location</a></li>
+      <li><a href="{{pathFor route='species'}}">Add Species</a></li>
+      <li><a href="{{pathFor route='mineral'}}">Add Mineral Type</a></li>
+      <li><a href="{{pathFor route='rock'}}">Add Rock Type</a></li>
+    </ul>
+    {{> addLog}}
+  </template>
+  
+  <template name="addLog">
+    <h3>New Log</h3>
+    <form id="add-log-form">
+      <p>Log Name:</p><input type="text" name="logName" id="logName">
+      <p>Date:</p><input type="date" id="date" name="find-date" value="0000-00-00" min="2000-01-01">
+      <input type="submit" id="submit" value="Create Log">
+    </form>
+  </template>
+  
+  <template name="addNewEntry">
+    <h3>Added Entries</h3>
+  </template>
+  
+  <template name="location">
+    <h3>New Location</h3>
+    <h3>Added Entries</h3>
+  </template>
+  
+  <template name="species">
+    <h3>New Species</h3>
+    <h3>Added Entries</h3>
+  </template>
+  
+  <template name="mineral">
+    <h3>New Mineral Type</h3>
+    <h3>Added Entries</h3>
+  </template>
+  
+  <template name="rock">
+    <h3>New Rock Type</h3>
+    <h3>Added Entries</h3>
+  </template>

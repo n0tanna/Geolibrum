@@ -7,11 +7,10 @@ ld.schema = new SimpleSchema ({
     log_name: {type: String},
     date_created: {type: Date, defaultValue: new Date()},
     date_found: {type: Date, defaultValue: new Date()},
-    img: {
-        type: Array,
-        optional: true,
-    },
-    'img.$': Object
+    location: {type: Array},
+    'location.$': Object,
+    entries: {type: Array},
+    'entries.$': Object
 });
 
 export { ld as LogData }

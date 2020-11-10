@@ -15,7 +15,7 @@
   },
   "meteor": {
     "mainModule": {
-      "client": "client/main.js",
+      "client": "client/routes.js",
       "server": "server/fill-tables.js"
     },
     "testModule": "tests/main.js"
