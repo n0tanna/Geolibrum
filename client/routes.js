@@ -1,5 +1,5 @@
 import './main.html';
-import './add.html';
+import '/imports/ui/layouts/layout';
 
 Router.route('/stats');
 Router.route('/species');
