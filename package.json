@@ -9,6 +9,10 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.11.2",
+    "blueimp-load-image": "^5.14.0",
+    "blueimp-load-image-browserify": "^1.11.1",
+    "exif-js": "^2.3.0",
+    "jpeg-exif": "^1.1.4",
     "jquery": "^3.5.1",
     "meteor-node-stubs": "^1.0.1",
     "simpl-schema": "^1.10.2"

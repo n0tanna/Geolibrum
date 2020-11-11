@@ -7,7 +7,7 @@ ld.schema = new SimpleSchema ({
     log_name: {type: String},
     date_created: {type: Date, defaultValue: new Date()},
     date_found: {type: Date, defaultValue: new Date()},
-    location: {type: Array},
+    location: {type: Array, optional: true},
     'location.$': Object,
     entries: {type: Array},
     'entries.$': Object
