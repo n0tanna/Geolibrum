@@ -1,4 +1,2 @@
-node_modules/
+
 server/main.js
-tests/
-.meteor/

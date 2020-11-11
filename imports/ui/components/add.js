@@ -53,10 +53,11 @@ if (Meteor.isClient) {
             console.log("aaaa");
 
             var loadImage = require('blueimp-load-image-browserify/js/load-image');
-
+            console.log(file);
             loadImage(
                 file,
                 function (file, data) {
+                    console.log(data);
                     var gpsInfo = data.exif && data.exif.get('GPSInfo')
                     if (gpsInfo) {
                         // Map of all GPSInfo tags with their mapped names/text as keys/values:
