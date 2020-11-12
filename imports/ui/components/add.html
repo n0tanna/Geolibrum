@@ -17,7 +17,7 @@
   
   <template name="addLog">
     <h3>New Log</h3>
-    <div id="error">{{errorHelper}}</div>
+    <div id="error">{{errorDisplay}}</div>
     <form id="add-log-form">
       <label for="logName">Log Name:</label>
       <input type="text" name="logName" id="logName">
@@ -35,30 +35,10 @@
   </template>
   
   <template name="addNewEntry">
-    <h2>Log Entry: {{logNameHelper}} || {{dateHelper}}</h2>
+    <h2>Log Entry: {{nameDisplay}} || {{dateDisplay}}</h2>
     <h3>Added Entries</h3>
   </template>
-  
-  <template name="location">
-    <h3>New Location</h3>
-    <form id="location-log-form">
-      <p>Use an image to have exact coordinates of your site.</p>
-      <label for="location-image-uploader">Upload Image:</label>
-      <input type="file" id="locationImageUploader">
-      <br>
-      <label for="location-name">Name:</label>
-      <input type="text" id="locationName">
-      <br>
-      <label for="latitude">Lat:</label>
-      <input type="text" id="latitude">
-      <br>
-      <label for="longtitude">Long:</label>
-      <input type="text" id="longtitude">
-      <br>
-      <input type="submit" id="submit" value="Add Location">
-    </form>
-    <h3>Added Entries</h3>
-  </template>
+
   
   <template name="species">
     <h3>New Species</h3>

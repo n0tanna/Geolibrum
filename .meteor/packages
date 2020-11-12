@@ -28,3 +28,4 @@ iron:router
 cfs:gridfs
 cfs:standard-packages
 aldeed:simple-schema
+manuel:reactivearray

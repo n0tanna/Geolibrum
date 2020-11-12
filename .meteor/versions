@@ -57,6 +57,7 @@ less@2.8.0
 livedata@1.0.18
 localstorage@1.2.0
 logging@1.1.20
+manuel:reactivearray@1.0.9
 mdg:validation-error@0.2.0
 meteor@1.9.3
 meteor-base@1.4.0

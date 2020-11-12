@@ -1,0 +1,39 @@
+<template name="location">
+    <h3>New Location</h3>
+    <div id="error">{{errorDisplay}}</div>
+    <form id="locationLogForm">
+        <p>Use an image to have exact coordinates of your site.</p>
+        <label for="locationImg">Upload Image:</label>
+        <input type="file" name="locationImg" id="locationImg">
+        <br>
+        <label for="locationName">Name:</label>
+        <input type="text" name="locationName" id="locationName">
+        <br>
+        <label for="latitudeNum">Lat:</label>
+        <input type="text" name="latitudeNum" id="latitudeNum">
+        <br>
+        <label for="longitudeNum">Long:</label>
+        <input type="text" name="longitudeNum" id="longitudeNum">
+        <br>
+        <input type="submit" id="submit" value="Add Location">
+    </form>
+    <h3>Added Entries</h3>
+    <ul>
+        {{#each locDisplay}}
+        <li>
+            <div id="name">{{jsonPrint this.areaName}}</div>
+            <br>
+            <div id="lat">{{jsonPrint this.latitudeNum}}</div>
+            <br>
+            <div id="long">{{jsonPrint this.longitudeNum}}</div>
+            <button class="btn edit">Edit</button>
+            <br>
+            <button class="btn remove">Remove</button>      
+       </li>
+        {{/each}}
+    </ul>
+    <div id="editModal">
+        <span class="close">&times;</span>
+        ok
+    </div>
+</template>
