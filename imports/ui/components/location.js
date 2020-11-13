@@ -9,7 +9,7 @@ global.Popper = global.Popper || popper
 var locEntered = new ReactiveArray();
 
 Meteor.startup(function () {
-    GoogleMaps.load({ key: 'AIzaSyB9NJQ45FYxVVlca1aKvosN1zw3KqNHjdI' });
+    GoogleMaps.load({ key: '' });
 
 });
 
