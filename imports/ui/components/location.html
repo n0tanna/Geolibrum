@@ -6,9 +6,6 @@
         <label for="locationImg">Upload Image:</label>
         <input type="file" name="locationImg" id="locationImg">
         <br>
-        <label for="locationName">Name:</label>
-        <input type="text" name="locationName" id="locationName">
-        <br>
         <label for="latitudeNum">Lat:</label>
         <input type="text" name="latitudeNum" id="latitudeNum">
         <br>
@@ -21,19 +18,55 @@
     <ul>
         {{#each locDisplay}}
         <li>
-            <div id="name">{{jsonPrint this.areaName}}</div>
+            <div id="name">{{ this.areaName}}</div>
             <br>
-            <div id="lat">{{jsonPrint this.latitudeNum}}</div>
+            <div id="loc">{{this.locName}}</div>
             <br>
-            <div id="long">{{jsonPrint this.longitudeNum}}</div>
+            <div id="country">{{this.countryName}}</div>
+            <br>
+            <div id="lat">{{this.latitudeNum}}</div>
+            <br>
+            <div id="long">{{this.longitudeNum}}</div>
             <button class="btn edit">Edit</button>
             <br>
             <button class="btn remove">Remove</button>      
        </li>
         {{/each}}
     </ul>
-    <div id="editModal">
-        <span class="close">&times;</span>
-        ok
-    </div>
 </template>
+
+<template name="editModal">
+    <div class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Edit Location</h4>
+				</div>
+				
+				<div class="modal-body">
+                    <label for="locName">Area Name:</label>
+                    <input type="text" name="locName" id="locationName">
+                    <br>
+                    <label for="areaName">Province/State/Region:</label>
+                    <input type="text" name="areaName" id="areaName">
+                    <br>
+                    <label for="countryName">Country:</label>
+                    <input type="text" name="countryName" id="countryName">
+                    <br>
+                    <label for="latitude">Latitude:</label>
+                    <input type="text" name="latitude" id="latitude">
+                    <br>
+                    <label for="longitude">Longitude:</label>
+                    <input type="text" name="longitude" id="longitude">
+				</div>
+				
+				<div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Add</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</template>
+
