@@ -9,8 +9,7 @@ global.Popper = global.Popper || popper
 var locEntered = new ReactiveArray();
 
 Meteor.startup(function () {
-    GoogleMaps.load({ key: '' });
-
+    GoogleMaps.load({ key:  Meteor.settings.public.googleAPI});
 });
 
 if (Meteor.isClient) {
@@ -67,7 +66,6 @@ if (Meteor.isClient) {
                         lat: lat,
                         lng: long
                     };
-                    var locationReturned = "";
 
                     geocoder.geocode({ location: latlng }, (results, status) => {
                         if (status === "OK") {

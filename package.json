@@ -10,6 +10,7 @@
   "dependencies": {
     "@babel/runtime": "^7.11.2",
     "bootstrap": "^3.4.1",
+    "dotenv": "^8.2.0",
     "exif-js": "^2.3.0",
     "exifr": "^6.0.0",
     "jpeg-exif": "^1.1.4",
