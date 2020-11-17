@@ -4,7 +4,7 @@
     <form id="locationLogForm">
         <p>Use an image to have exact coordinates of your site.</p>
         <label for="locationImg">Upload Image:</label>
-        <input type="file" name="locationImg" id="locationImg">
+        <input type="file" class="btn" name="locationImg" id="locationImg">
         <br>
         <label for="latitudeNum">Lat:</label>
         <input type="text" name="latitudeNum" id="latitudeNum">
@@ -12,7 +12,7 @@
         <label for="longitudeNum">Long:</label>
         <input type="text" name="longitudeNum" id="longitudeNum">
         <br>
-        <input type="submit" id="submit" value="Add Location">
+        <input type="submit" class="btn" id="submit" value="Add Location">
     </form>
     <h3>Added Entries</h3>
     <ul>
@@ -24,15 +24,14 @@
             <br>
             <div id="country">{{this.countryName}}</div>
             <br>
-            <div id="lat">{{this.latitudeNum}}</div>
-            <br>
-            <div id="long">{{this.longitudeNum}}</div>
             <button class="btn edit">Edit</button>
             <br>
             <button class="btn remove">Remove</button>      
        </li>
         {{/each}}
     </ul>
+    <button class="btn add">Add</button>
+    <button class="btn clear">Clear</button>
 </template>
 
 <template name="editModal">
@@ -42,26 +41,19 @@
 				<div class="modal-header">
 					<h4 class="modal-title">Edit Location</h4>
 				</div>
-				
 				<div class="modal-body">
                     <label for="locName">Area Name:</label>
-                    <input type="text" name="locName" id="locationName">
+                    <input type="text" name="locName" id="locName">
                     <br>
                     <label for="areaName">Province/State/Region:</label>
                     <input type="text" name="areaName" id="areaName">
                     <br>
                     <label for="countryName">Country:</label>
                     <input type="text" name="countryName" id="countryName">
-                    <br>
-                    <label for="latitude">Latitude:</label>
-                    <input type="text" name="latitude" id="latitude">
-                    <br>
-                    <label for="longitude">Longitude:</label>
-                    <input type="text" name="longitude" id="longitude">
 				</div>
-				
 				<div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Add</button>
+                    <button class="btn add" data-dismiss="modal">Add</button>
+                    <button class="btn reset" data-dismiss="modal">Reset Fields</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 				

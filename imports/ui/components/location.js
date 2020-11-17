@@ -3,13 +3,15 @@ import './location.html';
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import popper from 'popper.js'
+import '/imports/api/location/methods.js'
 
 global.Popper = global.Popper || popper
 
 var locEntered = new ReactiveArray();
+var currentSelected = new ReactiveVar();
 
 Meteor.startup(function () {
-    GoogleMaps.load({ key:  Meteor.settings.public.googleAPI});
+    GoogleMaps.load({ key: Meteor.settings.public.googleAPI });
 });
 
 if (Meteor.isClient) {
@@ -76,7 +78,7 @@ if (Meteor.isClient) {
                                 var locName = "";
                                 var countryName = "";
 
-                                var indice =  0;
+                                var indice = 0;
                                 for (var j = 0; j < results.length; j++) {
                                     if (results[j].types[0] == 'locality') {
                                         indice = j;
@@ -121,13 +123,102 @@ if (Meteor.isClient) {
             }
         },
 
+        'click .clear': function () {
+            locEntered.length = 0;
+            locEntered.push();
+        },
+
+        'click .add': function () {
+
+            locEntered.forEach(function (holder, index){
+                Meteor.call('addLocation', holder);
+            });
+
+            locEntered.length = 0;
+            locEntered.push();
+
+        },
+
         'click .remove': function () {
             return locEntered.remove(this);
         },
 
         'click .edit': function () {
-            Modal.show('editModal')
-            console.log(this);
+            currentSelected = this;
+
+            Modal.show('editModal');
+            console.log(currentSelected);
+
+            var locName = document.getElementById('locName');
+            locName.value = currentSelected.areaName;
+
+            var areaName = document.getElementById('areaName');
+            areaName.value = currentSelected.locName;
+
+            var country = document.getElementById('countryName');
+            country.value = currentSelected.countryName;
+
+        }
+    });
+
+    Template.editModal.events({
+        'click .add': function (e) {
+            var locNameHolder = document.getElementById('locName');
+            currentSelected.areaName = locNameHolder.value;
+
+            var areaNameHolder = document.getElementById('areaName');
+            currentSelected.locName = areaNameHolder.value;
+
+            var countryHolder = document.getElementById('countryName');
+            currentSelected.countryName = countryHolder.value;
+            locEntered.push();
+        },
+
+        'click .reset': function () {
+            var geocoder = new google.maps.Geocoder();
+            console.log(currentSelected);
+            var latlng = {
+                lat: parseFloat(currentSelected.latitudeNum),
+                lng: parseFloat(currentSelected.longitudeNum)
+            };
+
+            geocoder.geocode({ location: latlng }, (results, status) => {
+                if (status === "OK") {
+                    if (results[0]) {
+                        locationReturned = results[0].formatted_address;
+                        console.log(results[0]);
+
+                        var indice = 0;
+                        for (var j = 0; j < results.length; j++) {
+                            if (results[j].types[0] == 'locality') {
+                                indice = j;
+                                break;
+                            }
+                        }
+
+                        for (var i = 0; i < results[j].address_components.length; i++) {
+                            if (results[j].address_components[i].types[0] == "locality") {
+                                currentSelected.areaName = results[j].address_components[i].long_name;
+                                var locNameHolder = document.getElementById('locName');
+                                locNameHolder = currentSelected.areaName;
+                            }
+                            if (results[j].address_components[i].types[0] == "administrative_area_level_1") {
+                                currentSelected.locName = results[j].address_components[i].long_name;
+                                var areaNameHolder = document.getElementById('areaName');
+                                areaNameHolder = currentSelected.locName;
+                            }
+                            if (results[j].address_components[i].types[0] == "country") {
+                                currentSelected.countryName = results[j].address_components[i].long_name;
+                                var countryHolder = document.getElementById('countryName');
+                                countryHolder = currentSelected.countryName;
+                            }
+                        }
+                    }
+                }
+
+                locEntered.push();
+            });
+
         }
     });
 }
