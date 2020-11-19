@@ -8,12 +8,13 @@ Router.route('/mineral');
 Router.route('/rock');
 Router.route('/add');
 Router.route('/addNewEntry');
+Router.route('/locationList');
 
 Router.route('/', {
     name: 'home',
     template: 'home'
   });
 
-Router.configure({
+Router.configure({ 
   layoutTemplate: 'main'
 })

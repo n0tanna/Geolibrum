@@ -6,3 +6,14 @@ import { LogData } from "/imports/api/log-data";
 import { Location } from "/imports/api/location/location";
 import '/imports/api/location/methods.js';
 
+Meteor.methods({
+        getCount: function () {
+            return Location.find().count();
+        },
+
+        getLocations: function() {
+            return Location.find().fetch();
+        }
+    });
+
+

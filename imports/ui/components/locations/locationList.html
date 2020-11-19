@@ -1,0 +1,19 @@
+<template name="locationList">
+    <h3>Locations</h3>
+    <div id="error">{{statusDisplay}}</div>
+    <ul>
+        {{#each display}}
+        <li>
+            <div id="name">{{ this.areaName}}</div>
+            <br>
+            <div id="loc">{{this.locName}}</div>
+            <br>
+            <div id="country">{{this.countryName}}</div>
+            <br>
+            <button class="btn edit">Edit</button>
+            <br>
+            <button class="btn remove">Remove</button>
+        </li>
+        {{/each}}
+    </ul>
+</template>

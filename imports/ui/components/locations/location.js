@@ -16,15 +16,20 @@ Meteor.startup(function () {
 
 if (Meteor.isClient) {
     const error = new ReactiveVar(null);
+    const status = new ReactiveVar(null);
 
     Template.location.helpers({
         errorDisplay: function () {
             return error.get();
         },
 
+        statusDisplay: function () {
+            return status.get();
+        },
+
         locDisplay: function () {
             return locEntered.list();
-        },
+        }
     });
 
     Template.editModal.helpers({
@@ -115,11 +120,13 @@ if (Meteor.isClient) {
                         else {
                             window.alert("Geocoder failed due to: " + status);
                         }
+                        
                     });
                 }
                 else {
                     error.set("Please enter a number.");
                 }
+                status.set(null);
             }
         },
 
@@ -130,12 +137,18 @@ if (Meteor.isClient) {
 
         'click .add': function () {
 
-            locEntered.forEach(function (holder, index){
-                Meteor.call('addLocation', holder);
-            });
-
-            locEntered.length = 0;
-            locEntered.push();
+            if(locEntered.length == 0) {
+                status.set("Please add a location.");
+            }
+            else {
+                locEntered.forEach(function (holder, index){
+                    Meteor.call('addLocation', holder);
+                });
+    
+                locEntered.length = 0;
+                locEntered.push();
+                status.set("Added successfully.");
+            }
 
         },
 

@@ -7,7 +7,10 @@
 <template name="add">
     <h3>Add New Log</h3>
     <ul>
-      <li><a href="{{pathFor route='location'}}">Add Location</a></li>
+      <li><a href="{{pathFor route='locationList'}}">Locations</a></li>
+      <ul>
+        <li><a href="{{pathFor route='location'}}">Add Location</a></li>
+      </ul>
       <li><a href="{{pathFor route='species'}}">Add Species</a></li>
       <li><a href="{{pathFor route='mineral'}}">Add Mineral Type</a></li>
       <li><a href="{{pathFor route='rock'}}">Add Rock Type</a></li>
