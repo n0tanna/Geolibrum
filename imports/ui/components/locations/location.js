@@ -89,6 +89,15 @@ if (Meteor.isClient) {
                                         indice = j;
                                         break;
                                     }
+
+                                    else if (results[j].types[0] == 'administrative_area_level_1')  {
+                                        indice = j;
+                                        break;
+                                    }
+                                    else if (results[j].types[0] == 'country') {
+                                        indice = j;
+                                        break;
+                                    }
                                 }
 
                                 for (var i = 0; i < results[j].address_components.length; i++) {
@@ -128,6 +137,7 @@ if (Meteor.isClient) {
                 }
                 status.set(null);
             }
+            e.target.reset();
         },
 
         'click .clear': function () {
@@ -152,6 +162,10 @@ if (Meteor.isClient) {
 
         },
 
+        'click .locations': function () {
+            Router.go('locationList');
+        },
+
         'click .remove': function () {
             return locEntered.remove(this);
         },
@@ -160,7 +174,6 @@ if (Meteor.isClient) {
             currentSelected = this;
 
             Modal.show('editModal');
-            console.log(currentSelected);
 
             var locName = document.getElementById('locName');
             locName.value = currentSelected.areaName;

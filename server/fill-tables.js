@@ -7,13 +7,17 @@ import { Location } from "/imports/api/location/location";
 import '/imports/api/location/methods.js';
 
 Meteor.methods({
-        getCount: function () {
-            return Location.find().count();
-        },
+    getCount: function () {
+        return Location.find().count();
+    },
 
-        getLocations: function() {
-            return Location.find().fetch();
-        }
-    });
+    getLocations: function () {
+        return Location.find().fetch();
+    },
+
+    deleteLocation: function(_id) {
+        Location.remove(_id);
+    }
+});
 
 
