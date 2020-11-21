@@ -92,27 +92,32 @@ if (Meteor.isClient) {
                                     }
                                 }
 
-                                for (var i = 0; i < results[j].address_components.length; i++) {
-                                    if (results[j].address_components[i].types[0] == "locality") {
-                                        areaName = results[j].address_components[i].long_name;
+                                if(results.address_components != 0) {
+                                    for (var i = 0; i < results[j].address_components.length; i++) {
+                                        if (results[j].address_components[i].types[0] == "locality") {
+                                            areaName = results[j].address_components[i].long_name;
+                                        }
+                                        if (results[j].address_components[i].types[0] == "administrative_area_level_1") {
+                                            locName = results[j].address_components[i].long_name;
+                                        }
+                                        if (results[j].address_components[i].types[0] == "country") {
+                                            countryName = results[j].address_components[i].long_name;
+                                        }
                                     }
-                                    if (results[j].address_components[i].types[0] == "administrative_area_level_1") {
-                                        locName = results[j].address_components[i].long_name;
+                                    var locationData = {
+                                        areaName: areaName,
+                                        locName: locName,
+                                        countryName: countryName,
+                                        latitudeNum: lat,
+                                        longitudeNum: long
                                     }
-                                    if (results[j].address_components[i].types[0] == "country") {
-                                        countryName = results[j].address_components[i].long_name;
-                                    }
+    
+                                    locEntered.push(locationData);
+                                    error.set(null);
                                 }
-                                var locationData = {
-                                    areaName: areaName,
-                                    locName: locName,
-                                    countryName: countryName,
-                                    latitudeNum: lat,
-                                    longitudeNum: long
+                                else {
+                                    error.set("No information at those coordinates.");
                                 }
-
-                                locEntered.push(locationData);
-                                error.set(null);
                             }
                         }
                         else if (status === "ZERO_RESULTS") {
@@ -143,7 +148,6 @@ if (Meteor.isClient) {
                 status.set("Please add a location.");
             }
             else {
-                console.log(locEntered);
                 locEntered.forEach(function (holder, index){
                     Meteor.call('addLocation', holder);
                 });
@@ -195,7 +199,6 @@ if (Meteor.isClient) {
 
         'click .reset': function () {
             var geocoder = new google.maps.Geocoder();
-            console.log(currentSelected);
             var latlng = {
                 lat: parseFloat(currentSelected.latitudeNum),
                 lng: parseFloat(currentSelected.longitudeNum)
@@ -205,7 +208,6 @@ if (Meteor.isClient) {
                 if (status === "OK") {
                     if (results[0]) {
                         locationReturned = results[0].formatted_address;
-                        console.log(results[0]);
 
                         var indice = 0;
                         for (var j = 0; j < results.length; j++) {

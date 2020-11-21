@@ -3,6 +3,7 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import '/imports/api/location/methods.js';
 import '/imports/ui/components/util.js';
+import { Location } from '../../../api/location/location';
 
 var status = new ReactiveVar("No locations.");
 var locations = new ReactiveArray();
@@ -14,9 +15,9 @@ if (Meteor.isClient) {
         statusDisplay: function () {
             return status.get();
         },
-        displayLocation: function () {
-            return locations.list();
-        }
+        displayLocation: () => {
+            return Location.find({});
+       }
     });
 
     Template.editLocModal.helpers({
@@ -26,8 +27,8 @@ if (Meteor.isClient) {
     });
 
     Template.locationList.onRendered(function () {
+        locations.length = 0;
         Meteor.call("getCount", function (error, result) {
-            console.log(result);
             if (error) {
                 console.log("Error: " + error.reason)
             } else {
@@ -46,10 +47,6 @@ if (Meteor.isClient) {
                 }
             }
         });
-    });
-
-    Template.locationList.onCreated(function () {
-
     });
 
     Template.locationList.events({
@@ -95,7 +92,6 @@ if (Meteor.isClient) {
                 } 
                 else {
                     status.set("Deleted!");
-                    locations.push();
                 }
             });
         }
