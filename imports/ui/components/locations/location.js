@@ -2,21 +2,15 @@ import { Template } from 'meteor/templating';
 import './location.html';
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
-import popper from 'popper.js'
 import '/imports/api/location/methods.js'
-
-global.Popper = global.Popper || popper
+import '/imports/ui/components/util.js';
 
 var locEntered = new ReactiveArray();
 var currentSelected = new ReactiveVar();
 
-Meteor.startup(function () {
-    GoogleMaps.load({ key: Meteor.settings.public.googleAPI });
-});
-
 if (Meteor.isClient) {
-    const error = new ReactiveVar(null);
-    const status = new ReactiveVar(null);
+    var error = new ReactiveVar(null);
+    var status = new ReactiveVar(null);
 
     Template.location.helpers({
         errorDisplay: function () {
@@ -78,7 +72,6 @@ if (Meteor.isClient) {
                         if (status === "OK") {
                             if (results[0]) {
                                 locationReturned = results[0].formatted_address;
-                                console.log(results[0]);
                                 var areaName = "";
                                 var locName = "";
                                 var countryName = "";
@@ -89,7 +82,6 @@ if (Meteor.isClient) {
                                         indice = j;
                                         break;
                                     }
-
                                     else if (results[j].types[0] == 'administrative_area_level_1')  {
                                         indice = j;
                                         break;
@@ -127,7 +119,7 @@ if (Meteor.isClient) {
                             error.set("No results found at those coordinates.");
                         }
                         else {
-                            window.alert("Geocoder failed due to: " + status);
+                            error.set("Geocoder failed due to: " + status);
                         }
                         
                     });
@@ -151,6 +143,7 @@ if (Meteor.isClient) {
                 status.set("Please add a location.");
             }
             else {
+                console.log(locEntered);
                 locEntered.forEach(function (holder, index){
                     Meteor.call('addLocation', holder);
                 });
