@@ -142,16 +142,22 @@ if (Meteor.isClient) {
                             }
                         }
 
-                        for (var i = 0; i < results[j].address_components.length; i++) {
-                            if (results[j].address_components[i].types[0] == "locality") {
-                                areaName.value = results[j].address_components[i].long_name;
+                        if(results.address_components != 0) {
+                            for (var i = 0; i < results[j].address_components.length; i++) {
+                                if (results[j].address_components[i].types[0] == "locality") {
+                                    areaName.value = results[j].address_components[i].long_name;
+                                }
+                                if (results[j].address_components[i].types[0] == "administrative_area_level_1") {
+                                    locName.value = results[j].address_components[i].long_name;
+                                }
+                                if (results[j].address_components[i].types[0] == "country") {
+                                    countryName.value = results[j].address_components[i].long_name;
+                                }
                             }
-                            if (results[j].address_components[i].types[0] == "administrative_area_level_1") {
-                                locName.value = results[j].address_components[i].long_name;
-                            }
-                            if (results[j].address_components[i].types[0] == "country") {
-                                countryName.value = results[j].address_components[i].long_name;
-                            }
+                            searchError.set(null);
+                        }
+                        else {
+                            searchError.set("No results found at those coordinates.");
                         }
                     }
                 }

@@ -217,26 +217,28 @@ if (Meteor.isClient) {
                             }
                         }
 
-                        for (var i = 0; i < results[j].address_components.length; i++) {
-                            if (results[j].address_components[i].types[0] == "locality") {
-                                currentSelected.areaName = results[j].address_components[i].long_name;
-                                var locNameHolder = document.getElementById('locName');
-                                locNameHolder = currentSelected.areaName;
-                            }
-                            if (results[j].address_components[i].types[0] == "administrative_area_level_1") {
-                                currentSelected.locName = results[j].address_components[i].long_name;
-                                var areaNameHolder = document.getElementById('areaName');
-                                areaNameHolder = currentSelected.locName;
-                            }
-                            if (results[j].address_components[i].types[0] == "country") {
-                                currentSelected.countryName = results[j].address_components[i].long_name;
-                                var countryHolder = document.getElementById('countryName');
-                                countryHolder = currentSelected.countryName;
+                        if(results.address_components != 0)
+                        {
+                            for (var i = 0; i < results[j].address_components.length; i++) {
+                                if (results[j].address_components[i].types[0] == "locality") {
+                                    currentSelected.areaName = results[j].address_components[i].long_name;
+                                    var locNameHolder = document.getElementById('locName');
+                                    locNameHolder = currentSelected.areaName;
+                                }
+                                if (results[j].address_components[i].types[0] == "administrative_area_level_1") {
+                                    currentSelected.locName = results[j].address_components[i].long_name;
+                                    var areaNameHolder = document.getElementById('areaName');
+                                    areaNameHolder = currentSelected.locName;
+                                }
+                                if (results[j].address_components[i].types[0] == "country") {
+                                    currentSelected.countryName = results[j].address_components[i].long_name;
+                                    var countryHolder = document.getElementById('countryName');
+                                    countryHolder = currentSelected.countryName;
+                                }
                             }
                         }
                     }
                 }
-
                 locEntered.push();
             });
 
