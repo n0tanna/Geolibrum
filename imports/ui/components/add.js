@@ -1,7 +1,6 @@
 import { Template } from 'meteor/templating';
 import './add.html';
-
-//const exifr = require('exifr');
+import { Location } from '../../api/location/location';
 
 if (Meteor.isClient) {
     const logName = new ReactiveVar();
@@ -9,20 +8,24 @@ if (Meteor.isClient) {
     const error = new ReactiveVar(null);
 
     Template.addLog.helpers({
-        errorDisplay: function() {
+        displayLocation: () => {
+            return Location.find({});
+        },
+
+        errorDisplay: function () {
             return error.get();
         }
     });
 
     Template.addNewEntry.helpers({
-        nameDisplay: function() {
+        nameDisplay: function () {
             return logName.get();
         },
 
-        dateDisplay: function() {
+        dateDisplay: function () {
             return date.get();
         }
-    });
+    }); 
 
     Template.addLog.events({
         'submit #add-log-form': function (event) {

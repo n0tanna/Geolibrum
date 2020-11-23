@@ -8,9 +8,15 @@
         <br>
         <label for="latitudeNum">Lat:</label>
         <input type="text" name="latitudeNum" id="latitudeNum">
+        {{#if latErrorDisplay}}
+        <div id="errorLat">{{latErrorDisplay}}</div>
+        {{/if}}
         <br>
         <label for="longitudeNum">Long:</label>
         <input type="text" name="longitudeNum" id="longitudeNum">
+        {{#if lonErrorDisplay}}
+        <div id="errorLon">{{lonErrorDisplay}}</div>
+        {{/if}}
         <br>
         <input type="submit" class="btn" id="submit" value="Add Location">
     </form>
@@ -27,8 +33,8 @@
             <br>
             <button class="btn edit">Edit</button>
             <br>
-            <button class="btn remove">Remove</button>      
-       </li>
+            <button class="btn remove">Remove</button>
+        </li>
         {{/each}}
     </ul>
     <button class="btn add">Add</button>
@@ -38,28 +44,49 @@
 
 <template name="editModal">
     <div class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">Edit Location</h4>
-				</div>
-				<div class="modal-body">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Location</h4>
+                </div>
+                <div class="modal-body">
                     <label for="locName">Area Name:</label>
                     <input type="text" name="locName" id="locName">
+                    {{#if editErrorDisplay}}
+                    <div id="areaError">{{editErrorDisplay}}</div>
+                    {{/if}}
                     <br>
                     <label for="areaName">Province/State/Region:</label>
                     <input type="text" name="areaName" id="areaName">
                     <br>
                     <label for="countryName">Country:</label>
                     <input type="text" name="countryName" id="countryName">
-				</div>
-				<div class="modal-footer">
-                    <button class="btn add" data-dismiss="modal">Save</button>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn add">Save</button>
                     <button class="btn reset" data-dismiss="modal">Reset Fields</button>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-				
-			</div>
-		</div>
-	</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="areaModal">
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Area Name</h4>
+                </div>
+                <div class="modal-body">
+                    <label for="areaName">Area Name:</label>
+                    <input type="text" name="areaName" id="areaName">
+                    <div id="error">{{areaErrorDisplay}}</div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn save">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>

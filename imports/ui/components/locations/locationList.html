@@ -6,7 +6,7 @@
     <ul>
         {{#each displayLocation}}
         <li>
-            <div id="name">{{ this.location_area}}</div>
+            <div id="name">{{this.location_area}}</div>
             <br>
             <div id="loc">{{this.location_region}}</div>
             <br>
@@ -14,87 +14,96 @@
             <br>
             <button class="btn edit">Edit</button>
             <br>
-            <button class="btn remove">Remove</button>      
-       </li>
+            <button class="btn remove">Remove</button>
+        </li>
         {{/each}}
     </ul>
 </template>
 
 <template name="warningModal">
     <div class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">Warning</h4>
-				</div>
-				<div class="modal-body">
-                   Are you sure you would like to delete this location?
-				</div>
-				<div class="modal-footer">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Warning</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure you would like to delete this location?
+                </div>
+                <div class="modal-footer">
                     <button class="btn delete" data-dismiss="modal">Yes</button>
-					<button class="btn btn-default" data-dismiss="modal">No</button>
-				</div>
-				
-			</div>
-		</div>
-	</div>
+                    <button class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </template>
 
 <template name="deleteAllModal">
     <div class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">Warning</h4>
-				</div>
-				<div class="modal-body">
-                   Are you sure you would like to delete all locations?
-				</div>
-				<div class="modal-footer">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Warning</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure you would like to delete all locations?
+                </div>
+                <div class="modal-footer">
                     <button class="btn deleteAll" data-dismiss="modal">Yes</button>
-					<button class="btn btn-default" data-dismiss="modal">No</button>
-				</div>
-				
-			</div>
-		</div>
-	</div>
+                    <button class="btn btn-default" data-dismiss="modal">No</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </template>
 
 <template name="editLocModal">
     <div class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">Edit Location</h4>
-				</div>
-				<div class="modal-body">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Location</h4>
+                </div>
+                <div class="modal-body">
                     <div class="modal-body">
-                        <label for="locName">Area Name:</label>
-                        <input type="text" name="locName" id="locName">
-                        <br>
-                        <label for="areaName">Province/State/Region:</label>
-                        <input type="text" name="areaName" id="areaName">
-                        <br>
-                        <label for="countryName">Country:</label>
-                        <input type="text" name="countryName" id="countryName">
-                        <br>
-                        <h5>Change GPS Location</h5>
-                        <div id="searchError">{{searchError}}</div>
-                        <label for="lat">Latitude:</label>
-                        <input type="text" name="lat" id="lat">
-                        <br>
-                        <label for="long">Longitude</label>
-                        <input type="text" name="long" id="long">
-                        <br>
-                        <button class="btn search">Find Location</button>
+                        <form id="editForm">
+                            <label for="locName">Area Name:</label>
+                            <input type="text" name="locName" id="locName">
+                            <br>
+                            {{#if areaErrorDisplay}}
+                            <div id="areaError">{{areaErrorDisplay}}</div>
+                            {{/if}}
+                            <label for="areaName">Province/State/Region:</label>
+                            <input type="text" name="areaName" id="areaName">
+                            <br>
+                            <label for="countryName">Country:</label>
+                            <input type="text" name="countryName" id="countryName">
+                            <br>
+                            <h5>Change GPS Location</h5>
+                            <div id="searchError">{{searchError}}</div>
+                            <label for="lat">Latitude:</label>
+                            <input type="text" name="lat" id="lat">
+                            {{#if latErrorDisplay}}
+                            <div id="errorLat">{{latErrorDisplay}}</div>
+                            {{/if}}
+                            <br>
+                            <label for="long">Longitude</label>
+                            <input type="text" name="long" id="long">
+                            {{#if longErrorDisplay}}
+                            <div id="errorLon">{{longErrorDisplay}}</div>
+                            {{/if}}
+                            <br>
+                            <input type="submit" class="btn" id="submit" value="Find Location">
+                        </form>
                     </div>
-				</div>
-				<div class="modal-footer">
-                    <button class="btn save" data-dismiss="modal">Save</button>
-					<button class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-				
-			</div>
-		</div>
-	</div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn save">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>

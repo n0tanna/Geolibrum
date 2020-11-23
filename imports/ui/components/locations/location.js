@@ -11,6 +11,9 @@ var currentSelected = new ReactiveVar();
 if (Meteor.isClient) {
     var error = new ReactiveVar(null);
     var status = new ReactiveVar(null);
+    var longError = new ReactiveVar(null);
+    var latError = new ReactiveVar(null);
+    var areaError = new ReactiveVar(null);
 
     Template.location.helpers({
         errorDisplay: function () {
@@ -23,12 +26,30 @@ if (Meteor.isClient) {
 
         locDisplay: function () {
             return locEntered.list();
+        },
+
+        lonErrorDisplay: function () {
+            return longError.get();
+        },
+
+        latErrorDisplay: function () {
+            return latError.get();
         }
     });
 
     Template.editModal.helpers({
         jsonPrint(jsonObject) {
             return JSON.stringify(jsonObject);
+        },
+
+        editErrorDisplay: function () {
+            return areaError.get();
+        }
+    });
+
+    Template.areaModal.helpers({
+        areaErrorDisplay: function () {
+            return areaError.get();
         }
     });
 
@@ -48,14 +69,13 @@ if (Meteor.isClient) {
 
             if (!lat && !long) {
                 error.set("Please enter a latitude and a longitude.");
-
             }
             else if (!lat || !long) {
                 if (!lat) {
-                    error.set("Please enter a latitude.");
+                    latError.set("Please enter a latitude.");
                 }
                 else {
-                    error.set("Please enter a longitude.");
+                    longError.set("Please enter a longitude.");
                 }
             }
             else {
@@ -82,7 +102,7 @@ if (Meteor.isClient) {
                                         indice = j;
                                         break;
                                     }
-                                    else if (results[j].types[0] == 'administrative_area_level_1')  {
+                                    else if (results[j].types[0] == 'administrative_area_level_1') {
                                         indice = j;
                                         break;
                                     }
@@ -92,7 +112,7 @@ if (Meteor.isClient) {
                                     }
                                 }
 
-                                if(results.address_components != 0) {
+                                if (results.address_components != 0) {
                                     for (var i = 0; i < results[j].address_components.length; i++) {
                                         if (results[j].address_components[i].types[0] == "locality") {
                                             areaName = results[j].address_components[i].long_name;
@@ -104,16 +124,23 @@ if (Meteor.isClient) {
                                             countryName = results[j].address_components[i].long_name;
                                         }
                                     }
-                                    var locationData = {
+
+                                    if (areaName == '') {
+                                        Modal.show('areaModal');
+                                    }
+
+                                    currentSelected = {
                                         areaName: areaName,
                                         locName: locName,
                                         countryName: countryName,
                                         latitudeNum: lat,
                                         longitudeNum: long
                                     }
-    
-                                    locEntered.push(locationData);
+
+                                    locEntered.push(currentSelected);
                                     error.set(null);
+                                    longError.set(null);
+                                    latError.set(null);
                                 }
                                 else {
                                     error.set("No information at those coordinates.");
@@ -126,11 +153,11 @@ if (Meteor.isClient) {
                         else {
                             error.set("Geocoder failed due to: " + status);
                         }
-                        
+
                     });
                 }
                 else {
-                    error.set("Please enter a number.");
+                    error.set("Please enter a number for GPS coordinates.");
                 }
                 status.set(null);
             }
@@ -143,15 +170,14 @@ if (Meteor.isClient) {
         },
 
         'click .add': function () {
-
-            if(locEntered.length == 0) {
+            if (locEntered.length == 0) {
                 status.set("Please add a location.");
             }
             else {
-                locEntered.forEach(function (holder, index){
+                locEntered.forEach(function (holder, index) {
                     Meteor.call('addLocation', holder);
                 });
-    
+
                 locEntered.length = 0;
                 locEntered.push();
                 status.set("Added successfully.");
@@ -185,16 +211,25 @@ if (Meteor.isClient) {
     });
 
     Template.editModal.events({
-        'click .add': function (e) {
+        'click .add': function (e, template) {
             var locNameHolder = document.getElementById('locName');
-            currentSelected.areaName = locNameHolder.value;
+            var locHolder = template.find('#locName').value;
+            if (!locHolder) {
+                areaError.set("Please enter an area name");
+            }
+            else {
+                currentSelected.areaName = locNameHolder.value;
 
-            var areaNameHolder = document.getElementById('areaName');
-            currentSelected.locName = areaNameHolder.value;
+                var areaNameHolder = document.getElementById('areaName');
+                currentSelected.locName = areaNameHolder.value;
 
-            var countryHolder = document.getElementById('countryName');
-            currentSelected.countryName = countryHolder.value;
-            locEntered.push();
+                var countryHolder = document.getElementById('countryName');
+                currentSelected.countryName = countryHolder.value;
+
+                locEntered.push();
+
+                Modal.hide('editModal');
+            }
         },
 
         'click .reset': function () {
@@ -215,10 +250,17 @@ if (Meteor.isClient) {
                                 indice = j;
                                 break;
                             }
+                            else if (results[j].types[0] == 'administrative_area_level_1') {
+                                indice = j;
+                                break;
+                            }
+                            else if (results[j].types[0] == 'country') {
+                                indice = j;
+                                break;
+                            }
                         }
 
-                        if(results.address_components != 0)
-                        {
+                        if (results.address_components != 0) {
                             for (var i = 0; i < results[j].address_components.length; i++) {
                                 if (results[j].address_components[i].types[0] == "locality") {
                                     currentSelected.areaName = results[j].address_components[i].long_name;
@@ -242,6 +284,22 @@ if (Meteor.isClient) {
                 locEntered.push();
             });
 
+        }
+    });
+
+    Template.areaModal.events({
+        'click .save': function (e, template) {
+            var areaHolder = template.find('#areaName').value;
+           
+            if (!areaHolder) {
+                areaError.set("Please enter an area name.");
+            }
+            else {
+                Modal.hide('areaModal');
+                currentSelected.areaName = areaHolder;
+                locEntered.push();
+                areaError.set(null);
+            }
         }
     });
 }

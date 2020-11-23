@@ -24,6 +24,6 @@ Meteor.methods({
     },
 
     updateLocFunction: function (id, area, region, country, lat, long) {
-        Location.update({_id: id}, {$set:{}});
+        Location.update({_id: id}, {$set:{location_area: area, location_region: region, location_country: country, lat: lat, long: long}});
     }
 });

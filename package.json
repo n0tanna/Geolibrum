@@ -8,7 +8,7 @@
     "visualize": "meteor --production --extra-packages bundle-visualizer"
   },
   "dependencies": {
-    "@babel/runtime": "^7.11.2",
+    "@babel/runtime": "^7.12.5",
     "bootstrap": "^3.4.1",
     "dotenv": "^8.2.0",
     "exif-js": "^2.3.0",
