@@ -10,14 +10,19 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "bootstrap": "^3.4.1",
+    "buffer": "^6.0.3",
     "dotenv": "^8.2.0",
+    "exif": "^0.6.0",
     "exif-js": "^2.3.0",
     "exifr": "^6.0.0",
+    "exifreader": "^3.12.6",
     "jpeg-exif": "^1.1.4",
     "jquery": "^3.5.1",
     "meteor-node-stubs": "^1.0.1",
     "popper.js": "^1.16.1",
-    "simpl-schema": "^1.10.2"
+    "setimmediate": "^1.0.5",
+    "simpl-schema": "^1.10.2",
+    "string-to-arraybuffer": "^1.0.2"
   },
   "meteor": {
     "mainModule": {
@@ -25,5 +30,11 @@
       "server": "server/fill-tables.js"
     },
     "testModule": "tests/main.js"
+  },
+  "exifreader": {
+    "include": {
+      "jpeg": true,
+      "exif": true
+    }
   }
 }

@@ -7,7 +7,7 @@ import { Location } from "/imports/api/location/location";
 import '/imports/api/location/methods.js';
 
 Meteor.methods({
-    
+
 });
 
 

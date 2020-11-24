@@ -2,8 +2,9 @@ import { Template } from 'meteor/templating';
 import './location.html';
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
-import '/imports/api/location/methods.js'
+import '/imports/api/location/methods.js';
 import '/imports/ui/components/util.js';
+import ExifReader from 'exifreader';
 
 var locEntered = new ReactiveArray();
 var currentSelected = new ReactiveVar();
@@ -54,16 +55,30 @@ if (Meteor.isClient) {
     });
 
     Template.location.events({
+        'submit #imageSearch': function (e) {
+            e.preventDefault();
+        
+            const files = e.target.locationImg.files;
+            const reader = new FileReader();
+            console.log(files);
+       
+        
+            reader.onload = function (readerEvent) {
+                try {
+                    var buffer = readerEvent.target.result;
+                    const tags = ExifReader.load(buffer, {expanded: true});
+                    console.log(tags);
+                   
+                } 
+                catch (error) {
+        
+                }
+            };
+            reader.readAsArrayBuffer(files[0]);
+        },
+
         'submit #locationLogForm': function (e) {
             e.preventDefault();
-
-            //Will get this to work later
-            /*var file = event.target.locationImageUploader.value;
-            
-            (async () => {
-                let {latitude, longitude} = await exifr.gps(file);
-                console.log(latitude);
-            })();*/
             var lat = e.target.latitudeNum.value;
             var long = e.target.longitudeNum.value;
 
@@ -290,7 +305,7 @@ if (Meteor.isClient) {
     Template.areaModal.events({
         'click .save': function (e, template) {
             var areaHolder = template.find('#areaName').value;
-           
+
             if (!areaHolder) {
                 areaError.set("Please enter an area name.");
             }
