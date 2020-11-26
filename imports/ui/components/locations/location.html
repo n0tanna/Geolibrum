@@ -1,8 +1,8 @@
 <template name="location">
     <h3>New Location</h3>
-    <div id="error">{{errorDisplay}}</div>
     <form id="imageSearch">
         <p>Use an image to have exact coordinates of your site.</p>
+        <div id="imageError">{{imageErrorDisplay}}</div>
         <label for="locationImg">Upload Image:</label>
         <input type="file" class="btn" name="locationImg" id="locationImg" accept='image/png,image/jpeg'>
         <br>
@@ -10,6 +10,7 @@
     </form>
 
     <form id="locationLogForm">
+        <div id="error">{{errorDisplay}}</div>
         <label for="latitudeNum">Lat:</label>
         <input type="text" name="latitudeNum" id="latitudeNum">
         {{#if latErrorDisplay}}

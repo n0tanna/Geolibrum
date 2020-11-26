@@ -15,6 +15,7 @@ if (Meteor.isClient) {
     var longError = new ReactiveVar(null);
     var latError = new ReactiveVar(null);
     var areaError = new ReactiveVar(null);
+    var imageError = new ReactiveVar(null);
 
     Template.location.helpers({
         errorDisplay: function () {
@@ -35,6 +36,10 @@ if (Meteor.isClient) {
 
         latErrorDisplay: function () {
             return latError.get();
+        },
+
+        imageErrorDisplay: function () {
+            return imageError.get();
         }
     });
 
@@ -57,24 +62,114 @@ if (Meteor.isClient) {
     Template.location.events({
         'submit #imageSearch': function (e) {
             e.preventDefault();
-        
+
+            var gpsArray = new ReactiveArray();
+            var lat = new ReactiveVar();
+            var long = new ReactiveVar();
             const files = e.target.locationImg.files;
-            const reader = new FileReader();
-            console.log(files);
-       
-        
-            reader.onload = function (readerEvent) {
-                try {
+
+            if (files.length > 0) {
+                const reader = new FileReader();
+
+                reader.onload = function (readerEvent) {
                     var buffer = readerEvent.target.result;
-                    const tags = ExifReader.load(buffer, {expanded: true});
-                    console.log(tags);
+                    const tags = ExifReader.load(buffer, { expanded: true });
+
+                    for (const group in tags) {
+                        for (const name in tags[group]) {
+                            if (group === 'gps') {
+                                gpsArray.push(`${tags[group][name]}`);
+                            }
+                        }
+                    }
+
+                    console.log(gpsArray.length);
+                    
+                    lat = gpsArray[0];
+                    long = gpsArray[1];
+
+                    var geocoder = new google.maps.Geocoder();
+                    lat = parseFloat(lat);
+                    long = parseFloat(long);
+                    if (!lat && !long) {
+                        imageError.set("No meta data, please use a different photo.");
+                    }
+                    else {
+                        var latlng = {
+                            lat: lat,
+                            lng: long
+                        };
+    
+                        geocoder.geocode({ location: latlng }, (results, status) => {
+                            if (status === "OK") {
+                                if (results[0]) {
+                                    locationReturned = results[0].formatted_address;
+                                    var areaName = "";
+                                    var locName = "";
+                                    var countryName = "";
+    
+                                    var indice = 0;
+                                    for (var j = 0; j < results.length; j++) {
+                                        if (results[j].types[0] == 'locality') {
+                                            indice = j;
+                                            break;
+                                        }
+                                        else if (results[j].types[0] == 'administrative_area_level_1') {
+                                            indice = j;
+                                            break;
+                                        }
+                                        else if (results[j].types[0] == 'country') {
+                                            indice = j;
+                                            break;
+                                        }
+                                    }
+    
+                                    if (results.address_components != 0) {
+                                        for (var i = 0; i < results[j].address_components.length; i++) {
+                                            if (results[j].address_components[i].types[0] == "locality") {
+                                                areaName = results[j].address_components[i].long_name;
+                                            }
+                                            if (results[j].address_components[i].types[0] == "administrative_area_level_1") {
+                                                locName = results[j].address_components[i].long_name;
+                                            }
+                                            if (results[j].address_components[i].types[0] == "country") {
+                                                countryName = results[j].address_components[i].long_name;
+                                            }
+                                        }
+    
+                                        if (areaName == '') {
+                                            Modal.show('areaModal');
+                                        }
+    
+                                        currentSelected = {
+                                            areaName: areaName,
+                                            locName: locName,
+                                            countryName: countryName,
+                                            latitudeNum: lat,
+                                            longitudeNum: long
+                                        }
+    
+                                        locEntered.push(currentSelected);
+                                        imageError.set("Uploaded Location: " + areaName);
+                                    }
+                                }
+                            }
+                            else if (status === "ZERO_RESULTS") {
+                                imageError.set("No results found at those coordinates.");
+                            }
+                            else {
+                                imageError.set("Geocoder failed due to: " + status);
+                            }
+                        });
+                    };
+                    }
                    
-                } 
-                catch (error) {
-        
-                }
-            };
-            reader.readAsArrayBuffer(files[0]);
+                reader.readAsArrayBuffer(files[0]);
+            }
+            else {
+                imageError.set("Please choose a picture.");
+            }
+            e.target.reset();
         },
 
         'submit #locationLogForm': function (e) {
