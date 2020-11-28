@@ -7,9 +7,12 @@ l.schema = new SimpleSchema ({
     location_area: {type: String},
     location_region: {type: String},
     location_country: {type: String},
+    date_created: {type: Date, defaultValue: new Date()},
+    date_visited: {type: Array},
+    'date_visited.$': Object,
+    date_edited: {type: Date, defaultValue: new Date()},
     lat: {type: String},
     long: {type: String},
-    date_created: {type: Date, defaultValue: new Date()}
     
 });
 

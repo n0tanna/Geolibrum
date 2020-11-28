@@ -1,0 +1,48 @@
+<head>
+  <title>Geolibrum</title>
+</head>
+
+<body>
+
+
+</body>
+
+<template name="main">
+  <h1>Geolibrum</h1>
+  {{> loginButtons}}
+  {{#if currentUser}}
+  <h2><a href="{{pathFor route='home'}}">Admin Dashboard</a></h2>
+  <ul>
+    <li><a href="{{pathFor route='add'}}">Add Log Entry</a></li>
+    <li><a href="{{pathFor route='locationList'}}">Locations</a></li>
+    <ul>
+      <li><a href="{{pathFor route='location'}}">Add Location</a></li>
+    </ul>
+    <li><a href="{{pathFor route='species'}}">Species</a></li>
+    <ul>
+      <li><a href="">Add Species</a></li>
+    </ul>
+    <li><a href="{{pathFor route='mineral'}}">Mineral Types</a></li>
+    <ul>
+      <li><a href="">Add Minerals</a></li>
+    </ul>
+    <li><a href="{{pathFor route='rock'}}">Rock Types</a></li>
+    <ul>
+      <li><a href="">Add Rocks</a></li>
+    </ul>
+    <li><a href="{{pathFor route='stats'}}">User Stats</a></li>
+  </ul>
+  {{> yield}}
+  {{/if}}
+</template>
+
+<template name='home'>
+  <h3>Current Log Entries</h3>
+  <ul>
+    <li></li>
+  </ul>
+</template>
+
+<template name="stats">
+  <h3>Statistics</h3>
+</template>

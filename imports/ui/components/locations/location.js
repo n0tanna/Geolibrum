@@ -16,6 +16,8 @@ if (Meteor.isClient) {
     var latError = new ReactiveVar(null);
     var areaError = new ReactiveVar(null);
     var imageError = new ReactiveVar(null);
+    var today = new Date();
+    var currentDate = new ReactiveVar(today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate());
 
     Template.location.helpers({
         errorDisplay: function () {
@@ -24,6 +26,10 @@ if (Meteor.isClient) {
 
         statusDisplay: function () {
             return status.get();
+        },
+
+        maxDate: function() {
+            return currentDate.get();
         },
 
         locDisplay: function () {
@@ -48,6 +54,10 @@ if (Meteor.isClient) {
             return JSON.stringify(jsonObject);
         },
 
+        maxDate: function() {
+            return currentDate.get();
+        },
+
         editErrorDisplay: function () {
             return areaError.get();
         }
@@ -66,7 +76,12 @@ if (Meteor.isClient) {
             var gpsArray = new ReactiveArray();
             var lat = new ReactiveVar();
             var long = new ReactiveVar();
+            var date = e.target.date.value();
             const files = e.target.locationImg.files;
+            
+            if (!date) {
+                date = currentDate;
+            }
 
             if (files.length > 0) {
                 const reader = new FileReader();
@@ -83,8 +98,6 @@ if (Meteor.isClient) {
                         }
                     }
 
-                    console.log(gpsArray.length);
-                    
                     lat = gpsArray[0];
                     long = gpsArray[1];
 
@@ -99,7 +112,7 @@ if (Meteor.isClient) {
                             lat: lat,
                             lng: long
                         };
-    
+
                         geocoder.geocode({ location: latlng }, (results, status) => {
                             if (status === "OK") {
                                 if (results[0]) {
@@ -107,7 +120,7 @@ if (Meteor.isClient) {
                                     var areaName = "";
                                     var locName = "";
                                     var countryName = "";
-    
+
                                     var indice = 0;
                                     for (var j = 0; j < results.length; j++) {
                                         if (results[j].types[0] == 'locality') {
@@ -123,7 +136,7 @@ if (Meteor.isClient) {
                                             break;
                                         }
                                     }
-    
+
                                     if (results.address_components != 0) {
                                         for (var i = 0; i < results[j].address_components.length; i++) {
                                             if (results[j].address_components[i].types[0] == "locality") {
@@ -136,19 +149,22 @@ if (Meteor.isClient) {
                                                 countryName = results[j].address_components[i].long_name;
                                             }
                                         }
-    
+
                                         if (areaName == '') {
                                             Modal.show('areaModal');
                                         }
-    
+
                                         currentSelected = {
                                             areaName: areaName,
                                             locName: locName,
                                             countryName: countryName,
                                             latitudeNum: lat,
-                                            longitudeNum: long
+                                            longitudeNum: long,
+                                            date: date,
+                                            editDate: date,
+                                            createdDate: date
                                         }
-    
+
                                         locEntered.push(currentSelected);
                                         imageError.set("Uploaded Location: " + areaName);
                                     }
@@ -162,8 +178,8 @@ if (Meteor.isClient) {
                             }
                         });
                     };
-                    }
-                   
+                }
+
                 reader.readAsArrayBuffer(files[0]);
             }
             else {
@@ -176,6 +192,11 @@ if (Meteor.isClient) {
             e.preventDefault();
             var lat = e.target.latitudeNum.value;
             var long = e.target.longitudeNum.value;
+            var date = e.target.date.value;
+
+            if (!date) {
+                date = currentDate;
+            }
 
             if (!lat && !long) {
                 error.set("Please enter a latitude and a longitude.");
@@ -244,7 +265,10 @@ if (Meteor.isClient) {
                                         locName: locName,
                                         countryName: countryName,
                                         latitudeNum: lat,
-                                        longitudeNum: long
+                                        longitudeNum: long,
+                                        date: date,
+                                        editDate: date,
+                                        createdDate: date
                                     }
 
                                     locEntered.push(currentSelected);
@@ -317,6 +341,9 @@ if (Meteor.isClient) {
             var country = document.getElementById('countryName');
             country.value = currentSelected.countryName;
 
+            var date = document.getElementById('editDate');
+            date.value = currentSelected.date;
+
         }
     });
 
@@ -335,6 +362,9 @@ if (Meteor.isClient) {
 
                 var countryHolder = document.getElementById('countryName');
                 currentSelected.countryName = countryHolder.value;
+                
+                var dateHolder = document.getElementById('date');
+                currentSelected.date = dateHolder.value;
 
                 locEntered.push();
 

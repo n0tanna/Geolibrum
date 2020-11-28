@@ -1,4 +1,4 @@
-import './main.html';
+import './admin-main.html';
 import '/imports/ui/layouts/layout';
 
 Router.route('/stats');

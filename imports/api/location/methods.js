@@ -7,6 +7,9 @@ Meteor.methods({
             location_area: locEntered.areaName,
             location_region: locEntered.locName,
             location_country: locEntered.countryName,
+            date_created: locEntered.createdDate,
+            date_edited: locEntered.editDate,
+            date_visited: locEntered.date,
             lat: locEntered.latitudeNum,
             long: locEntered.longitudeNum
         });
@@ -23,7 +26,7 @@ Meteor.methods({
         Location.remove(_id);
     },
 
-    updateLocFunction: function (id, area, region, country, lat, long) {
-        Location.update({_id: id}, {$set:{location_area: area, location_region: region, location_country: country, lat: lat, long: long}});
+    updateLocFunction: function (id, area, region, country, lat, long, editDate, date) {
+        Location.update({_id: id}, {$set:{location_area: area, location_region: region, location_country: country, lat: lat, long: long, date_visited: date, edit_date: editDate}});
     }
 });

@@ -12,6 +12,8 @@ var searchError = new ReactiveVar();
 var areaError = new ReactiveVar();
 var latError = new ReactiveVar();
 var longError = new ReactiveVar();
+var today = new Date();
+var currentDate = new ReactiveVar(today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate());
 
 if (Meteor.isClient) {
     Template.locationList.helpers({
@@ -26,6 +28,10 @@ if (Meteor.isClient) {
     Template.editLocModal.helpers({
         searchError: function () {
             return searchError.get();
+        },
+
+        maxDate: function() {
+            return currentDate.get();
         },
 
         areaErrorDisplay: function () {

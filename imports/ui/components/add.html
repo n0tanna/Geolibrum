@@ -7,32 +7,33 @@
 <template name="add">
   <h3>Add New Log</h3>
   <ul>
-    <li><a href="{{pathFor route='locationList'}}">Locations</a></li>
-    <ul>
-      <li><a href="{{pathFor route='location'}}">Add Location</a></li>
-    </ul>
-    <li><a href="{{pathFor route='species'}}">Add Species</a></li>
-    <li><a href="{{pathFor route='mineral'}}">Add Mineral Type</a></li>
-    <li><a href="{{pathFor route='rock'}}">Add Rock Type</a></li>
+    
   </ul>
   {{> addLog}}
 </template>
 
 <template name="addLog">
-  <h3>New Log</h3>
+  <h2>Add New Log</h2>
   <div id="error">{{errorDisplay}}</div>
   <form id="add-log-form">
     <label for="logName">Log Name:</label>
     <input type="text" name="logName" id="logName">
     <br>
     <label for="date">Date:</label>
-    <input type="date" id="date" name="date" value="0000-00-00" min="2000-01-01">
+    <input type="date" id="date" name="date" value="0000-00-00">
     <br>
     <label for="locations">Location:</label>
     <select id="locations" name="locations">
-      {{#each displayLocation}}
-      <option value="locValue">{{this.location_area}}</option>
-      {{/each}}
+      {{#with displayLocation}}
+        {{#if this.count}}
+          {{#each displayLocation}}
+           <option id="locValue" value={{this.location_area}}>{{this.location_area}}</option>
+          {{/each}}
+          <option id="locValue" value="n/a">N/A</option>
+        {{else}}
+          <option id="locValue" value="n/a">N/A</option>
+        {{/if}}
+      {{/with}}
     </select>
     <br>
     <input type="submit" id="submit" value="Create Log">
@@ -41,21 +42,6 @@
 
 <template name="addNewEntry">
   <h2>Log Entry: {{nameDisplay}} || {{dateDisplay}}</h2>
-  <h3>Added Entries</h3>
-</template>
-
-
-<template name="species">
-  <h3>New Species</h3>
-  <h3>Added Entries</h3>
-</template>
-
-<template name="mineral">
-  <h3>New Mineral Type</h3>
-  <h3>Added Entries</h3>
-</template>
-
-<template name="rock">
-  <h3>New Rock Type</h3>
+  <h2>Location: {{locationDisplay}}</h2>
   <h3>Added Entries</h3>
 </template>

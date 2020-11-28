@@ -6,6 +6,8 @@
     <ul>
         {{#each displayLocation}}
         <li>
+            <div id="date">{{this.date}}</div>
+            <br>
             <div id="name">{{this.location_area}}</div>
             <br>
             <div id="loc">{{this.location_region}}</div>
@@ -70,6 +72,9 @@
                 <div class="modal-body">
                     <div class="modal-body">
                         <form id="editForm">
+                            <label for="date">Date Found:</label>
+                            <input type="date" id="date" name="date" value="0000-00-00" max='{{maxDate}}'>
+                            <br>
                             <label for="locName">Area Name:</label>
                             <input type="text" name="locName" id="locName">
                             <br>
