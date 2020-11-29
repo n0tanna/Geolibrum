@@ -33,12 +33,16 @@
     <ul>
         {{#each locDisplay}}
         <li>
-            <div id="date">{{this.date}}</div>
+            <p>Date visited:</p>
+            <div id="date">{{this.visitDate}}</div>
             <br>
+            <p>Area name:</p>
             <div id="name">{{this.areaName}}</div>
             <br>
+            <p>Region name:</p>
             <div id="loc">{{this.locName}}</div>
             <br>
+            <p>Country name:</p>
             <div id="country">{{this.countryName}}</div>
             <br>
             <button class="btn edit">Edit</button>

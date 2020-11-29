@@ -13,7 +13,7 @@ var areaError = new ReactiveVar();
 var latError = new ReactiveVar();
 var longError = new ReactiveVar();
 var today = new Date();
-var currentDate = new ReactiveVar(today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate());
+var currentDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
 if (Meteor.isClient) {
     Template.locationList.helpers({
@@ -31,7 +31,7 @@ if (Meteor.isClient) {
         },
 
         maxDate: function() {
-            return currentDate.get();
+            return currentDate;
         },
 
         areaErrorDisplay: function () {
@@ -80,6 +80,9 @@ if (Meteor.isClient) {
             locId = this._id;
             Modal.show('editLocModal');
 
+            var currentDate = document.getElementById('editDate');
+            currentDate.value = this.date_visited;
+
             var locName = document.getElementById('locName');
             locName.value = this.location_area;
 
@@ -120,21 +123,20 @@ if (Meteor.isClient) {
 
     Template.editLocModal.events({
         'click .save': function (e, template) {
+            var cDate = template.find('#editDate').value;
             var lat = template.find('#lat').value;
             var long = template.find('#long').value;
             var area = template.find('#locName').value;
             var region = template.find('#areaName').value;
             var country = template.find('#countryName').value;
 
-            var areaHolder = template.find('#locName').value;
-
-            if (!areaHolder) {
+            if (!area) {
                 areaError.set("Please enter an area name.");
             }
             else {
                 Modal.hide('areaModal');
                 areaError.set(null);
-                Meteor.call("updateLocFunction", locId, area, region, country, lat, long, function (error) {
+                Meteor.call("updateLocFunction", locId, area, region, country, lat, long, currentDate, cDate, function (error) {
                     if (error) {
                         console.log("Error: " + error.reason)
                     }

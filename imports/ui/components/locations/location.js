@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import '/imports/api/location/methods.js';
 import '/imports/ui/components/util.js';
 import ExifReader from 'exifreader';
+import { gps } from 'exifr';
 
 var locEntered = new ReactiveArray();
 var currentSelected = new ReactiveVar();
@@ -17,7 +18,7 @@ if (Meteor.isClient) {
     var areaError = new ReactiveVar(null);
     var imageError = new ReactiveVar(null);
     var today = new Date();
-    var currentDate = new ReactiveVar(today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate());
+    var currentDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
     Template.location.helpers({
         errorDisplay: function () {
@@ -28,8 +29,8 @@ if (Meteor.isClient) {
             return status.get();
         },
 
-        maxDate: function() {
-            return currentDate.get();
+        maxDate: function () {
+            return currentDate;
         },
 
         locDisplay: function () {
@@ -54,8 +55,8 @@ if (Meteor.isClient) {
             return JSON.stringify(jsonObject);
         },
 
-        maxDate: function() {
-            return currentDate.get();
+        maxDate: function () {
+            return currentDate;
         },
 
         editErrorDisplay: function () {
@@ -76,9 +77,9 @@ if (Meteor.isClient) {
             var gpsArray = new ReactiveArray();
             var lat = new ReactiveVar();
             var long = new ReactiveVar();
-            var date = e.target.date.value();
+            var date = currentDate;
             const files = e.target.locationImg.files;
-            
+
             if (!date) {
                 date = currentDate;
             }
@@ -94,6 +95,16 @@ if (Meteor.isClient) {
                         for (const name in tags[group]) {
                             if (group === 'gps') {
                                 gpsArray.push(`${tags[group][name]}`);
+                            }
+                            else if (group === 'exif' && name === 'DateTime') {
+                                var photoDate = tags['exif'].DateTime.description;
+                                var res = photoDate.split(":", 3);
+                                var lastDate = res[2];
+                                res.pop();
+                                var lastDate = lastDate.split(" ");
+                                res.push(lastDate[0]); 
+                                date = res[0] + "-" + res[1] + "-" + res[2]; 
+                                console.log(date);
                             }
                         }
                     }
@@ -160,7 +171,7 @@ if (Meteor.isClient) {
                                             countryName: countryName,
                                             latitudeNum: lat,
                                             longitudeNum: long,
-                                            date: date,
+                                            visitDate: date,
                                             editDate: date,
                                             createdDate: date
                                         }
@@ -266,7 +277,7 @@ if (Meteor.isClient) {
                                         countryName: countryName,
                                         latitudeNum: lat,
                                         longitudeNum: long,
-                                        date: date,
+                                        visitDate: date,
                                         editDate: date,
                                         createdDate: date
                                     }
@@ -342,7 +353,7 @@ if (Meteor.isClient) {
             country.value = currentSelected.countryName;
 
             var date = document.getElementById('editDate');
-            date.value = currentSelected.date;
+            date.value = currentSelected.visitDate;
 
         }
     });
@@ -362,9 +373,9 @@ if (Meteor.isClient) {
 
                 var countryHolder = document.getElementById('countryName');
                 currentSelected.countryName = countryHolder.value;
-                
+
                 var dateHolder = document.getElementById('date');
-                currentSelected.date = dateHolder.value;
+                currentSelected.visitDate = dateHolder.value;
 
                 locEntered.push();
 

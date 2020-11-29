@@ -9,7 +9,7 @@ Meteor.methods({
             location_country: locEntered.countryName,
             date_created: locEntered.createdDate,
             date_edited: locEntered.editDate,
-            date_visited: locEntered.date,
+            date_visited: locEntered.visitDate,
             lat: locEntered.latitudeNum,
             long: locEntered.longitudeNum
         });
