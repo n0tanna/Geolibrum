@@ -5,7 +5,6 @@ const gtCount = gt.find().count();
 
 if(gtCount === 0) {
     gt.insert({
-        geological_time_id: "0",
         time_period_name: "Siderian",
         era_info: {
             era_name: "Paleproterozoic",
@@ -19,7 +18,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "1",
         time_period_name: "Rhyacian",
         era_info: {
             era_name: "Paleproterozoic",
@@ -47,7 +45,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "3",
         time_period_name: "Slatherian",
         era_info: {
             era_name: "Paleproterozoic",
@@ -61,7 +58,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "4",
         time_period_name: "Calymmiam",
         era_info: {
             era_name: "Mesoproterozoic",
@@ -75,7 +71,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "5",
         time_period_name: "Ectasian",
         era_info: {
             era_name: "Mesoproterozoic",
@@ -89,7 +84,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "6",
         time_period_name: "Stenian",
         era_info: {
             era_name: "Mesoproterozoic",
@@ -103,7 +97,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "7",
         time_period_name: "Tonian",
         era_info: {
             era_name: "Neoproterozoic",
@@ -117,7 +110,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "8",
         time_period_name: "Cryogenian",
         era_info: {
             era_name: "Neoproterozoic",
@@ -131,7 +123,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "9",
         time_period_name: "Ediacaran",
         era_info: {
             era_name: "Neoproterozoic",
@@ -145,7 +136,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "10",
         time_period_name: "Cambrian",
         era_info: {
             era_name: "Paleozoic",
@@ -159,7 +149,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "11",
         time_period_name: "Ordovician",
         era_info: {
             era_name: "Paleozoic",
@@ -173,7 +162,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "12",
         time_period_name: "Silurian",
         era_info: {
             era_name: "Paleozoic",
@@ -187,7 +175,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "13",
         time_period_name: "Devonian",
         era_info: {
             era_name: "Paleozoic",
@@ -201,7 +188,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "14",
         time_period_name: "Carboniferous",
         era_info: {
             era_name: "Paleozoic",
@@ -215,7 +201,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "15",
         time_period_name: "Permian",
         era_info: {
             era_name: "Paleozoic",
@@ -229,7 +214,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "16",
         time_period_name: "Triassic",
         era_info: {
             era_name: "Mesozoic",
@@ -243,7 +227,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "17",
         time_period_name: "Jurassic",
         era_info: {
             era_name: "Mesozoic",
@@ -257,7 +240,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "18",
         time_period_name: "Cretaceous",
         era_info: {
             era_name: "Mesozoic",
@@ -271,7 +253,6 @@ if(gtCount === 0) {
     });
     
     gt.insert({
-        geological_time_id: "19",
         time_period_name: "Paleogene",
         era_info: {
             era_name: "Cenozoic",
@@ -285,7 +266,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "20",
         time_period_name: "Neogene",
         era_info: {
             era_name: "Cenozoic",
@@ -299,7 +279,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "21",
         time_period_name: "Quaternary",
         era_info: {
             era_name: "Cenozoic",
@@ -313,7 +292,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "22",
         time_period_name: "No periods created",
         era_info: {
             era_name: "Eoarchean",
@@ -327,7 +305,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "23",
         time_period_name: "No periods created",
         era_info: {
             era_name: "Paleoarchean",
@@ -341,7 +318,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "24",
         time_period_name: "No periods created",
         era_info: {
             era_name: "Mesoarchean",
@@ -355,7 +331,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "25",
         time_period_name: "No periods created",
         era_info:  {
             era_name: "Neoarchean",
@@ -369,7 +344,6 @@ if(gtCount === 0) {
     });
 
     gt.insert({
-        geological_time_id: "26",
         time_period_name: "No periods created",
         era_info: {
             era_name: "No eras created",
