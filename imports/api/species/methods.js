@@ -7,3 +7,7 @@ import { Classes } from "./classes";
 import { Orders } from "./orders";
 import { Families } from "./families";
 import { Genus } from "./genus";
+
+Meteor.methods({
+    
+});
