@@ -1,28 +1,26 @@
 <template name="species">
     <h3>New Species</h3>
-    {{> kingdom}}
+    {{> speciesEntry}}
 </template>
 
-<template name="phylum">
-
-</template>
-
-<template name="kingdom">
-    <h4>Select Kingdom</h4>
-    <form id="kingdomForm">
-        <label for="kingdom">kingdom:</label>
-        <select id="kingdom" name="kingdom">
-            {{#with kingdomNames}}
-              {{#if this.count}}
-                {{#each kingdomNames}}
-                 <option id="kinValue" value={{this.kingdom}}>{{this.kingdom}}</option>
+<template name="speciesEntry">
+    <form id="holderForm">
+        <div id="holder">
+            <h4>Select Domain</h4>
+            <ul>
+                {{#with domainNames}}
+                {{#if this.count}}
+                {{#each domainNames}}
+                <li>
+                    {{this.domain}}
+                </li>
                 {{/each}}
-              {{else}}
-                <option id="kinValue" value="n/a">N/A</option>
-              {{/if}}
-            {{/with}}
-        </select>
-        <br>
-        <input type="submit" id="submit" value="Next">
+                {{else}}
+                    <li>No domains.</li>
+                {{/if}}
+                {{/with}}
+            </ul>
+        </div>
+    <br>
     </form>
 </template>
