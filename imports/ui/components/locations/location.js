@@ -7,6 +7,8 @@ import '/imports/ui/components/util.js';
 import ExifReader from 'exifreader';
 import { gps } from 'exifr';
 
+'use strict';
+
 var locEntered = new ReactiveArray();
 var currentSelected = new ReactiveVar();
 
@@ -18,7 +20,7 @@ if (Meteor.isClient) {
     var areaError = new ReactiveVar(null);
     var imageError = new ReactiveVar(null);
     var today = new Date();
-    var currentDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    var currentDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + ("0" + today.getDate());
 
     Template.location.helpers({
         errorDisplay: function () {
@@ -204,6 +206,7 @@ if (Meteor.isClient) {
             var lat = e.target.latitudeNum.value;
             var long = e.target.longitudeNum.value;
             var date = e.target.date.value;
+            console.log(currentDate);
 
             if (!date) {
                 date = currentDate;

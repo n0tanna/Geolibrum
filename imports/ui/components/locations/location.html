@@ -32,23 +32,27 @@
     <div id="status">{{statusDisplay}}</div>
     <ul>
         {{#each locDisplay}}
-        <li>
-            <p>Date visited:</p>
-            <div id="date">{{this.visitDate}}</div>
-            <br>
-            <p>Area name:</p>
-            <div id="name">{{this.areaName}}</div>
-            <br>
-            <p>Region name:</p>
-            <div id="loc">{{this.locName}}</div>
-            <br>
-            <p>Country name:</p>
-            <div id="country">{{this.countryName}}</div>
-            <br>
-            <button class="btn edit">Edit</button>
-            <br>
-            <button class="btn remove">Remove</button>
-        </li>
+            <li>
+                <p>Date visited</p>
+                <br>
+                <div id="date">{{this.visitDate}}</div>
+                <br>
+                <p>Area name</p>
+                <br>
+                <div id="name">{{this.areaName}}</div>
+                <br>
+                <p>Region name</p>
+                <br>
+                <div id="loc">{{this.locName}}</div>
+                <br>
+                <p>Country name</p>
+                <br>
+                <div id="country">{{this.countryName}}</div>
+                <br>
+                <button class="btn edit">Edit</button>
+                <br>
+                <button class="btn remove">Remove</button>
+            </li>
         {{/each}}
     </ul>
     <button class="btn add">Add</button>
@@ -64,19 +68,23 @@
                     <h4 class="modal-title">Edit Location</h4>
                 </div>
                 <div class="modal-body">
-                    <label for="date">Date Found:</label>
+                    <label for="date">Date Found</label>
+                    <br>
                     <input type="date" id="editDate" name="editDate" value="0000-00-00" max='{{maxDate}}'>
                     <br>
-                    <label for="locName">Area Name:</label>
+                    <label for="locName">Area Name</label>
+                    <br>
                     <input type="text" name="locName" id="locName">
                     {{#if editErrorDisplay}}
                         <div id="areaError">{{editErrorDisplay}}</div>
                     {{/if}}
                     <br>
-                    <label for="areaName">Province/State/Region:</label>
+                    <label for="areaName">Province/State/Region</label>
+                    <br>
                     <input type="text" name="areaName" id="areaName">
                     <br>
-                    <label for="countryName">Country:</label>
+                    <label for="countryName">Country</label>
+                    <br>
                     <input type="text" name="countryName" id="countryName">
                 </div>
                 <div class="modal-footer">
@@ -96,7 +104,8 @@
                     <h4 class="modal-title">Add Area Name</h4>
                 </div>
                 <div class="modal-body">
-                    <label for="areaName">Area Name:</label>
+                    <label for="areaName">Area Name</label>
+                    <br>
                     <input type="text" name="areaName" id="areaName">
                     <div id="error">{{areaErrorDisplay}}</div>
                 </div>

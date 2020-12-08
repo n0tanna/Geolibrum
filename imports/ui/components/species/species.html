@@ -9,22 +9,33 @@
             <h4>Select Domain</h4>
             <ul>
                 {{#with domainNames}}
-                {{#if this.count}}
-                {{#each domainNames}}
-                <li>
-                    {{this.domain}}
-                </li>
-                {{/each}}
-                {{else}}
-                <li>No domains.</li>
-                {{/if}}
+                    {{#if this.count}}
+                        {{#each domainNames}}
+                            <li>
+                                {{this.domain}}
+                            </li>
+                        {{/each}}
+                    {{else}}
+                        <li>No domains.</li>
+                    {{/if}}
                 {{/with}}
             </ul>
         </div>
     </form>
     {{#if kingdomValue}}
-        {{> phylumArea}}
+            {{> phylumArea}}
     {{/if}}
+    <div id="listArea">
+        <ul>
+            {{#each displayEntry}}
+            <li>
+                <p>Phylum Name</p>
+                <br>
+                <div id="name">{{this.name}}</div>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
 </template>
 
 <template name="phylumArea">

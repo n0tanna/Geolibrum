@@ -17,11 +17,10 @@ if (Meteor.isClient) {
         },
 
         displayEntry: function () {
-            return displayArray;
+            return displayArray.list();
         },
 
         kingdomValue: function () {
-            console.log(kingdomHolder);
             return kingdomHolder.get();
         }
     });
@@ -39,7 +38,7 @@ if (Meteor.isClient) {
     }
 
     function createEnteredLi(name) {
-        document.getElementById('holder').innerHTML +=
+        document.getElementById('listArea').innerHTML +=
             '<h4>New ' + name + ' to be added</h4>' +
             '<ul id=enterList></ul>';
     }
@@ -50,11 +49,28 @@ if (Meteor.isClient) {
         '<p>No ' + name + ' exist.</p>';
     }
 
-    function removeEnteredLi() {
-        var remove = document.getElementById('list');
-        remove.parentNode.removeChild(remove);
-        document.getElementById('holder').innerHTML = '<div id="list"></div>';
-    }
+    Template.phylumArea.events({
+        'submit #phylumForm': function (event) {
+            event.preventDefault();
+            if (phylum === "") {
+                createEnteredLi("phylum");
+            }
+
+            phylum = event.currentTarget.name.value;
+            var extinct = event.currentTarget.extinctOption.value;
+            var description = event.currentTarget.description.value;
+
+            var newPhylum = {
+                kingdom: kingdom,
+                phylum: phylum,
+                extinct: extinct,
+                description: description 
+            }
+
+            displayArray.push(newPhylum);
+            console.log(displayArray);
+        }
+    });
 
     Template.speciesEntry.events({
         'click li': function (event) {
@@ -89,30 +105,6 @@ if (Meteor.isClient) {
                     emptyList("phylums");
                 }
             }
-        },
-
-        'submit #phylumForm': function (event) {
-            event.preventDefault();
-            if (phylum === "") {
-                createEnteredLi("phylum");
-            }
-
-            phylum = event.currentTarget.name.value;
-            console.log(phylum);
-            var extinct = event.currentTarget.extinctOption.value;
-            var description = event.currentTarget.description.value;
-            console.log(description);
-
-            phylum = "ok";
-
-            var newPhylum = {
-                kingdom: kingdom,
-                phylum: phylum,
-                extinct: extinct,
-                description: description 
-            }
-
-            displayArray.push(newPhylum);
         }
     });
 }

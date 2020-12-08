@@ -6,19 +6,24 @@
     <ul>
         {{#each displayLocation}}
         <li>
-            <p>Date of last visit:</p>
+            <p>Date of last visit</p>
+            <br>
             <div id="date">{{this.date_visited}}</div>
             <br>
-            <p>Date of last edit:</p>
+            <p>Date of last edit</p>
+            <br>
             <div id="editedDate">{{this.date_edited}}</div>
             <br>
-            <p>Area name:</p>
+            <p>Area name</p>
+            <br>
             <div id="name">{{this.location_area}}</div>
             <br>
-            <p>Region name:</p>
+            <p>Region name</p>
+            <br>
             <div id="loc">{{this.location_region}}</div>
             <br>
-            <p>Country name:</p>
+            <p>Country name</p>
+            <br>
             <div id="country">{{this.location_country}}</div>
             <br>
             <button class="btn edit">Edit</button>
@@ -79,30 +84,36 @@
                 <div class="modal-body">
                     <div class="modal-body">
                         <form id="editForm">
-                            <label for="editDate">Date Found:</label>
+                            <label for="editDate">Date Found</label>
+                            <br>
                             <input type="date" id="editDate" name="editDate" value="0000-00-00" max='{{maxDate}}'>
                             <br>
-                            <label for="locName">Area Name:</label>
+                            <label for="locName">Area Name</label>
+                            <br>
                             <input type="text" name="locName" id="locName">
                             <br>
                             {{#if areaErrorDisplay}}
                                 <div id="areaError">{{areaErrorDisplay}}</div>
                             {{/if}}
-                            <label for="areaName">Province/State/Region:</label>
+                            <label for="areaName">Province/State/Region</label>
+                            <br>
                             <input type="text" name="areaName" id="areaName">
                             <br>
-                            <label for="countryName">Country:</label>
+                            <label for="countryName">Country</label>
+                            <br>
                             <input type="text" name="countryName" id="countryName">
                             <br>
                             <h5>Change GPS Location</h5>
                             <div id="searchError">{{searchError}}</div>
-                            <label for="lat">Latitude:</label>
+                            <label for="lat">Latitude</label>
+                            <br>
                             <input type="text" name="lat" id="lat">
                             {{#if latErrorDisplay}}
                                 <div id="errorLat">{{latErrorDisplay}}</div>
                             {{/if}}
                             <br>
                             <label for="long">Longitude</label>
+                            <br>
                             <input type="text" name="long" id="long">
                             {{#if longErrorDisplay}}
                                 <div id="errorLon">{{longErrorDisplay}}</div>
