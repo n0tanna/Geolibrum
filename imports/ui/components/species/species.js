@@ -6,11 +6,23 @@ import { Phylums } from '../../../api/species/phylums';
 
 var domain = "";
 var kingdom = "";
+var kingdomHolder = new ReactiveVar();
+var phylum = "";
+var displayArray = new ReactiveArray();
 
 if (Meteor.isClient) {
     Template.speciesEntry.helpers({
         domainNames: () => {
             return Domains.find({});
+        },
+
+        displayEntry: function () {
+            return displayArray;
+        },
+
+        kingdomValue: function () {
+            console.log(kingdomHolder);
+            return kingdomHolder.get();
         }
     });
 
@@ -24,6 +36,24 @@ if (Meteor.isClient) {
         document.getElementById('holder').innerHTML =
             '<h4>Select a ' + name + ' within the ' + specificName + ' ' + previousName + '</h4>\
                          <ul id="list"></ul>';
+    }
+
+    function createEnteredLi(name) {
+        document.getElementById('holder').innerHTML +=
+            '<h4>New ' + name + ' to be added</h4>' +
+            '<ul id=enterList></ul>';
+    }
+
+    function emptyList(name) {
+        document.getElementById('holder').innerHTML +=
+        '<h4>' + name + '</h4>' +
+        '<p>No ' + name + ' exist.</p>';
+    }
+
+    function removeEnteredLi() {
+        var remove = document.getElementById('list');
+        remove.parentNode.removeChild(remove);
+        document.getElementById('holder').innerHTML = '<div id="list"></div>';
     }
 
     Template.speciesEntry.events({
@@ -44,6 +74,7 @@ if (Meteor.isClient) {
             }
             else if (kingdom === "") {
                 kingdom = event.target.textContent;
+                kingdomHolder.set(kingdom);
                 clearHTML();
 
                 phylumsFound = Phylums.find({ kingdom: kingdom }).fetch();
@@ -55,17 +86,33 @@ if (Meteor.isClient) {
                     }
                 }
                 else {
-                    document.getElementById('holder').innerHTML +=
-                        '<h5>Add new Phylum(s)</h5>' +
-                        '<label for="description">Name:</label>' +
-                        '<input type="text" name="name" id="name">' +
-                        '<br>' +
-                        '<label for="description">Description:</label>' +
-                        '<input type="text" name="description" id="description">' +
-                        '<br>' +
-                        '<input type="submit" id="addPhylum" value="Add">';
+                    emptyList("phylums");
                 }
             }
+        },
+
+        'submit #phylumForm': function (event) {
+            event.preventDefault();
+            if (phylum === "") {
+                createEnteredLi("phylum");
+            }
+
+            phylum = event.currentTarget.name.value;
+            console.log(phylum);
+            var extinct = event.currentTarget.extinctOption.value;
+            var description = event.currentTarget.description.value;
+            console.log(description);
+
+            phylum = "ok";
+
+            var newPhylum = {
+                kingdom: kingdom,
+                phylum: phylum,
+                extinct: extinct,
+                description: description 
+            }
+
+            displayArray.push(newPhylum);
         }
     });
 }

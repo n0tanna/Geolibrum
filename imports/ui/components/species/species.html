@@ -16,11 +16,35 @@
                 </li>
                 {{/each}}
                 {{else}}
-                    <li>No domains.</li>
+                <li>No domains.</li>
                 {{/if}}
                 {{/with}}
             </ul>
         </div>
-    <br>
+    </form>
+    {{#if kingdomValue}}
+        {{> phylumArea}}
+    {{/if}}
+</template>
+
+<template name="phylumArea">
+    <h4>Add new Phylum(s)</h4>
+    <form id="phylumForm">
+        <label for="name">Name</label>
+        <br>
+        <input type="text" name="name" id="name">
+        <br>
+        <label for="extinctOption">Extinct</label>
+        <br>
+        <select id="extinctOption" name="extinctOption">
+            <option id="answer" value="yes">Yes</option>
+            <option id="answer" value="no">No</option>
+        </select> 
+        <br>
+        <label for="description">Description</label>
+        <br>
+        <textarea rows="5" cols="80" id="description"></textarea>
+        <br>
+        <input type="submit" class="btn" id="submit" value="Add">
     </form>
 </template>
