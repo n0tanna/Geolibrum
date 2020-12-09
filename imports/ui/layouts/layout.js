@@ -1,4 +1,4 @@
-import '../components/add.js';
+import '../components/add-log/add.js';
 import '../components/locations/location.js';
 import '../components/locations/locationList.js';
 import '../components/species/speciesList.js';

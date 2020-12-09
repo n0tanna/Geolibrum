@@ -3,7 +3,7 @@ import './location.html';
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import '/imports/api/location/methods.js';
-import '/imports/ui/components/util.js';
+import { formatDate } from '/imports/ui/components/util.js';
 import ExifReader from 'exifreader';
 import { gps } from 'exifr';
 
@@ -19,8 +19,7 @@ if (Meteor.isClient) {
     var latError = new ReactiveVar(null);
     var areaError = new ReactiveVar(null);
     var imageError = new ReactiveVar(null);
-    var today = new Date();
-    var currentDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + ("0" + today.getDate());
+    var currentDate = formatDate();
 
     Template.location.helpers({
         errorDisplay: function () {

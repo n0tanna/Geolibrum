@@ -2,7 +2,7 @@ import './locationList.html';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import '/imports/api/location/methods.js';
-import '/imports/ui/components/util.js';
+import { formatDate } from '/imports/ui/components/util.js';
 import { Location } from '../../../api/location/location';
 
 var status = new ReactiveVar("No locations.");
@@ -12,8 +12,7 @@ var searchError = new ReactiveVar();
 var areaError = new ReactiveVar();
 var latError = new ReactiveVar();
 var longError = new ReactiveVar();
-var today = new Date();
-var currentDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+var currentDate = formatDate();
 
 if (Meteor.isClient) {
     Template.locationList.helpers({

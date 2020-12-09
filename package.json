@@ -16,6 +16,7 @@
     "exif-js": "^2.3.0",
     "exifr": "^6.0.0",
     "exifreader": "^3.12.6",
+    "imports": "^1.0.0",
     "jpeg-exif": "^1.1.4",
     "jquery": "^3.5.1",
     "meteor-node-stubs": "^1.0.1",
