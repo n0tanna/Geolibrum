@@ -23,27 +23,37 @@
         </div>
     </form>
     {{#if kingdomValue}}
-            {{> phylumArea}}
-    {{/if}}
-    <div id="listArea">
+        {{> phylumArea}}
+        <div id="listTitle">
+        </div>
         <ul>
             {{#each displayEntry}}
             <li>
                 <p>Phylum Name</p>
                 <br>
-                <div id="name">{{this.name}}</div>
+                <div id="name">{{this.phylum}}</div>
+                <br>
+                <p>Extinct</p>
+                <br>
+                <div id="extinct">{{this.extinct}}</div>
+                <br>
+                <p>Description</p>
+                <br>
+                <div id="description">{{this.description}}</div>
             </li>
             {{/each}}
         </ul>
+    {{/if}}
+    <div id="buttonsSubmit">
     </div>
 </template>
 
 <template name="phylumArea">
     <h4>Add new Phylum(s)</h4>
     <form id="phylumForm">
-        <label for="name">Name</label>
+        <label for="phylum">Name</label>
         <br>
-        <input type="text" name="name" id="name">
+        <input type="text" name="newPhylum" id="newPhylum">
         <br>
         <label for="extinctOption">Extinct</label>
         <br>
@@ -52,9 +62,9 @@
             <option id="answer" value="no">No</option>
         </select> 
         <br>
-        <label for="description">Description</label>
+        <label for="phylumDes">Description</label>
         <br>
-        <textarea rows="5" cols="80" id="description"></textarea>
+        <textarea rows="5" cols="80" name="phylumDes" id="phylumDes"></textarea>
         <br>
         <input type="submit" class="btn" id="submit" value="Add">
     </form>

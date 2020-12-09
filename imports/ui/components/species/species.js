@@ -38,9 +38,14 @@ if (Meteor.isClient) {
     }
 
     function createEnteredLi(name) {
-        document.getElementById('listArea').innerHTML +=
-            '<h4>New ' + name + ' to be added</h4>' +
-            '<ul id=enterList></ul>';
+        document.getElementById('listTitle').innerHTML += '<h4>New ' + name + ' to be added</h4>';
+    }
+
+    function addButtons(prevName) {
+        document.getElementById('buttonsSubmit').innerHTML +=
+        '<button class="btn add">Add All</button>' +
+        '<button class="btn clear">Clear</button>' +
+        '<button class="btn species">Return to ' + prevName + '</button>';
     }
 
     function emptyList(name) {
@@ -53,12 +58,13 @@ if (Meteor.isClient) {
         'submit #phylumForm': function (event) {
             event.preventDefault();
             if (phylum === "") {
-                createEnteredLi("phylum");
+                createEnteredLi("phylum(s)");
+                addButtons("Kingdoms");
             }
 
-            phylum = event.currentTarget.name.value;
-            var extinct = event.currentTarget.extinctOption.value;
-            var description = event.currentTarget.description.value;
+            phylum = event.target.newPhylum.value;
+            var extinct = event.target.extinctOption.value;
+            var description = event.target.phylumDes.value;
 
             var newPhylum = {
                 kingdom: kingdom,
