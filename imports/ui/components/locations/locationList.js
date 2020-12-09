@@ -5,14 +5,14 @@ import '/imports/api/location/methods.js';
 import { formatDate } from '/imports/ui/components/util.js';
 import { Location } from '../../../api/location/location';
 
-var status = new ReactiveVar("No locations.");
-var locations = new ReactiveArray();
-var locId = new ReactiveVar();
-var searchError = new ReactiveVar();
-var areaError = new ReactiveVar();
-var latError = new ReactiveVar();
-var longError = new ReactiveVar();
-var currentDate = formatDate();
+let status = new ReactiveVar("No locations.");
+let locations = new ReactiveArray();
+let locId = new ReactiveVar();
+let searchError = new ReactiveVar();
+let areaError = new ReactiveVar();
+let latError = new ReactiveVar();
+let longError = new ReactiveVar();
+let currentDate = formatDate();
 
 if (Meteor.isClient) {
     Template.locationList.helpers({
@@ -59,7 +59,7 @@ if (Meteor.isClient) {
                             console.log("Error: " + error.reason)
                         }
                         else {
-                            for (var i = 0; i < result.length; i++) {
+                            for (let i = 0; i < result.length; i++) {
                                 locations.push(result[i]);
                             }
                         }
@@ -79,22 +79,22 @@ if (Meteor.isClient) {
             locId = this._id;
             Modal.show('editLocModal');
 
-            var currentDate = document.getElementById('editDate');
+            let currentDate = document.getElementById('editDate');
             currentDate.value = this.date_visited;
 
-            var locName = document.getElementById('locName');
+            let locName = document.getElementById('locName');
             locName.value = this.location_area;
 
-            var areaName = document.getElementById('areaName');
+            let areaName = document.getElementById('areaName');
             areaName.value = this.location_region;
 
-            var country = document.getElementById('countryName');
+            let country = document.getElementById('countryName');
             country.value = this.location_country;
 
-            var lat = document.getElementById('lat');
+            let lat = document.getElementById('lat');
             lat.value = this.lat;
 
-            var long = document.getElementById('long');
+            let long = document.getElementById('long');
             long.value = this.long;
         },
 
@@ -122,12 +122,12 @@ if (Meteor.isClient) {
 
     Template.editLocModal.events({
         'click .save': function (e, template) {
-            var cDate = template.find('#editDate').value;
-            var lat = template.find('#lat').value;
-            var long = template.find('#long').value;
-            var area = template.find('#locName').value;
-            var region = template.find('#areaName').value;
-            var country = template.find('#countryName').value;
+            let cDate = template.find('#editDate').value;
+            let lat = template.find('#lat').value;
+            let long = template.find('#long').value;
+            let area = template.find('#locName').value;
+            let region = template.find('#areaName').value;
+            let country = template.find('#countryName').value;
 
             if (!area) {
                 areaError.set("Please enter an area name.");
@@ -152,8 +152,8 @@ if (Meteor.isClient) {
             latError.set(null);
             longError.set(null);
             
-            var lat = template.find('#lat').value;
-            var long = template.find('#long').value;
+            let lat = template.find('#lat').value;
+            let long = template.find('#long').value;
             if (!lat && !long) {
                 searchError.set("Please enter a latitude and a longitude.");
             }
@@ -167,10 +167,10 @@ if (Meteor.isClient) {
             }
             else {
                 if (!isNaN(lat) && !isNaN(long)) {
-                    var geocoder = new google.maps.Geocoder();
+                    const geocoder = new google.maps.Geocoder();
                     lat = parseFloat(lat);
                     long = parseFloat(long);
-                    var latlng = {
+                    let latlng = {
                         lat: lat,
                         lng: long
                     };
@@ -179,18 +179,18 @@ if (Meteor.isClient) {
                         if (status === "OK") {
                             if (results[0]) {
                                 locationReturned = results[0].formatted_address;
-                                var areaName = document.getElementById('locName');
-                                var locName = document.getElementById('areaName');
-                                var countryName = document.getElementById('countryName');
-                                var latInfo = document.getElementById('lat');
-                                var longInfo = document.getElementById('long');
+                                let areaName = document.getElementById('locName');
+                                let locName = document.getElementById('areaName');
+                                let countryName = document.getElementById('countryName');
+                                let latInfo = document.getElementById('lat');
+                                let longInfo = document.getElementById('long');
 
                                 e.target.reset();
 
                                 latInfo.value = lat;
                                 longInfo.value = long;
 
-                                var indice = 0;
+                                let indice = 0;
                                 for (var j = 0; j < results.length; j++) {
                                     if (results[j].types[0] == 'locality') {
                                         indice = j;
@@ -207,7 +207,7 @@ if (Meteor.isClient) {
                                 }
 
                                 if (results.address_components != 0) {
-                                    for (var i = 0; i < results[j].address_components.length; i++) {
+                                    for (let i = 0; i < results[j].address_components.length; i++) {
                                         if (results[j].address_components[i].types[0] == "locality") {
                                             areaName.value = results[j].address_components[i].long_name;
                                         }
@@ -244,7 +244,7 @@ if (Meteor.isClient) {
 
     Template.deleteAllModal.events({
         'click .deleteAll': function () {
-            for (var i = 0; i < locations.length; i++) {
+            for (let i = 0; i < locations.length; i++) {
                 locId = locations[i]._id;
                 Meteor.call("deleteLocation", locId, function (error) {
                     if (error) {

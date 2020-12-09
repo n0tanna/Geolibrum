@@ -9,17 +9,17 @@ import { gps } from 'exifr';
 
 'use strict';
 
-var locEntered = new ReactiveArray();
-var currentSelected = new ReactiveVar();
+const locEntered = new ReactiveArray();
+let currentSelected = new ReactiveVar();
 
 if (Meteor.isClient) {
-    var error = new ReactiveVar(null);
-    var status = new ReactiveVar(null);
-    var longError = new ReactiveVar(null);
-    var latError = new ReactiveVar(null);
-    var areaError = new ReactiveVar(null);
-    var imageError = new ReactiveVar(null);
-    var currentDate = formatDate();
+    let error = new ReactiveVar(null);
+    let status = new ReactiveVar(null);
+    let longError = new ReactiveVar(null);
+    let latError = new ReactiveVar(null);
+    let areaError = new ReactiveVar(null);
+    let imageError = new ReactiveVar(null);
+    let currentDate = formatDate();
 
     Template.location.helpers({
         errorDisplay: function () {
@@ -75,10 +75,10 @@ if (Meteor.isClient) {
         'submit #imageSearch': function (e) {
             e.preventDefault();
 
-            var gpsArray = new ReactiveArray();
-            var lat = new ReactiveVar();
-            var long = new ReactiveVar();
-            var date = currentDate;
+            const gpsArray = new ReactiveArray();
+            let lat = new ReactiveVar();
+            let long = new ReactiveVar();
+            let date = currentDate;
             const files = e.target.locationImg.files;
 
             if (!date) {
@@ -89,7 +89,7 @@ if (Meteor.isClient) {
                 const reader = new FileReader();
 
                 reader.onload = function (readerEvent) {
-                    var buffer = readerEvent.target.result;
+                    let buffer = readerEvent.target.result;
                     const tags = ExifReader.load(buffer, { expanded: true });
 
                     for (const group in tags) {
@@ -98,11 +98,11 @@ if (Meteor.isClient) {
                                 gpsArray.push(`${tags[group][name]}`);
                             }
                             else if (group === 'exif' && name === 'DateTime') {
-                                var photoDate = tags['exif'].DateTime.description;
-                                var res = photoDate.split(":", 3);
-                                var lastDate = res[2];
+                                let photoDate = tags['exif'].DateTime.description;
+                                let res = photoDate.split(":", 3);
+                                let lastDate = res[2];
                                 res.pop();
-                                var lastDate = lastDate.split(" ");
+                                lastDate = lastDate.split(" ");
                                 res.push(lastDate[0]); 
                                 date = res[0] + "-" + res[1] + "-" + res[2]; 
                                 console.log(date);
@@ -113,14 +113,14 @@ if (Meteor.isClient) {
                     lat = gpsArray[0];
                     long = gpsArray[1];
 
-                    var geocoder = new google.maps.Geocoder();
+                    let geocoder = new google.maps.Geocoder();
                     lat = parseFloat(lat);
                     long = parseFloat(long);
                     if (!lat && !long) {
                         imageError.set("No meta data, please use a different photo.");
                     }
                     else {
-                        var latlng = {
+                        let latlng = {
                             lat: lat,
                             lng: long
                         };
@@ -129,11 +129,11 @@ if (Meteor.isClient) {
                             if (status === "OK") {
                                 if (results[0]) {
                                     locationReturned = results[0].formatted_address;
-                                    var areaName = "";
-                                    var locName = "";
-                                    var countryName = "";
+                                    let areaName = "";
+                                    let locName = "";
+                                    let countryName = "";
 
-                                    var indice = 0;
+                                    let indice = 0;
                                     for (var j = 0; j < results.length; j++) {
                                         if (results[j].types[0] == 'locality') {
                                             indice = j;
@@ -150,7 +150,7 @@ if (Meteor.isClient) {
                                     }
 
                                     if (results.address_components != 0) {
-                                        for (var i = 0; i < results[j].address_components.length; i++) {
+                                        for (let i = 0; i < results[j].address_components.length; i++) {
                                             if (results[j].address_components[i].types[0] == "locality") {
                                                 areaName = results[j].address_components[i].long_name;
                                             }
@@ -202,9 +202,9 @@ if (Meteor.isClient) {
 
         'submit #locationLogForm': function (e) {
             e.preventDefault();
-            var lat = e.target.latitudeNum.value;
-            var long = e.target.longitudeNum.value;
-            var date = e.target.date.value;
+            let lat = e.target.latitudeNum.value;
+            let long = e.target.longitudeNum.value;
+            let date = e.target.date.value;
             console.log(currentDate);
 
             if (!date) {
@@ -224,23 +224,26 @@ if (Meteor.isClient) {
             }
             else {
                 if (!isNaN(lat) && !isNaN(long)) {
-                    var geocoder = new google.maps.Geocoder();
+                    let geocoder = new google.maps.Geocoder();
                     lat = parseFloat(lat);
                     long = parseFloat(long);
-                    var latlng = {
+                    let latlng = {
                         lat: lat,
                         lng: long
                     };
+
+                    console.log(lat);
+                    console.log(long);
 
                     geocoder.geocode({ location: latlng }, (results, status) => {
                         if (status === "OK") {
                             if (results[0]) {
                                 locationReturned = results[0].formatted_address;
-                                var areaName = "";
-                                var locName = "";
-                                var countryName = "";
+                                let areaName = "";
+                                let locName = "";
+                                let countryName = "";
 
-                                var indice = 0;
+                                let indice = 0;
                                 for (var j = 0; j < results.length; j++) {
                                     if (results[j].types[0] == 'locality') {
                                         indice = j;
@@ -257,7 +260,7 @@ if (Meteor.isClient) {
                                 }
 
                                 if (results.address_components != 0) {
-                                    for (var i = 0; i < results[j].address_components.length; i++) {
+                                    for (let i = 0; i < results[j].address_components.length; i++) {
                                         if (results[j].address_components[i].types[0] == "locality") {
                                             areaName = results[j].address_components[i].long_name;
                                         }
@@ -345,16 +348,16 @@ if (Meteor.isClient) {
 
             Modal.show('editModal');
 
-            var locName = document.getElementById('locName');
+            let locName = document.getElementById('locName');
             locName.value = currentSelected.areaName;
 
-            var areaName = document.getElementById('areaName');
+            let areaName = document.getElementById('areaName');
             areaName.value = currentSelected.locName;
 
-            var country = document.getElementById('countryName');
+            let country = document.getElementById('countryName');
             country.value = currentSelected.countryName;
 
-            var date = document.getElementById('editDate');
+            let date = document.getElementById('editDate');
             date.value = currentSelected.visitDate;
 
         }
@@ -362,21 +365,21 @@ if (Meteor.isClient) {
 
     Template.editModal.events({
         'click .add': function (e, template) {
-            var locNameHolder = document.getElementById('locName');
-            var locHolder = template.find('#locName').value;
+            let locNameHolder = document.getElementById('locName');
+            let locHolder = template.find('#locName').value;
             if (!locHolder) {
                 areaError.set("Please enter an area name");
             }
             else {
                 currentSelected.areaName = locNameHolder.value;
 
-                var areaNameHolder = document.getElementById('areaName');
+                let areaNameHolder = document.getElementById('areaName');
                 currentSelected.locName = areaNameHolder.value;
 
-                var countryHolder = document.getElementById('countryName');
+                let countryHolder = document.getElementById('countryName');
                 currentSelected.countryName = countryHolder.value;
 
-                var dateHolder = document.getElementById('date');
+                let dateHolder = document.getElementById('date');
                 currentSelected.visitDate = dateHolder.value;
 
                 locEntered.push();
@@ -386,8 +389,8 @@ if (Meteor.isClient) {
         },
 
         'click .reset': function () {
-            var geocoder = new google.maps.Geocoder();
-            var latlng = {
+            let geocoder = new google.maps.Geocoder();
+            let latlng = {
                 lat: parseFloat(currentSelected.latitudeNum),
                 lng: parseFloat(currentSelected.longitudeNum)
             };
@@ -397,7 +400,7 @@ if (Meteor.isClient) {
                     if (results[0]) {
                         locationReturned = results[0].formatted_address;
 
-                        var indice = 0;
+                        let indice = 0;
                         for (var j = 0; j < results.length; j++) {
                             if (results[j].types[0] == 'locality') {
                                 indice = j;
@@ -414,20 +417,20 @@ if (Meteor.isClient) {
                         }
 
                         if (results.address_components != 0) {
-                            for (var i = 0; i < results[j].address_components.length; i++) {
+                            for (let i = 0; i < results[j].address_components.length; i++) {
                                 if (results[j].address_components[i].types[0] == "locality") {
                                     currentSelected.areaName = results[j].address_components[i].long_name;
-                                    var locNameHolder = document.getElementById('locName');
+                                    let locNameHolder = document.getElementById('locName');
                                     locNameHolder = currentSelected.areaName;
                                 }
                                 if (results[j].address_components[i].types[0] == "administrative_area_level_1") {
                                     currentSelected.locName = results[j].address_components[i].long_name;
-                                    var areaNameHolder = document.getElementById('areaName');
+                                    let areaNameHolder = document.getElementById('areaName');
                                     areaNameHolder = currentSelected.locName;
                                 }
                                 if (results[j].address_components[i].types[0] == "country") {
                                     currentSelected.countryName = results[j].address_components[i].long_name;
-                                    var countryHolder = document.getElementById('countryName');
+                                    let countryHolder = document.getElementById('countryName');
                                     countryHolder = currentSelected.countryName;
                                 }
                             }
@@ -442,7 +445,7 @@ if (Meteor.isClient) {
 
     Template.areaModal.events({
         'click .save': function (e, template) {
-            var areaHolder = template.find('#areaName').value;
+            let areaHolder = template.find('#areaName').value;
 
             if (!areaHolder) {
                 areaError.set("Please enter an area name.");

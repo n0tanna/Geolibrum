@@ -5,12 +5,12 @@ import { Location } from '../../../api/location/location';
 import '/imports/api/log-data/methods.js';
 
 if (Meteor.isClient) {
-    const logName = new ReactiveVar();
-    const date = new ReactiveVar();
-    const location = new ReactiveVar();
-    const error = new ReactiveVar(null);
+    let logName = new ReactiveVar();
+    let date = new ReactiveVar();
+    let location = new ReactiveVar();
+    let error = new ReactiveVar(null);
 
-    var currentDate = formatDate();
+    let currentDate = formatDate();
 
     Template.addLog.helpers({
         displayLocation: () => {
@@ -43,9 +43,9 @@ if (Meteor.isClient) {
     Template.addLog.events({
         'submit #add-log-form': function (event) {
             event.preventDefault();
-            var logNameData = event.target.logName.value;
-            var dateData = event.target.date.value;
-            var locationData = event.target.locations.value;
+            let logNameData = event.target.logName.value;
+            let dateData = event.target.date.value;
+            let locationData = event.target.locations.value;
 
             console.log(currentDate);
 

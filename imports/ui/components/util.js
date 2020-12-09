@@ -8,11 +8,11 @@ Meteor.startup(function () {
 });
 
 export function formatDate() {
-    var today = new Date();
+    const today = new Date();
 
-    var day = today.getDate();
-    var month = today.getMonth() + 1;
-    var year = today.getFullYear();
+    const day = today.getDate();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
 
     if (day < 10) {
         return year + '-' + month + '-' + '0' + day;

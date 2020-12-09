@@ -4,11 +4,11 @@ import { Domains } from '../../../api/species/domains';
 import { Kingdoms } from '../../../api/species/kingdoms';
 import { Phylums } from '../../../api/species/phylums';
 
-var domain = "";
-var kingdom = "";
-var kingdomHolder = new ReactiveVar();
-var phylum = "";
-var displayArray = new ReactiveArray();
+let domain = "";
+let kingdom = "";
+let kingdomHolder = new ReactiveVar();
+let phylum = "";
+let displayArray = new ReactiveArray();
 
 if (Meteor.isClient) {
     Template.speciesEntry.helpers({
@@ -26,7 +26,7 @@ if (Meteor.isClient) {
     });
 
     function clearHTML() {
-        var remove = document.getElementById('holder');
+        let remove = document.getElementById('holder');
         remove.parentNode.removeChild(remove);
         document.getElementById('holderForm').innerHTML = '<div id="holder"></div>';
     }
@@ -44,8 +44,7 @@ if (Meteor.isClient) {
     function addButtons(prevName) {
         document.getElementById('buttonsSubmit').innerHTML +=
         '<button class="btn add">Add All</button>' +
-        '<button class="btn clear">Clear</button>' +
-        '<button class="btn species">Return to ' + prevName + '</button>';
+        '<button class="btn clear">Clear</button>'
     }
 
     function emptyList(name) {
@@ -63,10 +62,10 @@ if (Meteor.isClient) {
             }
 
             phylum = event.target.newPhylum.value;
-            var extinct = event.target.extinctOption.value;
-            var description = event.target.phylumDes.value;
+            let extinct = event.target.extinctOption.value;
+            let description = event.target.phylumDes.value;
 
-            var newPhylum = {
+            const newPhylum = {
                 kingdom: kingdom,
                 phylum: phylum,
                 extinct: extinct,
@@ -93,10 +92,14 @@ if (Meteor.isClient) {
                 for (i = 0; i < kingdomsFound.length; i++) {
                     document.getElementById('list').innerHTML += '<li>' + kingdomsFound[i].kingdom + '</li>'
                 }
+                 document.getElementById('buttonsSubmit').innerHTML += '<button class="btn species">Return to Domains</button>';
+               
             }
             else if (kingdom === "") {
                 kingdom = event.target.textContent;
                 kingdomHolder.set(kingdom);
+                
+                document.getElementById('buttonsSubmit').innerHTML = "";
                 clearHTML();
 
                 phylumsFound = Phylums.find({ kingdom: kingdom }).fetch();
