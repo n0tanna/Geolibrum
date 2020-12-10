@@ -26,6 +26,7 @@ if (Meteor.isClient) {
     });
 
     function clearHTML() {
+        document.getElementById('buttonsSubmit').innerHTML = "";
         let remove = document.getElementById('holder');
         remove.parentNode.removeChild(remove);
         document.getElementById('holderForm').innerHTML = '<div id="holder"></div>';
@@ -43,14 +44,50 @@ if (Meteor.isClient) {
 
     function addButtons(prevName) {
         document.getElementById('buttonsSubmit').innerHTML +=
-        '<button class="btn add">Add All</button>' +
-        '<button class="btn clear">Clear</button>'
+            '<button class="btn add">Add All</button>' +
+            '<button class="btn clear">Clear</button>'
     }
 
     function emptyList(name) {
         document.getElementById('holder').innerHTML +=
-        '<h4>' + name + '</h4>' +
-        '<p>No ' + name + ' exist.</p>';
+            '<h4>' + name + '</h4>' +
+            '<p>No ' + name + ' exist.</p>';
+    }
+
+    function addDomainList() {
+        domainsFound = Domains.find().fetch();
+
+        document.getElementById('holder').innerHTML =
+            '<h4>Select a Domain</h4>' +
+            '<ul id="list"></ul>';
+
+        for (i = 0; i < domainsFound.length; i++) {
+            document.getElementById('list').innerHTML += '<li>' + domainsFound[i].domain + '</li>'
+        }
+    }
+
+    function addKingdomList() {
+        kingdomsFound = Kingdoms.find({ domain: domain }).fetch();
+        fillHTMLHeader("Kingdom", domain, "Domain");
+
+        for (i = 0; i < kingdomsFound.length; i++) {
+            document.getElementById('list').innerHTML += '<li>' + kingdomsFound[i].kingdom + '</li>'
+        }
+        document.getElementById('buttonsSubmit').innerHTML += '<button class="btn back">Return to Domains</button>';
+    }
+
+    function addPhylumList() {
+        phylumsFound = Phylums.find({ kingdom: kingdom }).fetch();
+        fillHTMLHeader("Phylum", kingdom, "Kingdom");
+
+        if (phylumsFound.length > 0) {
+            for (i = 0; i < phylumsFound.length; i++) {
+                document.getElementById('list').innerHTML += '<li>' + phylumsFound[i].phylum + '</li>'
+            }
+        }
+        else {
+            emptyList("phylums");
+        }
     }
 
     Template.phylumArea.events({
@@ -69,11 +106,15 @@ if (Meteor.isClient) {
                 kingdom: kingdom,
                 phylum: phylum,
                 extinct: extinct,
-                description: description 
+                description: description
             }
 
             displayArray.push(newPhylum);
             console.log(displayArray);
+        },
+
+        'click back': function (event) {
+            kingdomValue.set("");
         }
     });
 
@@ -82,38 +123,33 @@ if (Meteor.isClient) {
             event.preventDefault();
 
             if (domain === "") {
-                domain = this.domain;
-                console.log(this);
-                clearHTML();
+                domain = event.target.textContent;
 
-                kingdomsFound = Kingdoms.find({ domain: domain }).fetch();
-                fillHTMLHeader("Kingdom", domain, "Domain");
-
-                for (i = 0; i < kingdomsFound.length; i++) {
-                    document.getElementById('list').innerHTML += '<li>' + kingdomsFound[i].kingdom + '</li>'
-                }
-                 document.getElementById('buttonsSubmit').innerHTML += '<button class="btn species">Return to Domains</button>';
-               
+                clearHTML(); 
+                addKingdomList();
             }
             else if (kingdom === "") {
                 kingdom = event.target.textContent;
                 kingdomHolder.set(kingdom);
-                
-                document.getElementById('buttonsSubmit').innerHTML = "";
+
                 clearHTML();
-
-                phylumsFound = Phylums.find({ kingdom: kingdom }).fetch();
-                fillHTMLHeader("Phylum", kingdom, "Kingdom");
-
-                if (phylumsFound.length > 0) {
-                    for (i = 0; i < phylumsFound.length; i++) {
-                        document.getElementById('list').innerHTML += '<li>' + phylumsFound[i].phylum + '</li>'
-                    }
-                }
-                else {
-                    emptyList("phylums");
-                }
+                addPhylumList();
             }
+        },
+
+        'click .back': function (event) {
+            clearHTML();
+
+            if (kingdomHolder.get() != "") {
+                kingdom = "";
+                kingdomHolder.set("");
+                addKingdomList();
+            }
+            else {
+                domain = "";
+                addDomainList();
+            }
+
         }
     });
 }
