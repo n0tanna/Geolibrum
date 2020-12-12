@@ -5,6 +5,8 @@ const ord = new Mongo.Collection('orders');
 ord.schema = new SimpleSchema ({
     class: {type: String},
     order: {type: String},
+    image: {type: String},
+    extinct: {type: String},
     description: {type: String},
     date_created: {type: Date, defaultValue: new Date()},
     date_edited: {type: Date, defaultValue: new Date()},   

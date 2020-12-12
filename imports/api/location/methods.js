@@ -14,6 +14,7 @@ Meteor.methods({
             long: locEntered.longitudeNum
         });
     },
+    
     getCount: function () {
         return Location.find().count();
     },

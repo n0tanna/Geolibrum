@@ -1,58 +1,83 @@
 <template name="species">
     <h3>New Species</h3>
-    {{> speciesEntry}}
+    {{#if startValue}}
+        {{> domainArea}}
+    {{/if}}
+
+    {{#if domainValue}}
+        <button class="btn domain">Domains</button>
+        {{> kingdomArea}}
+    {{/if}}
+
+    {{#if kingdomValue}}
+        <button class="btn domain">Domains</button>
+        <button class="btn kingdom">Kingdoms</button>
+        {{> phylumArea}}
+    {{/if}}
 </template>
 
-<template name="speciesEntry">
-    <form id="holderForm">
-        <div id="holder">
-            <h4>Select Domain</h4>
-            <ul>
-                {{#with domainNames}}
-                    {{#if this.count}}
-                        {{#each domainNames}}
-                            <li>
-                                {{this.domain}}
-                            </li>
-                        {{/each}}
-                    {{else}}
-                        <li>No domains.</li>
-                    {{/if}}
-                {{/with}}
-            </ul>
-        </div>
-    </form>
-    {{#if kingdomValue}}
-        {{> phylumArea}}
-        <div id="listTitle">
-        </div>
+<template name="domainArea">
+    <h4>Select Domain</h4>
         <ul>
-            {{#each displayEntry}}
-            <li>
-                <p>Phylum Name</p>
-                <br>
-                <div id="name">{{this.phylum}}</div>
-                <br>
-                <p>Extinct</p>
-                <br>
-                <div id="extinct">{{this.extinct}}</div>
-                <br>
-                <p>Description</p>
-                <br>
-                <div id="description">{{this.description}}</div>
-                <br>
-                <button class="btn editPhylum">Edit</button>
-                <br>
-                <button class="btn remove">Remove</button>
-            </li>
-            {{/each}}
+            {{#with domainNames}}
+                {{#if this.count}}
+                    {{#each domainNames}}
+                        <li>
+                            {{this.domain}}
+                            <br>
+                            {{this.description}}
+                            <br>
+                            <button class="btn select">Select</button>
+                        </li>
+                    {{/each}}
+                {{else}}
+                    <li>No domains.</li>
+                {{/if}}
+            {{/with}}
         </ul>
-    {{/if}}
-    <div id="buttonsSubmit">
-    </div>
 </template>
+
+<template name="kingdomArea">
+    <h4>Select a Kingdom within the {{domainName}} Domain</h4>
+    {{#with kingdomNames}}
+        {{#if this.count}}
+            {{#each kingdomNames}}
+                <li>
+                    <div id="kingdom">
+                        {{this.kingdom}}
+                    </div>
+                    <br>
+                    {{this.description}}
+                    <br>
+                    <button class="btn select">Select</button>
+                </li>
+            {{/each}}
+        {{else}}
+            <li>No kingdoms.</li>
+        {{/if}}
+    {{/with}}
+</template>
+
 
 <template name="phylumArea">
+    <h4>Select a Phylum within the {{kingdomName}} Kingdom</h4>
+    {{#with phylumNames}}
+        {{#if this.count}}
+            {{#each phylumNames}}
+                <li>
+                    <div id="phylum">
+                        {{this.phylum}}
+                    </div>
+                    <br>
+                    {{this.description}}
+                    <br>
+                    <button class="btn select">Select</button>
+                </li>
+            {{/each}}
+        {{else}}
+            <li>No phylums.</li>
+        {{/if}}
+    {{/with}}
     <h4>Add new Phylum(s)</h4>
     <form id="phylumForm">
         <label for="phylum">Name</label>
@@ -72,5 +97,28 @@
         <br>
         <input type="submit" class="btn" id="submit" value="Add">
     </form>
-    <button class="btn back">Return to Kingdoms</button>
+    <h4>New Phylum(s) to be added</h4>
+    <ul>
+        {{#each displayEntry}}
+        <li>
+            <label for="phylum">Phylum Name</label>
+            <br>
+            <div id="name">{{this.phylum}}</div>
+            <br>
+            <label for="extinct">Extinct</label>
+            <br>
+            <div id="extinct">{{this.extinct}}</div>
+            <br>
+            <label for="description">Description</label>
+            <br>
+            <div id="description">{{this.description}}</div>
+            <br>
+            <button class="btn editPhylum">Edit</button>
+            <br>
+            <button class="btn remove">Remove</button>
+        </li>
+        {{/each}}
+    </ul>
+    <button class="btn add">Add All</button>
+    <button class="btn clear">Clear</button>
 </template>

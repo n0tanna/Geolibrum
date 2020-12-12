@@ -8,6 +8,7 @@ import { Domains } from "/imports/api/species/domains";
 import { Kingdoms } from "/imports/api/species/kingdoms";
 import { Phylums } from "/imports/api/species/phylums";
 import '/imports/api/location/methods.js';
+import '/imports/api/species/methods.js';
 import '/imports/api/log-data/methods.js';
 
 if (Meteor.isServer) {
@@ -486,147 +487,220 @@ if (Meteor.isServer) {
     if (kingdomsCount === 0) {
         Kingdoms.insert({
             domain: "Eukaryota",
-            kingdom: "Fungi"
+            kingdom: "Fungi",
+            image: "",
+            description: 
+            "Fungi are multicellular(mostly), eukaryotic, and are heterotrpohs. " +
+            "They gain nutrition through absorption, and are made up of " +
+            "feathery filaments called hyphae. These hyphae group together" +
+            " to form a conglomerate called the mycelium. They can reproduce sexually " +
+            "and asexually. They also have symbiotic associations with plants and bacteria."
         });
 
         Kingdoms.insert({
             domain: "Eukaryota",
-            kingdom: "Animals"
+            kingdom: "Animals",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Eukaryota",
-            kingdom: "Plants"
+            kingdom: "Plants",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Eukaryota",
-            kingdom: "Ciliates"
+            kingdom: "Ciliates",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Eukaryota",
-            kingdom: "Slimemoids"
+            kingdom: "Slimemoids",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Eukaryota",
-            kingdom: "Entamoebae"
+            kingdom: "Entamoebae",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Eukaryota",
-            kingdom: "Flagellates"
+            kingdom: "Flagellates",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Eukaryota",
-            kingdom: "Trichomonads"
+            kingdom: "Trichomonads",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Eukaryota",
-            kingdom: "Microsporidia"
+            kingdom: "Microsporidia",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Eukaryota",
-            kingdom: "Diplomonads"
+            kingdom: "Diplomonads",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Archaea",
-            kingdom: "Halophiles"
+            kingdom: "Halophiles",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Archaea",
-            kingdom: "Methanosarcina"
+            kingdom: "Methanosarcina",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Archaea",
-            kingdom: "Methanobacterium"
+            kingdom: "Methanobacterium",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Archaea",
-            kingdom: "Methanosoccus"
+            kingdom: "Methanosoccus",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Archaea",
-            kingdom: "T.celer"
+            kingdom: "T.celer",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Archaea",
-            kingdom: "Thermoproteus"
+            kingdom: "Thermoproteus",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Archaea",
-            kingdom: "Pyrodicticum"
+            kingdom: "Pyrodicticum",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Bacteria",
-            kingdom: "Green Filamentous Bacteria"
+            kingdom: "Green Filamentous Bacteria",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Bacteria",
-            kingdom: "Cyanobacteria"
+            kingdom: "Cyanobacteria",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Bacteria",
-            kingdom: "Gram positives"
+            kingdom: "Gram positives",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Bacteria",
-            kingdom: "Spirochetes"
+            kingdom: "Spirochetes",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Bacteria",
-            kingdom: "Proteobacteria"
+            kingdom: "Proteobacteria",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Bacteria",
-            kingdom: "Planctomyces"
+            kingdom: "Planctomyces",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Bacteria",
-            kingdom: "Bacteroides Cytophaga"
+            kingdom: "Bacteroides Cytophaga",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Bacteria",
-            kingdom: "Thermotoga"
+            kingdom: "Thermotoga",
+            image: "",
+            description: ""
         });
 
         Kingdoms.insert({
             domain: "Bacteria",
-            kingdom: "Aquifex"
+            kingdom: "Aquifex",
+            image: "",
+            description: ""
         });
     }
 
     //DOMAINS INSERT
     if (domainsCount === 0) {
         Domains.insert({
-            domain: "Archaea"
+            domain: "Archaea",
+            image: "",
+            description: 
+            "The Archaea are a domain of bacteria-like " + 
+            "organisms, but they are not the same. Their " +
+            "cell walls and their RNA are very different " +
+            "from the bacteria domains. They are also often extremophiles."
         });
 
         Domains.insert({
-            domain: "Bacteria"
+            domain: "Bacteria",
+            image: "",
+            description: 
+            "The Bacteria are a domain also known as prokaryotes." +
+            "They have no organelles or membrane-bound nucleus. This is " +
+            "possibly the largest domain out of them all."
+
         });
 
         Domains.insert({
-            domain: "Eukaryota"
+            domain: "Eukaryota",
+            image: "",
+            description: 
+            "The Eukaryotas have membrane bound nucleus and organelles." +
+            "They are not unicellular like the other two domains."
         });
     }
 }

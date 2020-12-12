@@ -11,16 +11,19 @@
 
     <form id="locationLogForm">
         <div id="error">{{errorDisplay}}</div>
-        <label for="date">Date Found:</label>
+        <label for="date">Date Found</label>
+        <br>
         <input type="date" id="date" name="date" value="0000-00-00" max='{{maxDate}}'>
         <br>
-        <label for="latitudeNum">Lat:</label>
+        <label for="latitudeNum">Lat</label>
+        <br>
         <input type="text" name="latitudeNum" id="latitudeNum">
         {{#if latErrorDisplay}}
             <div id="errorLat">{{latErrorDisplay}}</div>
         {{/if}}
         <br>
-        <label for="longitudeNum">Long:</label>
+        <label for="longitudeNum">Long</label>
+        <br>
         <input type="text" name="longitudeNum" id="longitudeNum">
         {{#if lonErrorDisplay}}
             <div id="errorLon">{{lonErrorDisplay}}</div>
@@ -33,19 +36,19 @@
     <ul>
         {{#each locDisplay}}
             <li>
-                <p>Date visited</p>
+                <label for="date">Date Visited</label>
                 <br>
                 <div id="date">{{this.visitDate}}</div>
                 <br>
-                <p>Area name</p>
+                <label for="area">Area</label>
                 <br>
                 <div id="name">{{this.areaName}}</div>
                 <br>
-                <p>Region name</p>
+                <label for="region">Region</label>
                 <br>
                 <div id="loc">{{this.locName}}</div>
                 <br>
-                <p>Country name</p>
+                <label for="country">Country</label>
                 <br>
                 <div id="country">{{this.countryName}}</div>
                 <br>

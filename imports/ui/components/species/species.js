@@ -6,97 +6,94 @@ import { Phylums } from '../../../api/species/phylums';
 
 let domain = "";
 let kingdom = "";
-let kingdomHolder = new ReactiveVar();
 let phylum = "";
+
+let displayDomain = new ReactiveVar("yes");
+let kingdomHolder = new ReactiveVar();
+let domainHolder = new ReactiveVar();
+
 let displayArray = new ReactiveArray();
 
 if (Meteor.isClient) {
-    Template.speciesEntry.helpers({
-        domainNames: () => {
-            return Domains.find({});
-        },
-
-        displayEntry: function () {
-            return displayArray.list();
+    Template.species.helpers({
+        startValue: function () {
+            return displayDomain.get();
         },
 
         kingdomValue: function () {
             return kingdomHolder.get();
+        },
+
+        domainValue: function () {
+            return domainHolder.get();
         }
     });
 
-    function clearHTML() {
-        document.getElementById('buttonsSubmit').innerHTML = "";
-        let remove = document.getElementById('holder');
-        remove.parentNode.removeChild(remove);
-        document.getElementById('holderForm').innerHTML = '<div id="holder"></div>';
-    }
-
-    function fillHTMLHeader(name, specificName, previousName) {
-        document.getElementById('holder').innerHTML =
-            '<h4>Select a ' + name + ' within the ' + specificName + ' ' + previousName + '</h4>\
-                         <ul id="list"></ul>';
-    }
-
-    function createEnteredLi(name) {
-        document.getElementById('listTitle').innerHTML += '<h4>New ' + name + ' to be added</h4>';
-    }
-
-    function addButtons(prevName) {
-        document.getElementById('buttonsSubmit').innerHTML +=
-            '<button class="btn add">Add All</button>' +
-            '<button class="btn clear">Clear</button>'
-    }
-
-    function emptyList(name) {
-        document.getElementById('holder').innerHTML +=
-            '<h4>' + name + '</h4>' +
-            '<p>No ' + name + ' exist.</p>';
-    }
-
-    function addDomainList() {
-        domainsFound = Domains.find().fetch();
-
-        document.getElementById('holder').innerHTML =
-            '<h4>Select a Domain</h4>' +
-            '<ul id="list"></ul>';
-
-        for (i = 0; i < domainsFound.length; i++) {
-            document.getElementById('list').innerHTML += '<li>' + domainsFound[i].domain + '</li>'
+    Template.domainArea.helpers({
+        domainNames: () => {
+            return Domains.find({});
         }
-    }
+    });
 
-    function addKingdomList() {
-        kingdomsFound = Kingdoms.find({ domain: domain }).fetch();
-        fillHTMLHeader("Kingdom", domain, "Domain");
+    Template.kingdomArea.helpers({
+        kingdomNames: () => {
+            return Kingdoms.find({domain: domain});
+        },
 
-        for (i = 0; i < kingdomsFound.length; i++) {
-            document.getElementById('list').innerHTML += '<li>' + kingdomsFound[i].kingdom + '</li>'
+        domainName: function () {
+            return domain;
         }
-        document.getElementById('buttonsSubmit').innerHTML += '<button class="btn back">Return to Domains</button>';
-    }
+    });
 
-    function addPhylumList() {
-        phylumsFound = Phylums.find({ kingdom: kingdom }).fetch();
-        fillHTMLHeader("Phylum", kingdom, "Kingdom");
+    Template.phylumArea.helpers({
+        phylumNames: () => {
+            return Phylums.find({kingdom: kingdom});
+        },
 
-        if (phylumsFound.length > 0) {
-            for (i = 0; i < phylumsFound.length; i++) {
-                document.getElementById('list').innerHTML += '<li>' + phylumsFound[i].phylum + '</li>'
+        kingdomName: function () {
+            return kingdom;
+        },
+
+        displayEntry: function () {
+            return displayArray.list();
+        }
+    });
+
+    Template.species.events({
+        'click .domain': function () {
+            displayDomain.set("yes");
+            domain = "";
+            kingdom = "";
+            domainHolder.set("");
+            kingdomHolder.set("");
+        },
+
+        'click .kingdom': function () {
+            kingdom = "";
+            domainHolder.set(domain);
+            kingdomHolder.set("");
+        },
+
+        'click .select': function (event) {
+            if (domain === "") {
+                domain = this.domain;
+                domainHolder.set(domain);
+                displayDomain.set("");    
+            }
+            else if (kingdom === "") {
+                kingdom = document.getElementById("kingdom").textContent;
+                domainHolder.set("");
+                kingdomHolder.set(kingdom);
+            }
+            else if (phylum === "") {
+                kingdomHolder.set("");
             }
         }
-        else {
-            emptyList("phylums");
-        }
-    }
+    });
 
     Template.phylumArea.events({
         'submit #phylumForm': function (event) {
             event.preventDefault();
-            if (phylum === "") {
-                createEnteredLi("phylum(s)");
-                addButtons("Kingdoms");
-            }
 
             phylum = event.target.newPhylum.value;
             let extinct = event.target.extinctOption.value;
@@ -108,48 +105,8 @@ if (Meteor.isClient) {
                 extinct: extinct,
                 description: description
             }
-
             displayArray.push(newPhylum);
             console.log(displayArray);
-        },
-
-        'click back': function (event) {
-            kingdomValue.set("");
-        }
-    });
-
-    Template.speciesEntry.events({
-        'click li': function (event) {
-            event.preventDefault();
-
-            if (domain === "") {
-                domain = event.target.textContent;
-
-                clearHTML(); 
-                addKingdomList();
-            }
-            else if (kingdom === "") {
-                kingdom = event.target.textContent;
-                kingdomHolder.set(kingdom);
-
-                clearHTML();
-                addPhylumList();
-            }
-        },
-
-        'click .back': function (event) {
-            clearHTML();
-
-            if (kingdomHolder.get() != "") {
-                kingdom = "";
-                kingdomHolder.set("");
-                addKingdomList();
-            }
-            else {
-                domain = "";
-                addDomainList();
-            }
-
         }
     });
 }

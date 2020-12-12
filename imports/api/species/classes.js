@@ -5,6 +5,8 @@ const cl = new Mongo.Collection('classess');
 cl.schema = new SimpleSchema ({
     phylum: {type: String},
     class: {type: String},
+    image: {type: String},
+    extinct: {type: String},
     description: {type: String},
     subclass: {type: String, optional: true},
     date_created: {type: Date, defaultValue: new Date()},

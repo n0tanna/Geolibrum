@@ -9,5 +9,5 @@ import { Families } from "./families";
 import { Genus } from "./genus";
 
 Meteor.methods({
-    
+
 });
