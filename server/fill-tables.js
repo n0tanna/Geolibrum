@@ -17,6 +17,7 @@ if (Meteor.isServer) {
     const mineralInfoCount = MineralInfo.find().count();
     const rockInfoCount = RockInfo.find().count();
     const geologicalTimeCount = GeologicalTime.find().count();
+    const phylumsCount = Phylums.find().count();
 
     if (geologicalTimeCount === 0) {
         GeologicalTime.insert({
@@ -483,18 +484,82 @@ if (Meteor.isServer) {
         });
     }
 
+    //PHYLUMS INSERT
+    if (phylumsCount === 0) {
+        Phylums.insert({
+            domain: "Eukaryota",
+            kingdom: "Animals",
+            phylum: "Acanthocephala",
+            image: "",
+            count: 1420, 
+            extinct: "No",
+            description: 
+            "Acanthocephala means thorny head,  and are also referred to" +
+            " as thorny-headed worms. They have a reversible spiny proboscis that " +
+            "bears many rows of hooked spines."
+
+        });
+
+        Phylums.insert({
+            domain: "Eukaryota",
+            kingdom: "Animals",
+            phylum: "Annelida",
+            image: "",
+            count: 17000,
+            extinct: "No",
+            description: 
+            "Annelida means little ring, and are also referred to as segmented worms" +
+            ". They have multiple circular segments."
+        });
+
+        Phylums.insert({
+            domain: "Eukaryota",
+            kingdom: "Animals",
+            phylum: "Arthropoda",
+            image: "",
+            count: 1270000,
+            extinct: "No",
+            description: 
+            "Arthropoda means jointed foot, and are also referred to as Arthropods. " +
+            " They have segmented bodies and jointed limbs, with a Chitin exoskeleton."
+        });
+
+        Phylums.insert({
+            domain: "Eukaryota",
+            kingdom: "Animals",
+            phylum: "Brachiopoda",
+            image: "",
+            count: 12500,
+            extinct: "No",
+            description: 
+            "Brachiopoda means arm footm and are also referred to as Lampshells. " +
+            "They are lophophore and pedicle,"
+        });
+
+        Phylums.insert({
+            domain: "Eukaryote",
+            kingdom: "Animals",
+            phylum: "Brachiopoda",
+            image: "",
+            count: 6000,
+            extinct: "No",
+            description: 
+            ""
+        });
+    }
+
     //KINGDOMS INSERT
     if (kingdomsCount === 0) {
         Kingdoms.insert({
             domain: "Eukaryota",
             kingdom: "Fungi",
             image: "",
-            description: 
-            "Fungi are multicellular(mostly), eukaryotic, and are heterotrpohs. " +
-            "They gain nutrition through absorption, and are made up of " +
-            "feathery filaments called hyphae. These hyphae group together" +
-            " to form a conglomerate called the mycelium. They can reproduce sexually " +
-            "and asexually. They also have symbiotic associations with plants and bacteria."
+            description:
+                "Fungi are multicellular(mostly), eukaryotic, and are heterotrpohs. " +
+                "They gain nutrition through absorption, and are made up of " +
+                "feathery filaments called hyphae. These hyphae group together" +
+                " to form a conglomerate called the mycelium. They can reproduce sexually " +
+                "and asexually. They also have symbiotic associations with plants and bacteria."
         });
 
         Kingdoms.insert({
@@ -678,29 +743,29 @@ if (Meteor.isServer) {
         Domains.insert({
             domain: "Archaea",
             image: "",
-            description: 
-            "The Archaea are a domain of bacteria-like " + 
-            "organisms, but they are not the same. Their " +
-            "cell walls and their RNA are very different " +
-            "from the bacteria domains. They are also often extremophiles."
+            description:
+                "The Archaea are a domain of bacteria-like " +
+                "organisms, but they are not the same. Their " +
+                "cell walls and their RNA are very different " +
+                "from the bacteria domains. They are also often extremophiles."
         });
 
         Domains.insert({
             domain: "Bacteria",
             image: "",
-            description: 
-            "The Bacteria are a domain also known as prokaryotes." +
-            "They have no organelles or membrane-bound nucleus. This is " +
-            "possibly the largest domain out of them all."
+            description:
+                "The Bacteria are a domain also known as prokaryotes." +
+                "They have no organelles or membrane-bound nucleus. This is " +
+                "possibly the largest domain out of them all."
 
         });
 
         Domains.insert({
             domain: "Eukaryota",
             image: "",
-            description: 
-            "The Eukaryotas have membrane bound nucleus and organelles." +
-            "They are not unicellular like the other two domains."
+            description:
+                "The Eukaryotas have membrane bound nucleus and organelles." +
+                "They are not unicellular like the other two domains."
         });
     }
 }

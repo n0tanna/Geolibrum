@@ -7,6 +7,7 @@ ph.schema = new SimpleSchema ({
     image: {type: String},
     kingdom: {type: String},
     phylum: {type: String},
+    count: {type: Number},
     extinct: {type: String},
     description: {type: String},
     date_created: {type: Date, defaultValue: new Date()},

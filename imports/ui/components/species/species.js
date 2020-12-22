@@ -81,8 +81,9 @@ if (Meteor.isClient) {
                 displayDomain.set("");    
             }
             else if (kingdom === "") {
-                kingdom = document.getElementById("kingdom").textContent;
+                kingdom = event.currentTarget.getAttribute("id");
                 domainHolder.set("");
+                console.log(kingdom);
                 kingdomHolder.set(kingdom);
             }
             else if (phylum === "") {
@@ -98,11 +99,13 @@ if (Meteor.isClient) {
             phylum = event.target.newPhylum.value;
             let extinct = event.target.extinctOption.value;
             let description = event.target.phylumDes.value;
+            let count = event.target.newCount.value;
 
             const newPhylum = {
                 kingdom: kingdom,
                 phylum: phylum,
                 extinct: extinct,
+                count: count,
                 description: description
             }
             displayArray.push(newPhylum);

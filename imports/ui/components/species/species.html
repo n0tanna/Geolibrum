@@ -43,13 +43,11 @@
         {{#if this.count}}
             {{#each kingdomNames}}
                 <li>
-                    <div id="kingdom">
-                        {{this.kingdom}}
-                    </div>
+                    {{this.kingdom}}
                     <br>
                     {{this.description}}
                     <br>
-                    <button class="btn select">Select</button>
+                    <button class="btn select" id="{{this.kingdom}}">Select</button>
                 </li>
             {{/each}}
         {{else}}
@@ -65,13 +63,15 @@
         {{#if this.count}}
             {{#each phylumNames}}
                 <li>
-                    <div id="phylum">
-                        {{this.phylum}}
-                    </div>
+                    {{this.phylum}}
+                    <br>
+                    {{this.count}}
+                    <br>
+                    {{this.extinct}}
                     <br>
                     {{this.description}}
                     <br>
-                    <button class="btn select">Select</button>
+                    <button class="btn select" id="{{this.phylum}}">Select</button>
                 </li>
             {{/each}}
         {{else}}
@@ -89,7 +89,11 @@
         <select id="extinctOption" name="extinctOption">
             <option id="answer" value="yes">Yes</option>
             <option id="answer" value="no">No</option>
-        </select> 
+        </select>
+        <br>
+        <label for="count">Count of Species</label>
+        <br>
+        <input type="text" name="newCount" id="newCount">
         <br>
         <label for="phylumDes">Description</label>
         <br>
@@ -108,6 +112,9 @@
             <label for="extinct">Extinct</label>
             <br>
             <div id="extinct">{{this.extinct}}</div>
+            <br>
+            <label for="count">Count of Species</label>
+            <div id="count">{{this.count}}</div>
             <br>
             <label for="description">Description</label>
             <br>
