@@ -3,15 +3,19 @@ import { Template } from 'meteor/templating';
 import { Domains } from '../../../api/species/domains';
 import { Kingdoms } from '../../../api/species/kingdoms';
 import { Phylums } from '../../../api/species/phylums';
+import '/imports/api/species/methods.js';
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.css'
 
 let domain = "";
 let kingdom = "";
 let phylum = "";
 
 let displayDomain = new ReactiveVar("yes");
+let status = new ReactiveVar(null);
 let kingdomHolder = new ReactiveVar();
 let domainHolder = new ReactiveVar();
-
+let phylumHolder = new ReactiveVar();
 let displayArray = new ReactiveArray();
 
 if (Meteor.isClient) {
@@ -56,6 +60,10 @@ if (Meteor.isClient) {
 
         displayEntry: function () {
             return displayArray.list();
+        },
+
+        statusDisplay: function () {
+            return status.get();
         }
     });
 
@@ -83,11 +91,11 @@ if (Meteor.isClient) {
             else if (kingdom === "") {
                 kingdom = event.currentTarget.getAttribute("id");
                 domainHolder.set("");
-                console.log(kingdom);
                 kingdomHolder.set(kingdom);
             }
             else if (phylum === "") {
                 kingdomHolder.set("");
+                phylum = event.currentTarget.getAttribute("id");
             }
         }
     });
@@ -95,6 +103,7 @@ if (Meteor.isClient) {
     Template.phylumArea.events({
         'submit #phylumForm': function (event) {
             event.preventDefault();
+            status.set("");
 
             phylum = event.target.newPhylum.value;
             let extinct = event.target.extinctOption.value;
@@ -102,6 +111,7 @@ if (Meteor.isClient) {
             let count = event.target.newCount.value;
 
             const newPhylum = {
+                domain: domain,
                 kingdom: kingdom,
                 phylum: phylum,
                 extinct: extinct,
@@ -109,7 +119,53 @@ if (Meteor.isClient) {
                 description: description
             }
             displayArray.push(newPhylum);
-            console.log(displayArray);
+            event.target.reset();
+        },
+
+        'click .add': function () {
+            if (displayArray.length == 0) {
+                status.set("Please add a Phylum.");
+            }
+            else {
+                displayArray.forEach(function (holder, index) {
+                    Meteor.call('addPhylum', holder);
+                });
+
+                displayArray.length = 0;
+                displayArray.push();
+                status.set("Added successfully.");
+            }
+        },
+
+        'click .clear': function () {
+            displayArray.length = 0;
+            displayArray.push();
+        },
+
+        'click .remove': function () {
+            displayArray.remove(this);
+        },
+
+        'click .editPhylum': function () {
+            currentSelected = this;
+
+            Modal.show('editPhylumModal');
+
+            let phylumName = document.getElementById('phylumName');
+            phylumName.value = currentSelected.phylum;
+
+            let extinctValue = document.getElementById('extinctOpt');
+            extinctValue.value = currentSelected.extinct;
+
+            let countValue = document.getElementById('countOpt');
+            countValue.value = currentSelected.count;
+
+            let descriptionValue = document.getElementById('phylumDesOpt');
+            descriptionValue.value = currentSelected.description;
+        },
+
+        'click .edit': function () {
+            Modal.show('editExtPhylumModal');
         }
     });
 }

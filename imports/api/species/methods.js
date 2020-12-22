@@ -9,5 +9,14 @@ import { Families } from "./families";
 import { Genus } from "./genus";
 
 Meteor.methods({
-
+    addPhylum: function (phylumEntered) {
+        Phylums.insert({
+            domain: phylumEntered.domain,
+            kingdom: phylumEntered.kingdom,
+            phylum: phylumEntered.phylum,
+            count: phylumEntered.count,
+            extinct: phylumEntered.extinct,
+            description: phylumEntered.description
+        });
+    }
 });
