@@ -1,6 +1,5 @@
 import './admin-main.html';
 import '/imports/ui/layouts/layout';
-
 Router.route('/location');
 Router.route('/add');
 Router.route('/addNewEntry');

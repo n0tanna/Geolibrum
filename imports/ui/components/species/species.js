@@ -6,6 +6,8 @@ import { Phylums } from '../../../api/species/phylums';
 import '/imports/api/species/methods.js';
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
+import { uploadImage } from '../util';
+import { deleteImage } from '../util';
 
 let domain = "";
 let kingdom = "";
@@ -41,7 +43,7 @@ if (Meteor.isClient) {
 
     Template.kingdomArea.helpers({
         kingdomNames: () => {
-            return Kingdoms.find({domain: domain});
+            return Kingdoms.find({ domain: domain });
         },
 
         domainName: function () {
@@ -51,7 +53,7 @@ if (Meteor.isClient) {
 
     Template.phylumArea.helpers({
         phylumNames: () => {
-            return Phylums.find({kingdom: kingdom});
+            return Phylums.find({ kingdom: kingdom });
         },
 
         kingdomName: function () {
@@ -86,7 +88,7 @@ if (Meteor.isClient) {
             if (domain === "") {
                 domain = this.domain;
                 domainHolder.set(domain);
-                displayDomain.set("");    
+                displayDomain.set("");
             }
             else if (kingdom === "") {
                 kingdom = event.currentTarget.getAttribute("id");
@@ -109,8 +111,15 @@ if (Meteor.isClient) {
             let extinct = event.target.extinctOption.value;
             let description = event.target.phylumDes.value;
             let count = event.target.newCount.value;
+            let image = document.getElementById('phylumImage').files[0];
+
+            let directory = 'species/phylum/' + image.name;
+            uploadImage(image, directory);
+            let imageURL = 'https://s3.amazonaws.com/' + Meteor.settings.public.S3Bucket + '/' + directory;
 
             const newPhylum = {
+                image: imageURL,
+                imageDirectory: directory,
                 domain: domain,
                 kingdom: kingdom,
                 phylum: phylum,
@@ -138,11 +147,17 @@ if (Meteor.isClient) {
         },
 
         'click .clear': function () {
+            displayArray.Array.forEach(function (holder, index) {
+                let imageDir = holder.imageDirectory;
+                deleteImage(imageDir);
+            });
+
             displayArray.length = 0;
             displayArray.push();
         },
 
         'click .remove': function () {
+            deleteImage(this.imageDirectory);
             displayArray.remove(this);
         },
 

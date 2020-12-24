@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.12.5",
+    "aws-sdk": "^2.817.0",
     "bootstrap": "^3.4.1",
     "buffer": "^6.0.3",
     "dotenv": "^8.2.0",

@@ -1,58 +1,58 @@
 <template name="species">
     <h3>New Species</h3>
     {{#if startValue}}
-        {{> domainArea}}
+    {{> domainArea}}
     {{/if}}
 
     {{#if domainValue}}
-        <button class="btn domain">Domains</button>
-        {{> kingdomArea}}
+    <button class="btn domain">Domains</button>
+    {{> kingdomArea}}
     {{/if}}
 
     {{#if kingdomValue}}
-        <button class="btn domain">Domains</button>
-        <button class="btn kingdom">Kingdoms</button>
-        {{> phylumArea}}
+    <button class="btn domain">Domains</button>
+    <button class="btn kingdom">Kingdoms</button>
+    {{> phylumArea}}
     {{/if}}
 </template>
 
 <template name="domainArea">
     <h4>Select Domain</h4>
-        <ul>
-            {{#with domainNames}}
-                {{#if this.count}}
-                    {{#each domainNames}}
-                        <li>
-                            {{this.domain}}
-                            <br>
-                            {{this.description}}
-                            <br>
-                            <button class="btn select">Select</button>
-                        </li>
-                    {{/each}}
-                {{else}}
-                    <li>No domains.</li>
-                {{/if}}
-            {{/with}}
-        </ul>
+    <ul>
+        {{#with domainNames}}
+        {{#if this.count}}
+        {{#each domainNames}}
+        <li>
+            {{this.domain}}
+            <br>
+            {{this.description}}
+            <br>
+            <button class="btn select">Select</button>
+        </li>
+        {{/each}}
+        {{else}}
+        <li>No domains.</li>
+        {{/if}}
+        {{/with}}
+    </ul>
 </template>
 
 <template name="kingdomArea">
     <h4>Select a Kingdom within the {{domainName}} Domain</h4>
     {{#with kingdomNames}}
-        {{#if this.count}}
-            {{#each kingdomNames}}
-                <li>
-                    {{this.kingdom}}
-                    <br>
-                    {{this.description}}
-                    <br>
-                    <button class="btn select" id="{{this.kingdom}}">Select</button>
-                </li>
-            {{/each}}
-        {{else}}
-            <li>No kingdoms.</li>
-        {{/if}}
+    {{#if this.count}}
+    {{#each kingdomNames}}
+    <li>
+        {{this.kingdom}}
+        <br>
+        {{this.description}}
+        <br>
+        <button class="btn select" id="{{this.kingdom}}">Select</button>
+    </li>
+    {{/each}}
+    {{else}}
+    <li>No kingdoms.</li>
+    {{/if}}
     {{/with}}
 </template>
 
@@ -60,30 +60,34 @@
 <template name="phylumArea">
     <h4>Select a Phylum within the {{kingdomName}} Kingdom</h4>
     {{#with phylumNames}}
-        {{#if this.count}}
-            {{#each phylumNames}}
-                <li>
-                    {{this.phylum}}
-                    <br>
-                    {{this.count}}
-                    <br>
-                    {{this.extinct}}
-                    <br>
-                    {{this.description}}
-                    <br>
-                    <button class="btn select" id="{{this.phylum}}">Select</button>
-                    <br>
-                    <button class="btn edit">Edit</button>
-                    <br>
-                    <button class="btn removeExisting">Remove</button>
-                </li>
-            {{/each}}
-        {{else}}
-            <li>No phylums.</li>
-        {{/if}}
+    {{#if this.count}}
+    {{#each phylumNames}}
+    <li>
+        {{this.phylum}}
+        <br>
+        {{this.count}}
+        <br>
+        {{this.extinct}}
+        <br>
+        {{this.description}}
+        <br>
+        <button class="btn select" id="{{this.phylum}}">Select</button>
+        <br>
+        <button class="btn edit">Edit</button>
+        <br>
+        <button class="btn removeExisting">Remove</button>
+    </li>
+    {{/each}}
+    {{else}}
+    <li>No phylums.</li>
+    {{/if}}
     {{/with}}
     <h4>Add new Phylum(s)</h4>
     <form id="phylumForm">
+        <label type="text" name="phylumImg">Image</label>
+        <br>
+        <input type="file" name="phylumImage" id="phylumImage" accept="image/png, image/jpeg">
+        <br>
         <label for="phylum">Name</label>
         <br>
         <input type="text" name="newPhylum" id="newPhylum">
@@ -110,6 +114,8 @@
         <div id="status">{{statusDisplay}}</div>
         {{#each displayEntry}}
         <li>
+            <img src="{{this.image}}">
+            <br>
             <label for="phylum">Phylum Name</label>
             <br>
             <div id="name">{{this.phylum}}</div>
