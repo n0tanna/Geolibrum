@@ -1,0 +1,208 @@
+{
+    "domains": [
+        {
+            "domain": "Archaea",
+            "description": "The Archaea are a domain of bacteria-like organisms, but they are not the same. Their cell walls and their RNA are very different from the bacteria domains. They are also often extremophiles.",
+            "image": "https://geolibrum-assets.s3.amazonaws.com/species/domain/archea.png",
+            "kingdoms": [
+                {
+                    "kingdom": "Halophiles",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Methanosarcina",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Methanobacterium",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Methanosoccus",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "T.celer",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Thermoproteus",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Pyrodicticum",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                }
+            ]
+        },
+        {
+            "domain": "Bacteria",
+            "description": "The Bacteria are a domain also known as prokaryotes. They have no organelles or membrane-bound nucleus. This is possibly the largest domain out of them all.",
+            "image": "https://geolibrum-assets.s3.amazonaws.com/species/domain/bacteria.png",
+            "kingdoms": [
+                {
+                    "kingdom": "Green Filamentous Bacteria",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Cyanobacteria",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Gram positives",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Spirochetes",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Proteobacteria",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Planctomyces",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Bacteroides Cytophaga",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Thermotoga",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Aquifex",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                }
+            ]
+        },
+        {
+            "domain": "Eukayrote",
+            "description": "The Eukaryotas have membrane bound nucleus and organelles. They are not unicellular like the other two domains.",
+            "image": "https://geolibrum-assets.s3.amazonaws.com/species/domain/eukayrote.png",
+            "kingdoms": [
+                {
+                    "kingdom": "Fungi",
+                    "image": "",
+                    "description": "Fungi are multicellular(mostly), eukaryotic, and are heterotrpohs. They gain nutrition through absorption, and are made up of feathery filaments called hyphae. These hyphae group together to form a conglomerate called the mycelium. They can reproduce sexually and asexually. They also have symbiotic associations with plants and bacteria.",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Animals",
+                    "image": "",
+                    "description": "",
+                    "phylums": [
+                        {
+                            "phylum": "Acanthocephala",
+                            "image": "",
+                            "count": 1420,
+                            "extinct": "No",
+                            "description": "Acanthocephala means thorny head, and are also referred to as thorny-headed worms. They have a reversible spiny proboscis that bears many rows of hooked spines.",
+                            "classes": []
+                        },
+                        {
+                            "phylum": "Annelida",
+                            "image": "",
+                            "count": 17000,
+                            "extinct": "No",
+                            "description": "Annelida means little ring, and are also referred to as segmented worms. They have multiple circular segments.",
+                            "classes": []
+                        },
+                        {
+                            "phylum": "Arthropoda",
+                            "image": "",
+                            "count": 1270000,
+                            "extinct": "No",
+                            "description": "Arthropoda means jointed foot, and are also referred to as Arthropods. They have segmented bodies and jointed limbs, with a Chitin exoskeleton.",
+                            "classes": []
+                        },
+                        {
+                            "phylum": "Brachiopoda",
+                            "image": "",
+                            "count": 12500,
+                            "extinct": "No",
+                            "description": "Brachiopoda means arm footm and are also referred to as Lampshells. They are lophophore and pedicle,",
+                            "classes": []
+                        }
+                    ]
+                },
+                {
+                    "kingdom": "Plants",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Ciliates",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Slimemoids",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Flagellates",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Trichomonads",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Microsporidia",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                },
+                {
+                    "kingdom": "Diplomonads",
+                    "image": "",
+                    "description": "",
+                    "phylums": []
+                }
+            ]
+        }
+    ]
+}

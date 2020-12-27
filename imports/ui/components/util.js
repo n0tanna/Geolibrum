@@ -29,6 +29,11 @@ export function uploadImage(image, directory) {
 }
 
 export function deleteImage(imageURL) {
+    AWS.config.update({
+        accessKeyId: Meteor.settings.public.AWSAccessKeyId,
+        secretAccessKey: Meteor.settings.public.AWSSecretAccessKey
+    });
+    
     const params = {
         Bucket: Meteor.settings.public.AWSAccessKeyId,
         Key: imageURL

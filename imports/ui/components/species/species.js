@@ -1,24 +1,57 @@
 import './species.html';
 import { Template } from 'meteor/templating';
-import { Domains } from '../../../api/species/domains';
-import { Kingdoms } from '../../../api/species/kingdoms';
-import { Phylums } from '../../../api/species/phylums';
-import '/imports/api/species/methods.js';
+import { Species } from '/imports/api/species/species.js';
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
-import { uploadImage } from '../util';
-import { deleteImage } from '../util';
 
 let domain = "";
 let kingdom = "";
 let phylum = "";
 
 let displayDomain = new ReactiveVar("yes");
-let status = new ReactiveVar(null);
 let kingdomHolder = new ReactiveVar();
 let domainHolder = new ReactiveVar();
 let phylumHolder = new ReactiveVar();
-let displayArray = new ReactiveArray();
+
+let dbHolder = new ReactiveArray();
+
+function loadDomains() {
+    dbHolder.clear();
+    let tempHolderStart = Species.find().fetch();
+        let tempHolderDoms = new Array();
+
+        tempHolderStart.forEach(element => tempHolderDoms.push(element.domains));
+
+        tempHolderDoms.forEach(function (domainValue) {
+            domainValue.forEach(function (domain) {
+                dbHolder.push(domain);
+            });
+        });
+}
+
+function loadKingdoms(domain) {
+    dbHolder.forEach(function (domains) {
+        if (domains.domain === domain) {
+            let tempHolder = domains.kingdoms;
+            dbHolder.clear();
+            tempHolder.forEach(function (kingdoms) {
+                dbHolder.push(kingdoms);
+            });
+        }
+    });
+}
+
+function loadPhylums(kingdom) {
+    dbHolder.forEach(function (kingdoms) {
+        if (kingdoms.kingdom === kingdom) {
+            let tempHolder = kingdoms.phylums;
+            dbHolder.clear();
+            tempHolder.forEach(function (phylums) {
+                dbHolder.push(phylums);
+            });
+        }
+    });
+}
 
 if (Meteor.isClient) {
     Template.species.helpers({
@@ -36,14 +69,14 @@ if (Meteor.isClient) {
     });
 
     Template.domainArea.helpers({
-        domainNames: () => {
-            return Domains.find({});
+        domainNames: function () {
+            return dbHolder.list();
         }
     });
 
     Template.kingdomArea.helpers({
-        kingdomNames: () => {
-            return Kingdoms.find({ domain: domain });
+        kingdomNames: function () {
+            return dbHolder.list();
         },
 
         domainName: function () {
@@ -52,21 +85,17 @@ if (Meteor.isClient) {
     });
 
     Template.phylumArea.helpers({
-        phylumNames: () => {
-            return Phylums.find({ kingdom: kingdom });
+        phylumNames: function() {
+            return dbHolder.list();
         },
 
         kingdomName: function () {
             return kingdom;
-        },
-
-        displayEntry: function () {
-            return displayArray.list();
-        },
-
-        statusDisplay: function () {
-            return status.get();
         }
+    });
+
+    Template.species.onCreated(function nice() {
+        loadDomains();
     });
 
     Template.species.events({
@@ -76,12 +105,16 @@ if (Meteor.isClient) {
             kingdom = "";
             domainHolder.set("");
             kingdomHolder.set("");
+            loadDomains();
         },
 
         'click .kingdom': function () {
             kingdom = "";
             domainHolder.set(domain);
             kingdomHolder.set("");
+            dbHolder.clear();
+            loadDomains();
+            loadKingdoms(domain);
         },
 
         'click .select': function (event) {
@@ -89,11 +122,13 @@ if (Meteor.isClient) {
                 domain = this.domain;
                 domainHolder.set(domain);
                 displayDomain.set("");
+                loadKingdoms(domain);
             }
             else if (kingdom === "") {
                 kingdom = event.currentTarget.getAttribute("id");
                 domainHolder.set("");
                 kingdomHolder.set(kingdom);
+                loadPhylums(kingdom);
             }
             else if (phylum === "") {
                 kingdomHolder.set("");
@@ -103,84 +138,6 @@ if (Meteor.isClient) {
     });
 
     Template.phylumArea.events({
-        'submit #phylumForm': function (event) {
-            event.preventDefault();
-            status.set("");
 
-            phylum = event.target.newPhylum.value;
-            let extinct = event.target.extinctOption.value;
-            let description = event.target.phylumDes.value;
-            let count = event.target.newCount.value;
-            let image = document.getElementById('phylumImage').files[0];
-
-            let directory = 'species/phylum/' + image.name;
-            uploadImage(image, directory);
-            let imageURL = 'https://s3.amazonaws.com/' + Meteor.settings.public.S3Bucket + '/' + directory;
-
-            const newPhylum = {
-                image: imageURL,
-                imageDirectory: directory,
-                domain: domain,
-                kingdom: kingdom,
-                phylum: phylum,
-                extinct: extinct,
-                count: count,
-                description: description
-            }
-            displayArray.push(newPhylum);
-            event.target.reset();
-        },
-
-        'click .add': function () {
-            if (displayArray.length == 0) {
-                status.set("Please add a Phylum.");
-            }
-            else {
-                displayArray.forEach(function (holder, index) {
-                    Meteor.call('addPhylum', holder);
-                });
-
-                displayArray.length = 0;
-                displayArray.push();
-                status.set("Added successfully.");
-            }
-        },
-
-        'click .clear': function () {
-            displayArray.Array.forEach(function (holder, index) {
-                let imageDir = holder.imageDirectory;
-                deleteImage(imageDir);
-            });
-
-            displayArray.length = 0;
-            displayArray.push();
-        },
-
-        'click .remove': function () {
-            deleteImage(this.imageDirectory);
-            displayArray.remove(this);
-        },
-
-        'click .editPhylum': function () {
-            currentSelected = this;
-
-            Modal.show('editPhylumModal');
-
-            let phylumName = document.getElementById('phylumName');
-            phylumName.value = currentSelected.phylum;
-
-            let extinctValue = document.getElementById('extinctOpt');
-            extinctValue.value = currentSelected.extinct;
-
-            let countValue = document.getElementById('countOpt');
-            countValue.value = currentSelected.count;
-
-            let descriptionValue = document.getElementById('phylumDesOpt');
-            descriptionValue.value = currentSelected.description;
-        },
-
-        'click .edit': function () {
-            Modal.show('editExtPhylumModal');
-        }
     });
 }

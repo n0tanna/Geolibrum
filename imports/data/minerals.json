@@ -1,0 +1,61 @@
+{
+    "mineral_names": [
+        {
+            "mineral_group": "Native Elements",
+            "mineral_families": [
+                {
+                    "mineral_family": "Metals",
+                    "minerals": []
+                },
+                {
+                    "mineral_family": "Semimetals",
+                    "minerals": []
+                },
+                {
+                    "mineral_family": "Nonmetals",
+                    "minerals": []
+                }
+            ]
+        },
+        {
+            "mineral_group": "Sulfides",
+            "minerals": []
+        },
+        {
+            "mineral_group": "Sulfosalts",
+            "minerals": []
+        },
+        {
+            "mineral_group": "Oxides",
+            "minerals": []
+        },
+        {
+            "mineral_group": "Hydroxides",
+            "minerals": []
+        },
+        {
+            "mineral_group": "Halides",
+            "minerals": []
+        },
+        {
+            "mineral_group": "Carbonates",
+            "minerals": []
+        },
+        {
+            "mineral_group": "Borates",
+            "minerals": []
+        },
+        {
+            "mineral_group": "Sulfates",
+            "minerals": []
+        },
+        {
+            "mineral_group": "Phosphates",
+            "minerals": []
+        },
+        {
+            "mineral_group": "SIlicates",
+            "minerals": []
+        }
+    ]
+}

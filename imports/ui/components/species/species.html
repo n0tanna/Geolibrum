@@ -1,214 +1,65 @@
 <template name="species">
     <h3>New Species</h3>
     {{#if startValue}}
-    {{> domainArea}}
+        {{> domainArea}}
     {{/if}}
 
     {{#if domainValue}}
-    <button class="btn domain">Domains</button>
-    {{> kingdomArea}}
+        <button class="btn domain">Domains</button>
+        {{> kingdomArea}}
     {{/if}}
 
     {{#if kingdomValue}}
-    <button class="btn domain">Domains</button>
-    <button class="btn kingdom">Kingdoms</button>
-    {{> phylumArea}}
+        <button class="btn domain">Domains</button>
+        <button class="btn kingdom">Kingdoms</button>
+        {{> phylumArea}}
     {{/if}}
 </template>
 
 <template name="domainArea">
     <h4>Select Domain</h4>
     <ul>
-        {{#with domainNames}}
-        {{#if this.count}}
         {{#each domainNames}}
-        <li>
-            {{this.domain}}
-            <br>
-            {{this.description}}
-            <br>
-            <button class="btn select">Select</button>
-        </li>
+                <li>
+                    <img src="{{this.image}}" width="100" height="100">
+                    <br>
+                    {{this.domain}}
+                    <br>
+                    {{this.description}}
+                    <br>
+                    <button class="btn select">Select</button>
+                </li>
         {{/each}}
-        {{else}}
-        <li>No domains.</li>
-        {{/if}}
-        {{/with}}
     </ul>
 </template>
 
 <template name="kingdomArea">
     <h4>Select a Kingdom within the {{domainName}} Domain</h4>
-    {{#with kingdomNames}}
-    {{#if this.count}}
-    {{#each kingdomNames}}
-    <li>
-        {{this.kingdom}}
-        <br>
-        {{this.description}}
-        <br>
-        <button class="btn select" id="{{this.kingdom}}">Select</button>
-    </li>
-    {{/each}}
-    {{else}}
-    <li>No kingdoms.</li>
-    {{/if}}
-    {{/with}}
+        {{#each kingdomNames}}
+            <li>
+                {{this.kingdom}}
+                <br>
+                    {{this.description}}
+                <br>
+                <button class="btn select" id="{{this.kingdom}}">Select</button>
+            </li>
+        {{/each}}
 </template>
 
 
 <template name="phylumArea">
     <h4>Select a Phylum within the {{kingdomName}} Kingdom</h4>
-    {{#with phylumNames}}
-    {{#if this.count}}
-    {{#each phylumNames}}
-    <li>
-        {{this.phylum}}
-        <br>
-        {{this.count}}
-        <br>
-        {{this.extinct}}
-        <br>
-        {{this.description}}
-        <br>
-        <button class="btn select" id="{{this.phylum}}">Select</button>
-        <br>
-        <button class="btn edit">Edit</button>
-        <br>
-        <button class="btn removeExisting">Remove</button>
-    </li>
-    {{/each}}
-    {{else}}
-    <li>No phylums.</li>
-    {{/if}}
-    {{/with}}
-    <h4>Add new Phylum(s)</h4>
-    <form id="phylumForm">
-        <label type="text" name="phylumImg">Image</label>
-        <br>
-        <input type="file" name="phylumImage" id="phylumImage" accept="image/png, image/jpeg">
-        <br>
-        <label for="phylum">Name</label>
-        <br>
-        <input type="text" name="newPhylum" id="newPhylum">
-        <br>
-        <label for="extinctOption">Extinct</label>
-        <br>
-        <select id="extinctOption" name="extinctOption">
-            <option id="answer" value="yes">Yes</option>
-            <option id="answer" value="no">No</option>
-        </select>
-        <br>
-        <label for="count">Count of Species</label>
-        <br>
-        <input type="text" name="newCount" id="newCount">
-        <br>
-        <label for="phylumDes">Description</label>
-        <br>
-        <textarea rows="5" cols="80" name="phylumDes" id="phylumDes"></textarea>
-        <br>
-        <input type="submit" class="btn" id="submit" value="Add">
-    </form>
-    <h4>New Phylum(s) to be added</h4>
-    <ul>
-        <div id="status">{{statusDisplay}}</div>
-        {{#each displayEntry}}
-        <li>
-            <img src="{{this.image}}">
-            <br>
-            <label for="phylum">Phylum Name</label>
-            <br>
-            <div id="name">{{this.phylum}}</div>
-            <br>
-            <label for="extinct">Extinct</label>
-            <br>
-            <div id="extinct">{{this.extinct}}</div>
-            <br>
-            <label for="count">Count of Species</label>
-            <div id="count">{{this.count}}</div>
-            <br>
-            <label for="description">Description</label>
-            <br>
-            <div id="description">{{this.description}}</div>
-            <br>
-            <button class="btn editPhylum">Edit</button>
-            <br>
-            <button class="btn remove">Remove</button>
-        </li>
+        {{#each phylumNames}}
+            <li>
+                {{this.phylum}}
+                <br>
+                {{this.count}}
+                <br>
+                {{this.extinct}}
+                <br>
+                 {{this.description}}
+                <br>
+                <button class="btn select" id="{{this.phylum}}">Select</button>
+             </li>
         {{/each}}
-    </ul>
-    <button class="btn add">Add All</button>
-    <button class="btn clear">Clear</button>
-</template>
-
-<template name="editPhylumModal">
-    <div class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Phylum</h4>
-                </div>
-                <div class="modal-body">
-                    <label for="phylumName">Name</label>
-                    <br>
-                    <input type="text" name="phylumName" id="phylumName">
-                    <br>
-                    <label for="extinct">Extinct</label>
-                    <br>
-                    <select id="extinctOpt" name="extinctOpt">
-                        <option id="answer" value="yes">Yes</option>
-                        <option id="answer" value="no">No</option>
-                    </select>
-                    <br>
-                    <label for="countOpt">Count of Species</label>
-                    <br>
-                    <input type="text" name="countOpt" id="countOpt">
-                    <br>
-                    <label for="phylumDesOpt">Description</label>
-                    <br>
-                    <textarea rows="5" cols="60" name="phylumDesOpt" id="phylumDesOpt"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn add">Save</button>
-                    <button class="btn reset" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
-
-<template name="editExtPhylumModal">
-    <div class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Phylum</h4>
-                </div>
-                <div class="modal-body">
-                    <label for="phylumName">Name</label>
-                    <br>
-                    <input type="text" name="phylumName" id="phylumName">
-                    <br>
-                    <label for="extinct">Extinct</label>
-                    <br>
-                    <select id="extinctOpt" name="extinctOpt">
-                        <option id="answer" value="yes">Yes</option>
-                        <option id="answer" value="no">No</option>
-                    </select>
-                    <br>
-                    <label for="countOpt">Count of Species</label>
-                    <br>
-                    <input type="text" name="countOpt" id="countOpt">
-                    <br>
-                    <label for="phylumDesOpt">Description</label>
-                    <br>
-                    <textarea rows="5" cols="60" name="phylumDesOpt" id="phylumDesOpt"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn add">Save</button>
-                    <button class="btn reset" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </template>

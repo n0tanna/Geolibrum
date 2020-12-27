@@ -1,0 +1,51 @@
+{
+    "rock_names": [
+        {
+            "rock_name": "Igneous",
+            "subclasses": [
+                {
+                    "subclass": "Plutonic/Intrustive",
+                    "rocks": []
+                },
+                {
+                    "subclass": "Volcanic/Extrusive",
+                    "rocks": []
+                }
+            ]
+        },
+        {
+            "rock_name": "Sedimentary",
+            "subclasses": [
+                {
+                    "subclass": "Shale",
+                    "rocks": []
+                },
+                {
+                    "subclass": "Limestone",
+                    "rocks": []
+                },
+                {
+                    "subclass": "Sandstone",
+                    "rocks": []
+                },
+                {
+                    "subclass": "Arkoses",
+                    "rocks": []
+                }
+            ]
+        },
+        {
+            "rock_name": "Metamorphic",
+            "subclasses": [
+                {
+                    "subclass": "Foliated",
+                    "rocks": []
+                },
+                {
+                    "subclass": "Non-Foliated",
+                    "rocks": []
+                }
+            ]
+        }
+    ]
+}
