@@ -6,46 +6,272 @@
             "image": "https://geolibrum-assets.s3.amazonaws.com/species/domain/archea.png",
             "kingdoms": [
                 {
-                    "kingdom": "Halophiles",
+                    "kingdom": "Euryarchaeota",
                     "image": "",
                     "description": "",
-                    "phylums": []
+                    "phylums": [
+                        {
+                            "phylum": "N/A",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "No phylum created, but has a class or order.",
+                            "classes": [
+                                {
+                                    "class": "Thermococci",
+                                    "image": "",
+                                    "count": "N/A",
+                                    "extinct": "No",
+                                    "description": "They live in extremely hot environments, such as hydrothermal vents, and they have optimal growth temperatures above 80 °C."
+                                },
+                                {
+                                    "class": "Pyrococci",
+                                    "image": "",
+                                    "count": "N/A",
+                                    "extinct": "No",
+                                    "description": "No description."
+                                },
+                                {
+                                    "class": "Methanobacteria",
+                                    "image": "",
+                                    "count": "N/A",
+                                    "extinct": "No",
+                                    "description": "No description."
+                                },
+                                {
+                                    "class": "Methanobacteria",
+                                    "image": "",
+                                    "count": "N/A",
+                                    "extinct": "No",
+                                    "description": "No description."
+                                },
+                                {
+                                    "class": "Methanopyri",
+                                    "image": "",
+                                    "count": "N/A",
+                                    "extinct": "No",
+                                    "description": "No description."
+                                },
+                                {
+                                    "class": "Methanocellales",
+                                    "image": "",
+                                    "count": "N/A",
+                                    "extinct": "No",
+                                    "description": "No description."
+                                },
+                                {
+                                    "class": "Methanosarcinales",
+                                    "image": "",
+                                    "count": "N/A",
+                                    "extinct": "No",
+                                    "description": "No description."
+                                },
+                                {
+                                    "class": "Methanomicrobiales",
+                                    "image": "",
+                                    "count": "N/A",
+                                    "extinct": "No",
+                                    "description": "No description."
+                                },
+                                {
+                                    "class": "Halobacteria",
+                                    "image": "",
+                                    "count": "N/A",
+                                    "extinct": "No",
+                                    "description": "Haloarchaea (halophilic archaea, halophilic archaebacteria, halobacteria)[1] are a class of the Euryarchaeota, found in water saturated or nearly saturated with salt."
+                                },
+                                {
+                                    "class": "Thermoplastmatales",
+                                    "image": "",
+                                    "count": "N/A",
+                                    "extinct": "No",
+                                    "description": " Thermoplasmatales are an order of the Thermoplasmata. All are acidophiles, growing optimally at pH below 2. Picrophilus is currently the most acidophilic of all known organisms, being capable of growing at a pH of -0.06."
+                                },
+                                {
+                                    "class": "Methanomassiliicoccales",
+                                    "image": "",
+                                    "count": "N/A",
+                                    "extinct": "No",
+                                    "description": "No description."
+                                }
+                            ]
+                        },
+                        {
+                            "phylum": "Archaeoglobaceae",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "All known genera within the Archaeoglobaceae are hyperthermophilic and can be found near undersea hydrothermal vents.",
+                            "classes": [
+                                {
+                                    "class": "N/A"
+                                }
+                            ]
+                        },
+                        {
+                            "phylum": "Aciduliprofundum Boonei",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": " Isolated from acidic hydrothermal vent environments, A. boonei is the first cultured representative of a biogeochemically significant clade of thermoacidophilic archaea known as the “Deep-Sea Hydrothermal Vent Euryarchaeota 2 (DHVE2)",
+                            "classes": [
+                                {
+                                    "class": "N/A"
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
-                    "kingdom": "Methanosarcina",
+                    "kingdom": "Proteoarchaeota",
                     "image": "",
                     "description": "",
-                    "phylums": []
-                },
-                {
-                    "kingdom": "Methanobacterium",
-                    "image": "",
-                    "description": "",
-                    "phylums": []
-                },
-                {
-                    "kingdom": "Methanosoccus",
-                    "image": "",
-                    "description": "",
-                    "phylums": []
-                },
-                {
-                    "kingdom": "T.celer",
-                    "image": "",
-                    "description": "",
-                    "phylums": []
-                },
-                {
-                    "kingdom": "Thermoproteus",
-                    "image": "",
-                    "description": "",
-                    "phylums": []
-                },
-                {
-                    "kingdom": "Pyrodicticum",
-                    "image": "",
-                    "description": "",
-                    "phylums": []
+                    "phylums": [
+                        {
+                            "phylum": "Asgard",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "Asgard members encode many eukaryotic signature proteins, including novel GTPases, membrane-remodelling proteins like ESCRT and SNF7, a ubiquitin modifier system, and N-glycosylation pathway homologs.",
+                            "classes": [
+                                {
+                                    "class": "N/A"
+                                }
+                            ]
+                        },
+                        {
+                            "phylum": "TACK",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "TACK is a group of archaea acronym for Thaumarchaeota, Aigarchaeota, Crenarchaeota and Korarchaeota, the first groups discovered. They are found in different environments ranging from acidophilic thermophiles to mesophiles and psychrophiles and with different types of metabolism, predominantly anaerobic and chemosynthetic. TACK is a clade that is close to the branch that gave rise to the eukaryotes. The name Filarchaeota has been proposed.",
+                            "classes": [
+                                {
+                                    "class": "N/A"
+                                }
+                            ]
+                        },
+                        {
+                            "phylum": "Korarchaeota",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "The Korarchaeota have only been found in hydrothermal environments. They appear to have diversified at different phylogenetic levels according to temperature, salinity (freshwater or seawater), and/or geography. Korarchaeota have been found in nature in only low abundance.",
+                            "classes": [
+                                {
+                                    "class": "N/A"
+                                }
+                            ]
+                        },
+                        {
+                            "phylum": "Crenarchaeota",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "The Crenarchaeota were thought to be sulfur-dependent extremophiles but recent studies have identified characteristic Crenarchaeota environmental rRNA indicating the organisms may be the most abundant archaea in the marine environment.",
+                            "classes": [
+                                {
+                                    "class": "N/A"
+                                }
+                            ]
+                        },
+                        {
+                            "phylum": "Aigarchaeota",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "No description.",
+                            "classes": [
+                                {
+                                    "class": "N/A"
+                                }
+                            ]
+                        },
+                        {
+                            "phylum": "Geoarchaeota",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "No description.",
+                            "classes": [
+                                {
+                                    "class": "N/A"
+                                }
+                            ]
+                        },
+                        {
+                            "phylum": "Thaumarchaeota",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "The Thaumarchaeota or Thaumarchaea are a phylum of the Archaea proposed in 2008 after the genome of Cenarchaeum symbiosum was sequenced and found to differ significantly from other members of the hyperthermophilic phylum Crenarchaeota.",
+                            "classes": [
+                                {
+                                    "class": "N/A"
+                                }
+                            ]
+                        },
+                        {
+                            "phylum": "Bathyarchaeota",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "No description.",
+                            "classes": [
+                                {
+                                    "class": "N/A"
+                                }
+                            ]
+                        },
+                        {
+                            "phylum": "Odinarchaeota",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "No description.",
+                            "classes": [
+                                {
+                                    "class": "N/A"
+                                }
+                            ]
+                        },
+                        {
+                            "phylum": "Thorarchaeota",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "Thorarchaeota have not been cultured in a laboratory. What is known about Thorarchaeota has come from analyzing partial and near complete genomes. 3,029 proteins have been sequenced from the partial genomes.",
+                            "classes": [
+                                {
+                                    "class": "N/A"
+                                }
+                            ]
+                        },
+                        {
+                            "phylum": "Lokiarchaeota",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "The Lokiarchaeum composite genome consists of 5,381 protein coding genes. Of these, roughly 32% do not correspond to any known protein, 26% closely resemble archaeal proteins, and 29% correspond to bacterial proteins.",
+                            "classes": [
+                                {
+                                    "class": "N/A"
+                                }
+                            ]
+                        },
+                        {
+                            "phylum": "Helarchaepta",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "N/A",
+                            "classes": [
+                                {
+                                    "class": "N/A"
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
@@ -55,58 +281,158 @@
             "image": "https://geolibrum-assets.s3.amazonaws.com/species/domain/bacteria.png",
             "kingdoms": [
                 {
-                    "kingdom": "Green Filamentous Bacteria",
+                    "kingdom": "N/A",
                     "image": "",
-                    "description": "",
-                    "phylums": []
-                },
-                {
-                    "kingdom": "Cyanobacteria",
-                    "image": "",
-                    "description": "",
-                    "phylums": []
-                },
-                {
-                    "kingdom": "Gram positives",
-                    "image": "",
-                    "description": "",
-                    "phylums": []
-                },
-                {
-                    "kingdom": "Spirochetes",
-                    "image": "",
-                    "description": "",
-                    "phylums": []
-                },
-                {
-                    "kingdom": "Proteobacteria",
-                    "image": "",
-                    "description": "",
-                    "phylums": []
-                },
-                {
-                    "kingdom": "Planctomyces",
-                    "image": "",
-                    "description": "",
-                    "phylums": []
-                },
-                {
-                    "kingdom": "Bacteroides Cytophaga",
-                    "image": "",
-                    "description": "",
-                    "phylums": []
-                },
-                {
-                    "kingdom": "Thermotoga",
-                    "image": "",
-                    "description": "",
-                    "phylums": []
-                },
-                {
-                    "kingdom": "Aquifex",
-                    "image": "",
-                    "description": "",
-                    "phylums": []
+                    "description": "Bactaria do not have kingdoms, but do have phylums.",
+                    "phylums": [
+                        {
+                            "phylum": "Acidobacteria",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "Members of this phylum are physiologically diverse, and can be found in a variety of environments including soil, hot springs, oceans, caves, and metal-contaminated soils.",
+                            "classes": [
+                                {
+                                    "class": "Blastocatellia",
+                                    "image": "",
+                                    "count": "N/A",
+                                    "extinct": "No",
+                                    "description": "N/A",
+                                    "orders": [
+                                        {
+                                            "order": "Blastocatellales",
+                                            "image": "",
+                                            "count": "N/A",
+                                            "extinct": "No",
+                                            "description": "N/A",
+                                            "orders": [
+                                                {
+                                                    "family": "N/A"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "phylum": "Actinobacteria",
+                            "image": "",
+                            "count": "N/A",
+                            "extinct": "No",
+                            "description": "The Actinobacteria are a phylum of Gram-positive bacteria. They can be terrestrial or aquatic. They are of great economic importance to humans because agriculture and forests depend on their contributions to soil systems.",
+                            "classes": [
+                                {
+                                    "class": "Acidothermales",
+                                    "image": "",
+                                    "count": "N/A",
+                                    "extinct": "No",
+                                    "description": "N/A",
+                                    "orders": [
+                                        {
+                                            "order": "N/A"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "class": "Actinobacteria",
+                                    "image": "",
+                                    "count": "N/A",
+                                    "extinct": "No",
+                                    "description": "The Actinobacteria are a phylum of Gram-positive bacteria. They can be terrestrial or aquatic.",
+                                    "orders": [
+                                        {
+                                            "order": "Actinomycineae",
+                                            "image": "",
+                                            "count": "N/A",
+                                            "extinct": "No",
+                                            "description": "Contains the medically important genus Actinomyces.",
+                                            "families": [
+                                                {
+                                                    "family": "Actinomycetaceae",
+                                                    "image": "",
+                                                    "count": "N/A",
+                                                    "extinct": "No",
+                                                    "description": "These organisms are closely related to the mycobacteria, but were originally classified as fungi because they were thought to be transitional forms between bacteria and fungi.",
+                                                    "genus": [
+                                                        {
+                                                            "genus": "Actinobaculum",
+                                                            "image": "",
+                                                            "count": "N/A",
+                                                            "extinct": "No",
+                                                            "description": "N/A",
+                                                            "species": []
+                                                        },
+                                                        {
+                                                            "genus": "Actinomyces",
+                                                            "image": "",
+                                                            "count": "N/A",
+                                                            "extinct": "No",
+                                                            "description": "Actinomyces species are facultatively anaerobic (except A. meyeri and A. israelii both obligate anaerobe), and they grow best under anaerobic conditions.",
+                                                            "species": []
+                                                        },
+                                                        {
+                                                            "genus": "Arcanobacterium",
+                                                            "image": "",
+                                                            "count": "N/A",
+                                                            "extinct": "No",
+                                                            "description": "They are gram-positive, non–acid fast, nonmotile, facultatively anaerobic, and non–endospore forming. They are widely distributed in nature in the microbiota of animals (including the human microbiota) and are mostly innocuous. Some can cause disease in humans and other animals.",
+                                                            "species": []
+                                                        },
+                                                        {
+                                                            "genus": "Mobiluncus",
+                                                            "image": "",
+                                                            "count": "N/A",
+                                                            "extinct": "No",
+                                                            "description": "Mobiluncus is a genus of Gram-negative, anaerobic, rod-shaped bacteria. While this species possesses a cell wall with structural similarity to other Gram-positive cell walls, upon Gram stain, these bacteria may be stained either Gram-negative or Gram-variable.",
+                                                            "species": []
+                                                        },
+                                                        {
+                                                            "genus": "Trueperella",
+                                                            "image": "",
+                                                            "count": "N/A",
+                                                            "extinct": "No",
+                                                            "description": "N/A",
+                                                            "species": []
+                                                        },
+                                                        {
+                                                            "genus": "Valibaculum",
+                                                            "image": "",
+                                                            "count": "N/A",
+                                                            "extinct": "No",
+                                                            "description": "Varibaculum is a Gram-positive, facultatively anaerobic, non-spore-forming and non-motile genus of bacteria from the family of Actinomycetaceae.",
+                                                            "species": []
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "order": "Actinopolysporineae",
+                                            "image": "",
+                                            "count": "N/A",
+                                            "extinct": "No",
+                                            "description": "N/A",
+                                            "families": [
+                                                {
+                                                    "order": "Actinopolysporaceae",
+                                                    "image": "",
+                                                    "count": "N/A",
+                                                    "extinct": "No",
+                                                    "description": "N/A",
+                                                    "genus": [
+                                                        {
+                                                            "genus": "N/A"
+                                                        }
+                                                    ] 
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },

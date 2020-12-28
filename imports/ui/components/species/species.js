@@ -133,11 +133,8 @@ if (Meteor.isClient) {
             else if (phylum === "") {
                 kingdomHolder.set("");
                 phylum = event.currentTarget.getAttribute("id");
+                phylumHolder.set(phylum);
             }
         }
-    });
-
-    Template.phylumArea.events({
-
     });
 }
