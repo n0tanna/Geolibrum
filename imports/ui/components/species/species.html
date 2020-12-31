@@ -4,15 +4,60 @@
         {{> domainArea}}
     {{/if}}
 
-    {{#if domainValue}}
+    {{#if buttonDomain}}
         <button class="btn domain">Domains</button>
+    {{/if}}
+
+    {{#if buttonKingdom}}
+        <button class="btn kingdom">Kingdoms</button>
+    {{/if}}
+
+    {{#if buttonPhylum}}
+        <button class="btn phylum">Phylums</button>
+    {{/if}}
+
+    {{#if buttonClass}}
+        <button class="btn class">Classes</button>
+    {{/if}}
+
+    {{#if buttonOrder}}
+        <button class="btn order">Orders</button>
+    {{/if}}
+
+    {{#if buttonFamily}}
+        <button class="btn family">Families</button>
+    {{/if}}
+
+    {{#if buttonGenus}}
+        <button class="btn genus">Genera</button>
+    {{/if}}
+
+    {{#if domainValue}}
         {{> kingdomArea}}
     {{/if}}
 
     {{#if kingdomValue}}
-        <button class="btn domain">Domains</button>
-        <button class="btn kingdom">Kingdoms</button>
         {{> phylumArea}}
+    {{/if}}
+
+    {{#if phylumValue}}
+        {{> classArea}}
+    {{/if}}
+
+    {{#if classValue}}
+        {{> orderArea}}
+    {{/if}}
+
+    {{#if orderValue}}
+        {{> familyArea}}
+    {{/if}}
+
+    {{#if familyValue}}
+        {{> genusArea}}
+    {{/if}}
+
+    {{#if genusValue}}
+        {{> speciesArea}}
     {{/if}}
 </template>
 
@@ -62,4 +107,79 @@
                 <button class="btn select" id="{{this.phylum}}">Select</button>
              </li>
         {{/each}}
+</template>
+
+<template name="classArea">
+    <h4>Select a Class within the {{phylumName}} Phylum</h4>
+        {{#each classNames}}
+            <li>
+                {{this.class}}
+                <br>
+                {{this.count}}
+                <br>
+                {{this.extinct}}
+                <br>
+                 {{this.description}}
+                <br>
+                <button class="btn select" id="{{this.class}}">Select</button>
+             </li>
+        {{/each}}
+</template>
+
+<template name="orderArea">
+    <h4>Select an Order within the {{className}} Phylum</h4>
+        {{#each orderNames}}
+            <li>
+                {{this.order}}
+                <br>
+                {{this.count}}
+                <br>
+                {{this.extinct}}
+                <br>
+                 {{this.description}}
+                <br>
+                <button class="btn select" id="{{this.order}}">Select</button>
+             </li>
+        {{/each}}
+</template>
+
+<template name="familyArea">
+    <h4>Select a Family within the {{orderName}} Order</h4>
+        {{#each familyNames}}
+            <li>
+                {{this.family}}
+                <br>
+                {{this.count}}
+                <br>
+                {{this.extinct}}
+                <br>
+                 {{this.description}}
+                <br>
+                <button class="btn select" id="{{this.family}}">Select</button>
+             </li>
+        {{/each}}
+</template>
+
+<template name="genusArea">
+    <h4>Select a Genus within the {{familyName}} Family</h4>
+        {{#each genusNames}}
+            <li>
+                {{this.genus}}
+                <br>
+                {{this.count}}
+                <br>
+                {{this.extinct}}
+                <br>
+                 {{this.description}}
+                <br>
+                <button class="btn select" id="{{this.genus}}">Select</button>
+             </li>
+        {{/each}}
+</template>
+
+<template name="speciesArea">
+    <h4>Add a species to the genus {{genusName}}</h4>
+    <form>
+
+    </form>    
 </template>
