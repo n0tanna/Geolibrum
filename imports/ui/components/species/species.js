@@ -31,7 +31,7 @@ let genusHolder = new ReactiveVar();
 
 let dbHolder = new ReactiveArray();
 
-function loadInfo(info, taxLevel, pluralInfo) {
+function loadInfo(info, info2,  taxLevel, pluralInfo) {
     if (info === "") {
         dbHolder.clear();
         let tempHolderStart = Species.find().fetch();
@@ -47,23 +47,25 @@ function loadInfo(info, taxLevel, pluralInfo) {
     }
     else {
         dbHolder.forEach(function (values) {
-            console.log(pluralInfo);
             if (values[info] === taxLevel) {
                 let tempHolder = values[pluralInfo];
-                console.log(tempHolder);
                 dbHolder.clear();
                 tempHolder.forEach(function (innerValues) {
-                    if(innerValues[info] === "N/A" && !(innerValues[info] == "phylum")) {
-                        genusHolder.set("yes");
-                        console.log("ok");
-                    }
-                    else {
-                        dbHolder.push(innerValues);
-                    }
+                    dbHolder.push(innerValues);
                 });
             }
         });
     }
+
+    dbHolder.forEach(function (value) {
+        let name = value[info2];
+        if (name === "N/A" && !(value.hasOwnProperty('description'))) {
+            genusHolder.set("true");
+        }
+        else {
+            genusHolder.set("");
+        }
+    });
 }
 
 if (Meteor.isClient) {
@@ -95,7 +97,7 @@ if (Meteor.isClient) {
         familyValue: function () {
             return familyHolder.get();
         },
-        
+
         genusValue: function () {
             return genusHolder.get();
         },
@@ -195,13 +197,6 @@ if (Meteor.isClient) {
         }
     });
 
-    Template.speciesArea.helpers({
-
-        genusName: function () {
-            return genus;
-        }
-    });
-
     Template.species.onCreated(function nice() {
         loadInfo("");
         dButton.set("true");
@@ -213,7 +208,7 @@ if (Meteor.isClient) {
             domain = "";
             domainHolder.set("");
             kingdomHolder.set("");
-            
+
             loadInfo("");
 
             dButton.set("");
@@ -227,9 +222,11 @@ if (Meteor.isClient) {
             dbHolder.clear();
 
             loadInfo("");
-            loadInfo("domain", domain, "kingdoms");
+            loadInfo("domain", "kingdom", domain, "kingdoms");
 
             kButton.set("");
+            let button = document.getElementById('domainButton');
+            button.disabled = false;
         },
 
         'click .phylum': function () {
@@ -239,10 +236,12 @@ if (Meteor.isClient) {
             dbHolder.clear();
 
             loadInfo("");
-            loadInfo("domain", domain, "kingdoms");
-            loadInfo("kingdom", kingdom, "phylums");
+            loadInfo("domain", "kingdom", domain, "kingdoms");
+            loadInfo("kingdom", "phylum", kingdom, "phylums");
 
             pButton.set("");
+            let button = document.getElementById('kingdomButton');
+            button.disabled = false;
         },
 
         'click .class': function () {
@@ -252,11 +251,13 @@ if (Meteor.isClient) {
             dbHolder.clear();
 
             loadInfo("");
-            loadInfo("domain", domain, "kingdoms");
-            loadInfo("kingdom", kingdom, "phylums");
-            loadInfo("phylum", phylum, "classes");
-
+            loadInfo("domain", "kingdom", domain, "kingdoms");
+            loadInfo("kingdom", "phylum", kingdom, "phylums");
+            loadInfo("phylum", "class", phylum, "classes");
+            
             cButton.set("");
+            let button = document.getElementById('phylumButton');
+            button.disabled = false;
         },
 
         'click .order': function () {
@@ -267,12 +268,14 @@ if (Meteor.isClient) {
             dbHolder.clear();
 
             loadInfo("");
-            loadInfo("domain", domain, "kingdoms");
-            loadInfo("kingdom", kingdom, "phylums");
-            loadInfo("phylum", phylum, "classes");
-            loadInfo("class", classes, "orders");
+            loadInfo("domain", "kingdom", domain, "kingdoms");
+            loadInfo("kingdom", "phylum", kingdom, "phylums");
+            loadInfo("phylum", "class", phylum, "classes");
+            loadInfo("class", "order", classes, "orders");
 
             oButton.set("");
+            let button = document.getElementById('classButton');
+            button.disabled = false;
         },
 
         'click .family': function () {
@@ -283,13 +286,15 @@ if (Meteor.isClient) {
             dbHolder.clear();
 
             loadInfo("");
-            loadInfo("domain", domain, "kingdoms");
-            loadInfo("kingdom", kingdom, "phylums");
-            loadInfo("phylum", phylum, "classes");
-            loadInfo("class", classes, "orders");
-            loadInfo("order", order, "families");
+            loadInfo("domain", "kingdom", domain, "kingdoms");
+            loadInfo("kingdom", "phylum", kingdom, "phylums");
+            loadInfo("phylum", "class", phylum, "classes");
+            loadInfo("class", "order", classes, "orders");
+            loadInfo("order", "family", order, "families");
 
             fButton.set("");
+            let button = document.getElementById('orderButton');
+            button.disabled = false;
         },
 
         'click .genus': function () {
@@ -300,14 +305,16 @@ if (Meteor.isClient) {
             dbHolder.clear();
 
             loadInfo("");
-            loadInfo("domain", domain, "kingdoms");
-            loadInfo("kingdom", kingdom, "phylums");
-            loadInfo("phylum", phylum, "classes");
-            loadInfo("class", classes, "orders");
-            loadInfo("order", order, "families");
-            loadInfo("family", family, "genera");
+            loadInfo("domain", "kingdom", domain, "kingdoms");
+            loadInfo("kingdom", "phylum", kingdom, "phylums");
+            loadInfo("phylum", "class", phylum, "classes");
+            loadInfo("class", "order", classes, "orders");
+            loadInfo("order", "family", order, "families");
+            loadInfo("family", "genus", family, "genera");
 
             gButton.set("");
+            let button = document.getElementById('familyButton');
+            button.disabled = false;
         },
 
         'click .select': function (event) {
@@ -316,7 +323,7 @@ if (Meteor.isClient) {
                 domainHolder.set(domain);
                 displayDomain.set("");
 
-                loadInfo("domain", domain, "kingdoms");
+                loadInfo("domain", "kingdom", domain, "kingdoms");
 
                 dButton.set("true");
             }
@@ -325,51 +332,84 @@ if (Meteor.isClient) {
                 domainHolder.set("");
                 kingdomHolder.set(kingdom);
 
-                loadInfo("kingdom", kingdom, "phylums");
+                loadInfo("kingdom", "phylum", kingdom, "phylums");
 
                 kButton.set("true");
+                let button = document.getElementById('domainButton');
+                button.disabled = true;
             }
             else if (phylum === "") {
                 phylum = event.currentTarget.getAttribute("id");
                 kingdomHolder.set("");
                 phylumHolder.set(phylum);
 
-                loadInfo("phylum", phylum, "classes");
+                loadInfo("phylum", "class", phylum, "classes");
+
+                let response = genusHolder.get();
+                if(response === 'true') {
+                    phylumHolder.set("");
+                }
 
                 pButton.set("true");
+                let button = document.getElementById('kingdomButton');
+                button.disabled = true;
             }
             else if (classes === "") {
                 classes = event.currentTarget.getAttribute("id");
                 phylumHolder.set("");
                 classHolder.set(classes);
 
-                loadInfo("class", classes, "orders");
+                loadInfo("class", "order", classes, "orders");
+
+                let response = genusHolder.get();
+                if(response === 'true') {
+                    classHolder.set("");
+                }
 
                 cButton.set("true");
+                let button = document.getElementById('phylumButton');
+                button.disabled = true;
             }
             else if (order == "") {
                 order = event.currentTarget.getAttribute("id");
                 classHolder.set("");
                 orderHolder.set(order);
 
-                loadInfo("order", order, "families");
+                loadInfo("order", "family", order, "families");
+
+                let response = genusHolder.get();
+                if(response === 'true') {
+                    orderHolder.set("");
+                }
 
                 oButton.set("true");
+                let button = document.getElementById('classButton');
+                button.disabled = true;
             }
             else if (family == "") {
                 family = event.currentTarget.getAttribute("id");
                 orderHolder.set("");
                 familyHolder.set(order);
 
-                loadInfo("family", family, "genera");
+                loadInfo("family", "genus", family, "genera");
 
+                let response = genusHolder.get();
+                if(response === 'true') {
+                    familyHolder.set("");
+                }
+
+                let button = document.getElementById('orderButton');
+                button.disabled = true;
                 fButton.set("true");
             }
             else if (genus == "") {
                 genus = event.currentTarget.getAttribute("id");
                 familyHolder.set("");
                 genusHolder.set(order);
+
                 gButton.set("true");
+                let button = document.getElementById('familyButton');
+                button.disabled = true;
             }
         }
     });

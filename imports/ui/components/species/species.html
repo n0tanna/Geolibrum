@@ -5,31 +5,31 @@
     {{/if}}
 
     {{#if buttonDomain}}
-        <button class="btn domain">Domains</button>
+        <button class="btn domain" id="domainButton">Domains</button>
     {{/if}}
 
     {{#if buttonKingdom}}
-        <button class="btn kingdom">Kingdoms</button>
+        <button class="btn kingdom" id="kingdomButton">Kingdoms</button>
     {{/if}}
 
     {{#if buttonPhylum}}
-        <button class="btn phylum">Phylums</button>
+        <button class="btn phylum" id="phylumButton">Phylums</button>
     {{/if}}
 
     {{#if buttonClass}}
-        <button class="btn class">Classes</button>
+        <button class="btn class" id="classButton">Classes</button>
     {{/if}}
 
     {{#if buttonOrder}}
-        <button class="btn order">Orders</button>
+        <button class="btn order" id="orderButton">Orders</button>
     {{/if}}
 
     {{#if buttonFamily}}
-        <button class="btn family">Families</button>
+        <button class="btn family" id="familyButton">Families</button>
     {{/if}}
 
     {{#if buttonGenus}}
-        <button class="btn genus">Genera</button>
+        <button class="btn genus" id="genusButton">Genera</button>
     {{/if}}
 
     {{#if domainValue}}
@@ -68,7 +68,11 @@
                 <li>
                     <img src="{{this.image}}" width="100" height="100">
                     <br>
+                    <label for="name">Domain:</label>
+                    <br>
                     {{this.domain}}
+                    <br>
+                    <label for="name">Description:</label>
                     <br>
                     {{this.description}}
                     <br>
@@ -82,7 +86,11 @@
     <h4>Select a Kingdom within the {{domainName}} Domain</h4>
         {{#each kingdomNames}}
             <li>
+                <label for="name">Kingdom:</label>
+                <br>
                 {{this.kingdom}}
+                <br>
+                <label for="name">Description:</label>
                 <br>
                     {{this.description}}
                 <br>
@@ -96,11 +104,19 @@
     <h4>Select a Phylum within the {{kingdomName}} Kingdom</h4>
         {{#each phylumNames}}
             <li>
+                <label for="name">Phylum:</label>
+                <br>
                 {{this.phylum}}
+                <br>
+                <label for="count">Amount:</label>
                 <br>
                 {{this.count}}
                 <br>
+                <label for="extinict">Extinct:</label>
+                <br>
                 {{this.extinct}}
+                <br>
+                <label for="count">Description:</label>
                 <br>
                  {{this.description}}
                 <br>
@@ -113,11 +129,19 @@
     <h4>Select a Class within the {{phylumName}} Phylum</h4>
         {{#each classNames}}
             <li>
+                <label for="name">Class:</label>
+                <br>
                 {{this.class}}
+                <br>
+                <label for="count">Amount:</label>
                 <br>
                 {{this.count}}
                 <br>
+                <label for="extinict">Extinct:</label>
+                <br>
                 {{this.extinct}}
+                <br>
+                <label for="count">Description:</label>
                 <br>
                  {{this.description}}
                 <br>
@@ -130,11 +154,19 @@
     <h4>Select an Order within the {{className}} Phylum</h4>
         {{#each orderNames}}
             <li>
+                <label for="name">Order:</label>
+                <br>
                 {{this.order}}
+                <br>
+                <label for="count">Amount:</label>
                 <br>
                 {{this.count}}
                 <br>
+                <label for="extinict">Extinct:</label>
+                <br>
                 {{this.extinct}}
+                <br>
+                <label for="count">Description:</label>
                 <br>
                  {{this.description}}
                 <br>
@@ -147,11 +179,19 @@
     <h4>Select a Family within the {{orderName}} Order</h4>
         {{#each familyNames}}
             <li>
+                <label for="name">Family:</label>
+                <br>
                 {{this.family}}
+                <br>
+                <label for="count">Amount:</label>
                 <br>
                 {{this.count}}
                 <br>
+                <label for="extinict">Extinct:</label>
+                <br>
                 {{this.extinct}}
+                <br>
+                <label for="count">Description:</label>
                 <br>
                  {{this.description}}
                 <br>
@@ -164,11 +204,19 @@
     <h4>Select a Genus within the {{familyName}} Family</h4>
         {{#each genusNames}}
             <li>
+                <label for="name">Genus:</label>
+                <br>
                 {{this.genus}}
+                <br>
+                <label for="count">Amount:</label>
                 <br>
                 {{this.count}}
                 <br>
+                <label for="extinict">Extinct:</label>
+                <br>
                 {{this.extinct}}
+                <br>
+                <label for="count">Description:</label>
                 <br>
                  {{this.description}}
                 <br>
@@ -178,8 +226,22 @@
 </template>
 
 <template name="speciesArea">
-    <h4>Add a species to the genus {{genusName}}</h4>
-    <form>
-
+    <h4>Add new Species</h4>
+    <form id="formEntry">
+        <label for="imageUpload">Species Image:</label>
+        <br>
+        <input type="file" name="imageUpload" id="imageUpload">
+        <br>
+        <label for="speciesName">Species Name:</label>
+        <br>
+        <input type="text" name="speciesName" id="speciesName">
+        <br>
+        <label for="extinct">Extinct:</label>
+        <br>
+        <input type="text" name="extinct" id="extinct">
+        <br>
+        <label for="description">Description:</label>
+        <br>
+        <input type="text" name="description" id="description">
     </form>    
 </template>
