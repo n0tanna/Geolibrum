@@ -7,6 +7,7 @@ import { Species } from "/imports/api/species/species";
 import { Taxonomy } from "/imports/api/taxonomy.js";
 import '/imports/api/location/methods.js';
 import '/imports/api/log-data/methods.js';
+import '/imports/api/species/methods.js';
 
 if (Meteor.isServer) {
     

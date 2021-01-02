@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { LogData } from "./log-data";
+
 Meteor.methods({
     addLogData: function (logEntered) {
         LogData.insert({

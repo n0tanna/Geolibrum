@@ -228,6 +228,9 @@
 <template name="speciesArea">
     <h4>Add new Species</h4>
     <form id="formEntry">
+        {{#if updateDisplay}}
+            <div id="error">{{updateDisplay}}</div>
+        {{/if}}
         <label for="imageUpload">Species Image:</label>
         <br>
         <input type="file" name="imageUpload" id="imageUpload" accept="jpg,png" multiple="multiple">
@@ -237,7 +240,7 @@
         <input type="text" name="speciesName" id="speciesName">
         <br>
         {{#if errorDisplay}}
-        <div id="error">Please enter a species name.</div>
+            <div id="error">Please enter a species name.</div>
         {{/if}}
         <br>
         <label for="timePeriod">Time Period:</label>
@@ -245,7 +248,7 @@
         <div id="timePeriod">
         </div>
         {{#if deleteButton}}
-            <button class="btn remove">x</button>
+            <button type="button" class="btn remove">x</button>
         {{/if}}
         <br>
         <button class="btn time">Choose Geological Time Period</button>
