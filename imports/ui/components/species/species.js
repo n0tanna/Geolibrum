@@ -1,8 +1,10 @@
 import './species.html';
 import { Template } from 'meteor/templating';
 import { Species } from '/imports/api/species/species.js';
+import { GeologicalTime } from '/imports/api/geological-time.js';
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
+import { Modal } from 'bootstrap';
 
 let domain = "";
 let kingdom = "";
@@ -11,6 +13,10 @@ let classes = "";
 let order = "";
 let family = "";
 let genus = "";
+
+let eon = "";
+let era = "";
+let time = "";
 
 let kButton = new ReactiveVar();
 let dButton = new ReactiveVar();
@@ -29,7 +35,12 @@ let orderHolder = new ReactiveVar();
 let familyHolder = new ReactiveVar();
 let genusHolder = new ReactiveVar();
 
+let displayEons = new ReactiveVar("yes");
+let displayEras = new ReactiveVar();
+let displayTime = new ReactiveVar();
+
 let dbHolder = new ReactiveArray();
+let timeHolder = new ReactiveArray();
 
 function loadInfo(info, info2,  taxLevel, pluralInfo) {
     if (info === "") {
@@ -66,6 +77,34 @@ function loadInfo(info, info2,  taxLevel, pluralInfo) {
             genusHolder.set("");
         }
     });
+}
+
+function loadTime(timeTitle, timeName, pluralInfo) {
+    if(timeTitle === "") {
+        timeHolder.clear();
+        let tempHolderStart = GeologicalTime.find().fetch();
+        let tempHolderTime = new Array();
+        tempHolderStart.forEach(element => tempHolderTime.push(element.eons));
+
+        tempHolderTime.forEach(function (timeValue) {
+            timeValue.forEach(function (time) {
+                timeHolder.push(time);
+            });
+        });
+
+    }
+    else {
+        timeHolder.forEach(function (values) {
+            if (values[timeTitle] === timeName) {
+                let tempHolder = values[pluralInfo];
+                timeHolder.clear();
+                tempHolder.forEach(function (innerValues) {
+                    timeHolder.push(innerValues);
+                    console.log(innerValue);
+                });
+            }
+        });
+    }
 }
 
 if (Meteor.isClient) {
@@ -197,9 +236,83 @@ if (Meteor.isClient) {
         }
     });
 
+    Template.timeModal.helpers({
+        timePeriods: function () {
+            return timeHolder.list();
+        },
+
+        eonDisplay: function () {
+            return displayEons.get();
+        },
+
+        eraDisplay: function () {
+            return displayEras.get();
+        },
+
+        timeDisplay: function () {
+            return displayTime.get();
+        },
+
+        eonName: function () {
+            return eon;
+        },
+
+        eraName: function () {
+            return era;
+        }
+    });
+
     Template.species.onCreated(function nice() {
         loadInfo("");
-        dButton.set("true");
+        loadTime("");
+    });
+
+    Template.speciesArea.events({
+        'submit #formEntry': function (e) {
+            e.preventDefault();
+
+            let name = e.target.speciesName.value;
+            let ext = e.target.extinct.value;
+            let desc = e.target.description.value;
+            
+        },
+
+        'click .time': function () {
+            Modal.show('timeModal');
+        }
+    });
+
+    Template.timeModal.events({
+        'click .eon': function () {
+            displayEras.set("");
+            displayEons.set("");
+
+            displayEons.set("yes");
+            eon = "";
+
+            loadTime("");
+        },
+
+        'click .select': function (e) {
+            if(eon === "") {
+                eon = this.eon;
+                displayEons.set("");
+                displayEras.set(eon);
+
+                loadTime("eon", eon, "eras");
+            }
+            else if (era === "") {
+                era = e.currentTarget.getAttribute("id");
+                console.log(era);
+                displayEras.set("");
+                displayTime.set(era);
+
+                loadTime("era", era, "time_period");
+            }
+            else if (time === "") {
+               
+            }
+        }
     });
 
     Template.species.events({

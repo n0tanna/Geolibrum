@@ -236,12 +236,94 @@
         <br>
         <input type="text" name="speciesName" id="speciesName">
         <br>
+        {{#if timeHolder}}
+            <div id="timeArea">
+
+            </div>
+        {{/if}}
+        <button class="btn time">Choose Geological Time Period</button>
+        <br>
         <label for="extinct">Extinct:</label>
         <br>
-        <input type="text" name="extinct" id="extinct">
+        <select id="extinct" name="extinct">
+            <option id="extValue" value="yes">Yes</option>
+            <option id="extValue" value="no">No</option>
+        </select>
         <br>
         <label for="description">Description:</label>
         <br>
-        <input type="text" name="description" id="description">
+        <textarea name="description" id="description" rows="4" cols="50"></textarea>
+        <br>
+        <input type="submit" id="submit" value="Create Species">
     </form>    
+</template>
+
+<template name="timeModal">
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Pick Geological Time Period</h4>
+                </div>
+                <div class="modal-body">
+                    {{#if eonDisplay}}
+                    <h4>Eons</h4>
+                        {{#each timePeriods}}
+                            <li>
+                                <label for="name">Name:</label>
+                                <br>
+                                {{this.eon}}
+                                <br>
+                                <label for="description">Time Frame:</label>
+                                <br>
+                                {{this.time_frame}}
+                                <br>
+                                <button class="btn select" id="{{this.eon}}">Select</button>
+                            </li>
+                        {{/each}}
+                    {{/if}}
+
+                    {{#if eraDisplay}}
+                        <h4>Eras within {{eonName}}</h4>
+                        <button class="btn eon" id="eonButton">Eons</button>
+                        {{#each timePeriods}}
+                            <li>
+                                <label for="name">Name:</label>
+                                <br>
+                                {{this.era}}
+                                <br>
+                                <label for="description">Time Frame:</label>
+                                <br>
+                                {{this.time_frame}}
+                                <br>
+                                <button class="btn select" id="{{this.era}}">Select</button>
+                            </li>
+                        {{/each}}
+                    {{/if}}
+
+                    {{#if timeDisplay}}
+                    <h4>Time Periods within {{eraName}}</h4>
+                        <button class="btn eon" id="eonButton">Eons</button>
+                        <button class="btn era" id="eraButton">Eras</button>
+                        {{#each timePeriods}}
+                            <li>
+                                <label for="name">Name:</label>
+                                <br>
+                                {{this.time_period_name}}
+                                <br>
+                                <label for="description">Time Frame:</label>
+                                <br>
+                                {{this.time_frame}}
+                                <br>
+                                <button class="btn select" id="{{this.time_period_name}}" data-dismiss="modal">Select</button>
+                            </li>
+                        {{/each}}
+                    {{/if}}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn save" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
