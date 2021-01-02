@@ -230,17 +230,24 @@
     <form id="formEntry">
         <label for="imageUpload">Species Image:</label>
         <br>
-        <input type="file" name="imageUpload" id="imageUpload">
+        <input type="file" name="imageUpload" id="imageUpload" accept="jpg,png" multiple="multiple">
         <br>
         <label for="speciesName">Species Name:</label>
         <br>
         <input type="text" name="speciesName" id="speciesName">
         <br>
-        {{#if timeHolder}}
-            <div id="timeArea">
-
-            </div>
+        {{#if errorDisplay}}
+        <div id="error">Please enter a species name.</div>
         {{/if}}
+        <br>
+        <label for="timePeriod">Time Period:</label>
+        <br>
+        <div id="timePeriod">
+        </div>
+        {{#if deleteButton}}
+            <button class="btn remove">x</button>
+        {{/if}}
+        <br>
         <button class="btn time">Choose Geological Time Period</button>
         <br>
         <label for="extinct">Extinct:</label>
@@ -303,19 +310,19 @@
 
                     {{#if timeDisplay}}
                     <h4>Time Periods within {{eraName}}</h4>
-                        <button class="btn eon" id="eonButton">Eons</button>
+                    <h6>Choose one </h6>
                         <button class="btn era" id="eraButton">Eras</button>
                         {{#each timePeriods}}
                             <li>
                                 <label for="name">Name:</label>
                                 <br>
-                                {{this.time_period_name}}
+                                {{this.time_period}}
                                 <br>
                                 <label for="description">Time Frame:</label>
                                 <br>
                                 {{this.time_frame}}
                                 <br>
-                                <button class="btn select" id="{{this.time_period_name}}" data-dismiss="modal">Select</button>
+                                <button class="btn select" id="{{this.time_period}}" data-dismiss="modal">Select</button>
                             </li>
                         {{/each}}
                     {{/if}}

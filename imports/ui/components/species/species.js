@@ -2,9 +2,9 @@ import './species.html';
 import { Template } from 'meteor/templating';
 import { Species } from '/imports/api/species/species.js';
 import { GeologicalTime } from '/imports/api/geological-time.js';
+import { uploadImage } from '../util.js';
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
-import { Modal } from 'bootstrap';
 
 let domain = "";
 let kingdom = "";
@@ -17,6 +17,9 @@ let genus = "";
 let eon = "";
 let era = "";
 let time = "";
+
+let timeChosen = "";
+let textTimeArea = "";
 
 let kButton = new ReactiveVar();
 let dButton = new ReactiveVar();
@@ -35,6 +38,10 @@ let orderHolder = new ReactiveVar();
 let familyHolder = new ReactiveVar();
 let genusHolder = new ReactiveVar();
 
+let timeNHolder = new ReactiveVar();
+
+let error = new ReactiveVar();
+
 let displayEons = new ReactiveVar("yes");
 let displayEras = new ReactiveVar();
 let displayTime = new ReactiveVar();
@@ -42,7 +49,7 @@ let displayTime = new ReactiveVar();
 let dbHolder = new ReactiveArray();
 let timeHolder = new ReactiveArray();
 
-function loadInfo(info, info2,  taxLevel, pluralInfo) {
+function loadInfo(info, info2, taxLevel, pluralInfo) {
     if (info === "") {
         dbHolder.clear();
         let tempHolderStart = Species.find().fetch();
@@ -80,7 +87,7 @@ function loadInfo(info, info2,  taxLevel, pluralInfo) {
 }
 
 function loadTime(timeTitle, timeName, pluralInfo) {
-    if(timeTitle === "") {
+    if (timeTitle === "") {
         timeHolder.clear();
         let tempHolderStart = GeologicalTime.find().fetch();
         let tempHolderTime = new Array();
@@ -100,7 +107,6 @@ function loadTime(timeTitle, timeName, pluralInfo) {
                 timeHolder.clear();
                 tempHolder.forEach(function (innerValues) {
                     timeHolder.push(innerValues);
-                    console.log(innerValue);
                 });
             }
         });
@@ -236,6 +242,16 @@ if (Meteor.isClient) {
         }
     });
 
+    Template.speciesArea.helpers({
+        deleteButton: function () {
+            return timeNHolder.get();
+        },
+
+        errorDisplay: function () {
+            return error.get();
+        }
+    });
+
     Template.timeModal.helpers({
         timePeriods: function () {
             return timeHolder.list();
@@ -274,27 +290,72 @@ if (Meteor.isClient) {
             let name = e.target.speciesName.value;
             let ext = e.target.extinct.value;
             let desc = e.target.description.value;
-            
+            let img = e.target.imageUpload.files;
+
+            if(name === "") {
+                error.set("yes");
+            }
+            else {
+                error.set();
+
+                let inputObj = {
+                    species: name,
+                    extinct: ext,
+                    description: desc,
+                    images: []
+                }
+                
+                if(img === "") {
+
+                }
+                else {
+                    let imgArray = new Array();
+
+                    for(i = 0; i < img.length; i++) {
+                        let imageLink = "s3://geolibrum-assets/" + "species/species/" + img[i].name;
+                        imgArray.push(imageLink);
+                        uploadImage(img[i], "species/species/" + img[i].name);
+                    }
+
+                    inputObj.images = imgArray;
+                    console.log(inputObj);
+                }
+            } 
         },
 
         'click .time': function () {
             Modal.show('timeModal');
+            textTimeArea = document.getElementById('timePeriod');
+        },
+
+        'click .remove': function () {
+            textTimeArea.textContent = "";
+            timeNHolder.set("");
         }
     });
 
     Template.timeModal.events({
         'click .eon': function () {
             displayEras.set("");
-            displayEons.set("");
-
             displayEons.set("yes");
+
             eon = "";
 
             loadTime("");
         },
 
+        'click .era': function () {
+            displayEras.set(era);
+            displayTime.set("");
+
+            era = "";
+
+            loadTime("");
+            loadTime("eon", eon, "eras");
+        },
+
         'click .select': function (e) {
-            if(eon === "") {
+            if (eon === "") {
                 eon = this.eon;
                 displayEons.set("");
                 displayEras.set(eon);
@@ -303,14 +364,24 @@ if (Meteor.isClient) {
             }
             else if (era === "") {
                 era = e.currentTarget.getAttribute("id");
-                console.log(era);
                 displayEras.set("");
                 displayTime.set(era);
 
-                loadTime("era", era, "time_period");
+                loadTime("era", era, "time_periods");
             }
             else if (time === "") {
-               
+                time = e.currentTarget.getAttribute("id");
+                timeChosen = eon + ", " + era + ", " + time;
+                textTimeArea.textContent = timeChosen;
+                timeNHolder.set("yes");
+
+                loadTime("");
+                eon = "";
+                era = "";
+                time = "";
+                displayEons.set("yes");
+                displayEras.set("");
+                displayTime.set("");
             }
         }
     });
@@ -367,7 +438,7 @@ if (Meteor.isClient) {
             loadInfo("domain", "kingdom", domain, "kingdoms");
             loadInfo("kingdom", "phylum", kingdom, "phylums");
             loadInfo("phylum", "class", phylum, "classes");
-            
+
             cButton.set("");
             let button = document.getElementById('phylumButton');
             button.disabled = false;
@@ -459,7 +530,7 @@ if (Meteor.isClient) {
                 loadInfo("phylum", "class", phylum, "classes");
 
                 let response = genusHolder.get();
-                if(response === 'true') {
+                if (response === 'true') {
                     phylumHolder.set("");
                 }
 
@@ -475,7 +546,7 @@ if (Meteor.isClient) {
                 loadInfo("class", "order", classes, "orders");
 
                 let response = genusHolder.get();
-                if(response === 'true') {
+                if (response === 'true') {
                     classHolder.set("");
                 }
 
@@ -491,7 +562,7 @@ if (Meteor.isClient) {
                 loadInfo("order", "family", order, "families");
 
                 let response = genusHolder.get();
-                if(response === 'true') {
+                if (response === 'true') {
                     orderHolder.set("");
                 }
 
@@ -507,7 +578,7 @@ if (Meteor.isClient) {
                 loadInfo("family", "genus", family, "genera");
 
                 let response = genusHolder.get();
-                if(response === 'true') {
+                if (response === 'true') {
                     familyHolder.set("");
                 }
 

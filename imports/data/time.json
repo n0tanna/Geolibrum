@@ -191,7 +191,7 @@
                   "time_frame": "N/A",
                   "time_period": [
                     { 
-                        "time_period_name": "No time periods.",
+                        "time_period": "N/A",
                         "time_frame": "N/A"
                     }
                   ] 
