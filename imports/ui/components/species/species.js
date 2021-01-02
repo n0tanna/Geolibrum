@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import { Taxonomy } from '/imports/api/taxonomy.js';
 import { GeologicalTime } from '/imports/api/geological-time.js';
 import { uploadImage } from '../util.js';
+import '/imports/api/species/methods.js'
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 
@@ -292,35 +293,26 @@ if (Meteor.isClient) {
             let ext = e.target.extinct.value;
             let desc = e.target.description.value;
             let img = e.target.imageUpload.files;
+            let imgArray = new Array();
 
             if(name === "") {
                 error.set("yes");
             }
             else {
                 error.set();
-
-                let inputObj = {
-                    species: name,
-                    extinct: ext,
-                    description: desc,
-                    images: []
-                }
                 
                 if(img === "") {
 
                 }
                 else {
-                    let imgArray = new Array();
-
                     for(i = 0; i < img.length; i++) {
                         let imageLink = "s3://geolibrum-assets/" + "species/species/" + img[i].name;
                         imgArray.push(imageLink);
                         uploadImage(img[i], "species/species/" + img[i].name);
                     }
-
                     inputObj.images = imgArray;
-                    console.log(inputObj);
                 }
+
             } 
         },
 

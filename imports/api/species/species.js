@@ -3,6 +3,11 @@ import { Mongo } from 'meteor/mongo';
 const sp = new Mongo.Collection('species');
 
 sp.schema = new SimpleSchema ({
+    domain: {type: String},
+    kingdom: {type: String},
+    phylum: {type: String},
+    order: {type: String},
+    family: {type: String},
     genus: {type: String},
     species: {type: String},
     "images.$": {
