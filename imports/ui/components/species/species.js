@@ -1,6 +1,6 @@
 import './species.html';
 import { Template } from 'meteor/templating';
-import { Species } from '/imports/api/species/species.js';
+import { Taxonomy } from '/imports/api/taxonomy.js';
 import { GeologicalTime } from '/imports/api/geological-time.js';
 import { uploadImage } from '../util.js';
 import 'bootstrap'
@@ -52,7 +52,8 @@ let timeHolder = new ReactiveArray();
 function loadInfo(info, info2, taxLevel, pluralInfo) {
     if (info === "") {
         dbHolder.clear();
-        let tempHolderStart = Species.find().fetch();
+        let tempHolderStart = Taxonomy.find().fetch();
+        console.log(tempHolderStart);
         let tempHolderDoms = new Array();
 
         tempHolderStart.forEach(element => tempHolderDoms.push(element.domains));
