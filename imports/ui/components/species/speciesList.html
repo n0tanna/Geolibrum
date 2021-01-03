@@ -1,47 +1,95 @@
 <template name="speciesList">
     <h3>Species</h3>
+    {{#if speciesHome}}
+        {{> speciesDisplay}}
+    {{/if}}
+
+    {{#if viewPage}}
+        {{> view}}
+    {{/if}}
+</template>
+
+<template name="speciesDisplay">
     <button class="btn addSpecies">Add New Species</button>
     <input type="text" id="search" size="30" placeholder="Search"/>
     <button class="btn search">Search</button>
     <br>
+    {{#if displayMessage}}
+        <div id="message">{{displayasMessage}}</div>
+    {{/if}}
     <ul>
         {{#each displaySpecies}}
             <li>
                 <label for="species">Species</label>
                 <br>
-                <p>{{this.species}}</p>
+                <h5>{{this.species}}</h5>
                 <br>
                 <label for="genus">Genus</label>
                 <br>
-                <p>{{this.genus}}</p>
+                <h5>{{this.genus}}</h5>
                 <br>
                 <label for="family">Family</label>
                 <br>
-                <p>{{this.family}}</p>
+                <h5>{{this.family}}</h5>
                 <br>
                 <label for="order">Order</label>
                 <br>
-                <h6>{{this.order}}</h6>
+                <h5>{{this.order}}</h5>
                 <br>
                 <label for="phylum">Phylum</label>
                 <br>
-                <h6>{{this.phylum}}</h6>
+                <h5>{{this.phylum}}</h5>
                 <br>
                 <label for="class">Class</label>
                 <br>
-                <h6>{{this.class}}</h6>
+                <h5>{{this.class}}</h5>
                 <br>
                 <label for="kingdom">Kingdom</label>
                 <br>
-                <h6>{{this.kingdom}}</h6>
+                <h5>{{this.kingdom}}</h5>
                 <br>
                 <label for="domain">Domain</label>
                 <br>
-                <h6>{{this.domain}}</h6>
+                <h5>{{this.domain}}</h5>
                 <br>
-                <button class="btn edit">View</button>
-                <button class="delete">X</button>
+                <button class="btn view">View</button>
+                <button class="btn delete">X</button>
             </li>
         {{/each}}
     </ul>
+</template>
+
+<template name="view">
+    <h3>{{speciesValue.species}}</h3>
+    <p>{{speciesValue.genus}} || {{speciesValue.family}} || {{speciesValue.class}} || {{speciesValue.order}} || {{speciesValue.phylum}} || {{speciesValue.kingdom}} || {{speciesValue.domain}}</p>
+    {{#each images}}
+        <img id="images" src="{{images.index}}">
+    {{/each}}
+    <label for="extinct">Extinct:</label>
+    <p>{{speciesValue.extinct}}</p>
+    <br>
+    <label for="description">Description:</label>
+    <br>
+    <p>{{speciesValue.description}}</p>
+    <br>
+    <button class="btn update">Update</button>
+    <button class="btn return">Return</button>
+</template>
+
+<template name="updateModal">
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Update {{speciesValue.species}}</h4>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button class="btn save" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>

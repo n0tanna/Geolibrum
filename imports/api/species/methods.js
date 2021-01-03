@@ -16,5 +16,9 @@ Meteor.methods({
             description: newSp.description,
             date_range: newSp.time
         });
-    }
+    },
+
+    deleteSpecies: function(_id) {
+        Species.remove(_id);
+    },
 });
