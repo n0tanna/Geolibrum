@@ -335,6 +335,7 @@ if (Meteor.isClient) {
                     order: order,
                     family: family,
                     genus: genus,
+                    class: classes,
                     species: name,
                     images: imgArray,
                     extinct: ext,

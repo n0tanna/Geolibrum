@@ -1,7 +1,47 @@
 <template name="speciesList">
     <h3>Species</h3>
     <button class="btn addSpecies">Add New Species</button>
+    <input type="text" id="search" size="30" placeholder="Search"/>
+    <button class="btn search">Search</button>
+    <br>
     <ul>
-        
+        {{#each displaySpecies}}
+            <li>
+                <label for="species">Species</label>
+                <br>
+                <p>{{this.species}}</p>
+                <br>
+                <label for="genus">Genus</label>
+                <br>
+                <p>{{this.genus}}</p>
+                <br>
+                <label for="family">Family</label>
+                <br>
+                <p>{{this.family}}</p>
+                <br>
+                <label for="order">Order</label>
+                <br>
+                <h6>{{this.order}}</h6>
+                <br>
+                <label for="phylum">Phylum</label>
+                <br>
+                <h6>{{this.phylum}}</h6>
+                <br>
+                <label for="class">Class</label>
+                <br>
+                <h6>{{this.class}}</h6>
+                <br>
+                <label for="kingdom">Kingdom</label>
+                <br>
+                <h6>{{this.kingdom}}</h6>
+                <br>
+                <label for="domain">Domain</label>
+                <br>
+                <h6>{{this.domain}}</h6>
+                <br>
+                <button class="btn edit">View</button>
+                <button class="delete">X</button>
+            </li>
+        {{/each}}
     </ul>
 </template>
