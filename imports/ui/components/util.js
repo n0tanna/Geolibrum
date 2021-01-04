@@ -2,7 +2,11 @@ import { Template } from 'meteor/templating';
 import popper from 'popper.js'
 
 const AWS = require('aws-sdk');
-const s3 = new AWS.S3();
+const s3 = new AWS.S3({
+    accessKeyId: Meteor.settings.public.AWSAccessKeyId,
+    secretAccessKey: Meteor.settings.public.AWSSecretAccessKey,
+    region: 'us-east-1'
+});
 
 global.Popper = global.Popper || popper
 
@@ -11,11 +15,6 @@ Meteor.startup(function () {
 });
 
 export function uploadImage(image, directory) {
-    AWS.config.update({
-        accessKeyId: Meteor.settings.public.AWSAccessKeyId,
-        secretAccessKey: Meteor.settings.public.AWSSecretAccessKey
-    });
-
     const params = {
         Bucket: Meteor.settings.public.S3Bucket,
         Key: directory,
@@ -29,11 +28,6 @@ export function uploadImage(image, directory) {
 }
 
 export function deleteImage(imageURL) {
-    AWS.config.update({
-        accessKeyId: Meteor.settings.public.AWSAccessKeyId,
-        secretAccessKey: Meteor.settings.public.AWSSecretAccessKey
-    });
-    
     const params = {
         Bucket: Meteor.settings.public.AWSAccessKeyId,
         Key: imageURL

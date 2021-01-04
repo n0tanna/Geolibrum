@@ -9,6 +9,8 @@ let view = new ReactiveVar();
 let locations = new ReactiveArray();
 let images = new ReactiveArray();
 
+import { deleteImage } from '../util.js';
+
 let speciesObj = '';
 
 Template.speciesList.helpers({
@@ -74,8 +76,16 @@ Template.speciesDisplay.events({
     },
 
     'click .delete': function () {
+        speciesObj = this;
+        let img = speciesObj.images;
+        img.forEach(function (element) {
+            console.log(element.name);
+            deleteImage("species/species/" + element.name);
+        });
+
         Meteor.call('deleteSpecies', this._id);
         updateMessage.set("Deleted " + this.species);
+        
     }
 });
 

@@ -63,7 +63,7 @@
     <h3>{{speciesValue.species}}</h3>
     <p>{{speciesValue.genus}} || {{speciesValue.family}} || {{speciesValue.class}} || {{speciesValue.order}} || {{speciesValue.phylum}} || {{speciesValue.kingdom}} || {{speciesValue.domain}}</p>
     {{#each imageDisplay}}
-        <img id="images" src="{{this}}" width="100" height="100">
+        <img id="images" src="{{this.link}}" width="100" height="100">
     {{/each}}
     <br>
     <label for="extinct">Date Range:</label>

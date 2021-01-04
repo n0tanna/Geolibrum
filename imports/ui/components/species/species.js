@@ -309,7 +309,13 @@ if (Meteor.isClient) {
                 else {
                     for (i = 0; i < img.length; i++) {
                         let imageLink = "https://geolibrum-assets.s3.amazonaws.com/species/species/" + img[i].name;
-                        imgArray.push(imageLink);
+                        let imageName = img[i].name;
+                        let imageObject = {
+                            name: imageName,
+                            link: imageLink
+                        }
+
+                        imgArray.push(imageObject);
                         uploadImage(img[i], "species/species/" + img[i].name);
                     }
                 }
@@ -617,7 +623,7 @@ if (Meteor.isClient) {
                 let button = document.getElementById('phylumButton');
                 button.disabled = true;
             }
-            else if (order == "") {
+            else if (order === "") {
                 order = event.currentTarget.getAttribute("id");
                 classHolder.set("");
                 orderHolder.set(true);
@@ -633,7 +639,7 @@ if (Meteor.isClient) {
                 let button = document.getElementById('classButton');
                 button.disabled = true;
             }
-            else if (family == "") {
+            else if (family === "") {
                 family = event.currentTarget.getAttribute("id");
                 orderHolder.set("");
                 familyHolder.set(true);
@@ -649,7 +655,7 @@ if (Meteor.isClient) {
                 button.disabled = true;
                 fButton.set("true");
             }
-            else if (genus == "") {
+            else if (genus === "") {
                 genus = event.currentTarget.getAttribute("id");
                 familyHolder.set("");
                 genusHolder.set(true);
