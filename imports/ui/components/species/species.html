@@ -1,5 +1,9 @@
 <template name="species">
     <h3>New Species</h3>
+    {{#if updateDisplay}}
+        <div id="error">{{updateDisplay}}</div>
+    {{/if}}
+
     {{#if startValue}}
         {{> domainArea}}
     {{/if}}
@@ -228,9 +232,6 @@
 <template name="speciesArea">
     <h4>Add new Species</h4>
     <form id="formEntry">
-        {{#if updateDisplay}}
-            <div id="error">{{updateDisplay}}</div>
-        {{/if}}
         <label for="imageUpload">Species Image:</label>
         <br>
         <input type="file" name="imageUpload" id="imageUpload" accept="jpg,png" multiple="multiple">
@@ -245,13 +246,17 @@
         <br>
         <label for="timePeriod">Time Period:</label>
         <br>
-        <div id="timePeriod">
-        </div>
-        {{#if deleteButton}}
-            <button type="button" class="btn remove">x</button>
-        {{/if}}
+        {{#each timePerChosen}}
+            <p>{{this.time}}</p>
+            <br>
+            <p>{{this.era}}</p>
+            <br>
+            <p>{{this.eon}}</p>
+            <br>
+            <button type="button" class="btn delete">X</button>
+        {{/each}}
         <br>
-        <button class="btn time">Choose Geological Time Period</button>
+        <button type="button" class="btn time">Choose Geological Time Period</button>
         <br>
         <label for="extinct">Extinct:</label>
         <br>

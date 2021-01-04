@@ -18,9 +18,6 @@ let eon = "";
 let era = "";
 let time = "";
 
-let timeChosen = "";
-let textTimeArea = "";
-
 let kButton = new ReactiveVar();
 let dButton = new ReactiveVar();
 let pButton = new ReactiveVar();
@@ -38,8 +35,6 @@ let orderHolder = new ReactiveVar();
 let familyHolder = new ReactiveVar();
 let genusHolder = new ReactiveVar();
 
-let timeNHolder = new ReactiveVar();
-
 let error = new ReactiveVar();
 let update = new ReactiveVar();
 
@@ -48,6 +43,7 @@ let displayEras = new ReactiveVar();
 let displayTime = new ReactiveVar();
 
 let dbHolder = new ReactiveArray();
+let geoTimeHolder = new ReactiveArray();
 let timeHolder = new ReactiveArray();
 
 function loadInfo(info, info2, taxLevel, pluralInfo) {
@@ -175,6 +171,10 @@ if (Meteor.isClient) {
 
         buttonGenus: function () {
             return gButton.get();
+        },
+
+        updateDisplay: function () {
+            return update.get();
         }
     });
 
@@ -245,16 +245,12 @@ if (Meteor.isClient) {
     });
 
     Template.speciesArea.helpers({
-        deleteButton: function () {
-            return timeNHolder.get();
-        },
-
         errorDisplay: function () {
             return error.get();
         },
-        
-        updateDisplay: function () {
-            return update.get();
+
+        timePerChosen: function () {
+            return geoTimeHolder.list();
         }
     });
 
@@ -301,30 +297,30 @@ if (Meteor.isClient) {
             let img = e.target.imageUpload.files;
             let imgArray = new Array();
 
-            if(name === "") {
+            if (name === "") {
                 error.set("yes");
             }
             else {
                 error.set();
-                
-                if(img === "") {
+
+                if (img === "") {
                     imgArray.push("s3://geolibrum-assets/species/species/default.png");
                 }
                 else {
-                    for(i = 0; i < img.length; i++) {
-                        let imageLink = "s3://geolibrum-assets/species/species/" + img[i].name;
+                    for (i = 0; i < img.length; i++) {
+                        let imageLink = "https://geolibrum-assets.s3.amazonaws.com/species/species/" + img[i].name;
                         imgArray.push(imageLink);
                         uploadImage(img[i], "species/species/" + img[i].name);
                     }
                 }
 
-                if(order === "") {
+                if (order === "") {
                     order = "N/A";
                 }
-                if(family === "") {
+                if (family === "") {
                     family = "N/A";
                 }
-                if(genus === "") {
+                if (genus === "") {
                     genus = "N/A";
                 }
 
@@ -340,21 +336,50 @@ if (Meteor.isClient) {
                     images: imgArray,
                     extinct: ext,
                     description: desc,
-                    date_range: timeChosen
+                    date_range: geoTimeHolder
                 }
 
                 try {
                     Meteor.call('addSpecies', newSpecies);
                     update.set("Upload successful!");
-                } 
-                catch(error) {
+                }
+                catch (error) {
                     update.set("Upload failed!");
                 }
-    
+
+                e.target.reset();
+                geoTimeHolder.clear();
+
+                displayDomain.set(true);
+                domainHolder.set("");
+                kingdomHolder.set("");
+                phylumHolder.set("");
+                classHolder.set("");
+                orderHolder.set("");
+                familyHolder.set("");
+                genusHolder.set("");
+
+                domain = "";
+                kingdom = "";
+                phylum = "";
+                order = "";
+                classes = "";
+                family = "";
+                genus = "";
+
+
+                dButton.set("");
+                kButton.set("");
+                pButton.set("");
+                cButton.set("");
+                oButton.set("");
+                fButton.set("");
+                gButton.set("");
+
+                loadInfo("");
+
             }
-            document.getElementById('timePeriod').innerHTML = "";
-            e.target.reset(); 
-            timeNHolder.set("");
+
         },
 
         'click .time': function () {
@@ -362,9 +387,8 @@ if (Meteor.isClient) {
             textTimeArea = document.getElementById('timePeriod');
         },
 
-        'click .remove': function () {
-            textTimeArea.textContent = "";
-            timeNHolder.set("");
+        'click .delete': function () {
+            geoTimeHolder.remove(this);
         }
     });
 
@@ -405,9 +429,14 @@ if (Meteor.isClient) {
             }
             else if (time === "") {
                 time = e.currentTarget.getAttribute("id");
-                timeChosen = eon + ", " + era + ", " + time;
-                textTimeArea.textContent = timeChosen;
-                timeNHolder.set(true);
+
+                let timeChosen = {
+                    time: time,
+                    era: era,
+                    eon: eon
+                }
+
+                geoTimeHolder.push(timeChosen);
 
                 loadTime("");
                 eon = "";

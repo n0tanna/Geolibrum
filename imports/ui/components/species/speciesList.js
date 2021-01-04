@@ -6,6 +6,9 @@ let updateMessage = new ReactiveVar();
 let home = new ReactiveVar(true);
 let view = new ReactiveVar();
 
+let locations = new ReactiveArray();
+let images = new ReactiveArray();
+
 let speciesObj = '';
 
 Template.speciesList.helpers({
@@ -31,6 +34,14 @@ Template.speciesDisplay.helpers({
 Template.view.helpers({
     speciesValue: function () {
         return speciesObj;
+    },
+
+    locationDisplay: function () {
+        return locations.list();
+    },
+
+    imageDisplay: function () {
+        return images.list();
     }
 });
 
@@ -49,6 +60,17 @@ Template.speciesDisplay.events({
         home.set("");
         view.set(true);
         speciesObj = this;
+        let locs = speciesObj.date_range;
+        let img = speciesObj.images;
+
+        locs.forEach(function (element){
+            locations.push(element);
+        });
+
+        img.forEach(function (element){
+            images.push(element);
+            console.log(element);
+        });
     },
 
     'click .delete': function () {

@@ -15,7 +15,7 @@
     <button class="btn search">Search</button>
     <br>
     {{#if displayMessage}}
-        <div id="message">{{displayasMessage}}</div>
+        <div id="message">{{displayMessage}}</div>
     {{/if}}
     <ul>
         {{#each displaySpecies}}
@@ -62,9 +62,21 @@
 <template name="view">
     <h3>{{speciesValue.species}}</h3>
     <p>{{speciesValue.genus}} || {{speciesValue.family}} || {{speciesValue.class}} || {{speciesValue.order}} || {{speciesValue.phylum}} || {{speciesValue.kingdom}} || {{speciesValue.domain}}</p>
-    {{#each images}}
-        <img id="images" src="{{images.index}}">
+    {{#each imageDisplay}}
+        <img id="images" src="{{this}}" width="100" height="100">
     {{/each}}
+    <br>
+    <label for="extinct">Date Range:</label>
+    {{#each locationDisplay}}
+        <br>
+        <label for="time">Time Period</label>
+        <p>{{this.time}}</p>
+        <label for="time">Era</label>
+        <p>{{this.era}}</p>
+        <label for="time">eon</label>
+        <p>{{this.eon}}</p>
+    {{/each}}
+    <br>
     <label for="extinct">Extinct:</label>
     <p>{{speciesValue.extinct}}</p>
     <br>

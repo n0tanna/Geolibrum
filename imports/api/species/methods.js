@@ -14,7 +14,7 @@ Meteor.methods({
             images: newSp.images,
             extinct: newSp.extinct,
             description: newSp.description,
-            date_range: newSp.time
+            date_range: newSp.date_range
         });
     },
 
