@@ -4,6 +4,7 @@ import { LogData } from "./log-data";
 Meteor.methods({
     addLogData: function (logEntered) {
         LogData.insert({
+            createdBy: locEntered.createdBy,
             log_name: logEntered.logName,
             date_found: logName.date,
             date_created: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(),

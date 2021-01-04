@@ -4,6 +4,7 @@ import { Species } from "./species";
 Meteor.methods({
     addSpecies: function (newSp) {
         Species.insert({
+            createdBy: newSp.createdBy,
             domain: newSp.domain,
             kingdom: newSp.kingdom,
             phylum: newSp.phylum,

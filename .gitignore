@@ -2,3 +2,5 @@
 server/main.js
 node_modules
 settings.json
+debug.log
+.vscode/

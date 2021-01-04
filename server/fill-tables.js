@@ -10,7 +10,28 @@ import '/imports/api/log-data/methods.js';
 import '/imports/api/species/methods.js';
 
 if (Meteor.isServer) {
-    
+    Meteor.publish('location', function() {
+        let currentUserId = this.userId;
+        return Location.find({ createdBy: currentUserId});
+    });
+
+    Meteor.publish('species', function() {
+        let currentUserId = this.userId;
+        return Species.find({ createdBy: currentUserId});
+    });
+
+    Meteor.publish('taxonomy', function() {
+        return Taxonomy.find({});
+    });
+
+    Meteor.publish('log-data', function() {
+        let currentUserId = this.userId;
+        return LogData.find({ createdBy: currentUserId});
+    });
+
+    Meteor.publish('geo-time', function() {
+        return GeologicalTime.find({});
+    });
 }
 
 

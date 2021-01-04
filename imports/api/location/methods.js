@@ -4,6 +4,7 @@ import { Location } from "./location";
 Meteor.methods({
     addLocation: function (locEntered) {
         Location.insert({
+            createdBy: locEntered.createdBy,
             location_area: locEntered.areaName,
             location_region: locEntered.locName,
             location_country: locEntered.countryName,

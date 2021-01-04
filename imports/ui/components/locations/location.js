@@ -13,6 +13,10 @@ const locEntered = new ReactiveArray();
 let currentSelected = new ReactiveVar();
 
 if (Meteor.isClient) {
+    Tracker.autorun(() => {
+        Meteor.subscribe('location');
+    });
+
     let error = new ReactiveVar(null);
     let status = new ReactiveVar(null);
     let longError = new ReactiveVar(null);
@@ -167,6 +171,7 @@ if (Meteor.isClient) {
                                         }
 
                                         currentSelected = {
+                                            createdBy: Meteor.userId(),
                                             areaName: areaName,
                                             locName: locName,
                                             countryName: countryName,
@@ -205,7 +210,6 @@ if (Meteor.isClient) {
             let lat = e.target.latitudeNum.value;
             let long = e.target.longitudeNum.value;
             let date = e.target.date.value;
-            console.log(currentDate);
 
             if (!date) {
                 date = currentDate;
@@ -231,9 +235,6 @@ if (Meteor.isClient) {
                         lat: lat,
                         lng: long
                     };
-
-                    console.log(lat);
-                    console.log(long);
 
                     geocoder.geocode({ location: latlng }, (results, status) => {
                         if (status === "OK") {
@@ -277,6 +278,7 @@ if (Meteor.isClient) {
                                     }
 
                                     currentSelected = {
+                                        createdBy: Meteor.userId(),
                                         areaName: areaName,
                                         locName: locName,
                                         countryName: countryName,

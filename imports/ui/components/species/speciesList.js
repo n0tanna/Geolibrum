@@ -13,89 +13,96 @@ import { deleteImage } from '../util.js';
 
 let speciesObj = '';
 
-Template.speciesList.helpers({
-    speciesHome: function () {
-        return home.get();
-    },
+if (Meteor.isClient) {
 
-    viewPage: function () {
-        return view.get();
-    }
-});
+    Tracker.autorun(() => {
+        Meteor.subscribe('species');
+    });
 
-Template.speciesDisplay.helpers({
-    displaySpecies: () => {
-        return Species.find({});
-    },
+    Template.speciesList.helpers({
+        speciesHome: function () {
+            return home.get();
+        },
 
-    displayMessage: function () {
-        return updateMessage.get();
-    }
-});
+        viewPage: function () {
+            return view.get();
+        }
+    });
 
-Template.view.helpers({
-    speciesValue: function () {
-        return speciesObj;
-    },
+    Template.speciesDisplay.helpers({
+        displaySpecies: () => {
+            return Species.find({});
+        },
 
-    locationDisplay: function () {
-        return locations.list();
-    },
+        displayMessage: function () {
+            return updateMessage.get();
+        }
+    });
 
-    imageDisplay: function () {
-        return images.list();
-    }
-});
+    Template.view.helpers({
+        speciesValue: function () {
+            return speciesObj;
+        },
 
-Template.updateModal.helpers({
-    speciesValue: function () {
-        return speciesObj;
-    }
-});
+        locationDisplay: function () {
+            return locations.list();
+        },
 
-Template.speciesDisplay.events({
-    'click .addSpecies': function () {
-        Router.go('species');
-    },
+        imageDisplay: function () {
+            return images.list();
+        }
+    });
 
-    'click .view': function () {
-        home.set("");
-        view.set(true);
-        speciesObj = this;
-        let locs = speciesObj.date_range;
-        let img = speciesObj.images;
+    Template.updateModal.helpers({
+        speciesValue: function () {
+            return speciesObj;
+        }
+    });
 
-        locs.forEach(function (element){
-            locations.push(element);
-        });
+    Template.speciesDisplay.events({
+        'click .addSpecies': function () {
+            Router.go('species');
+        },
 
-        img.forEach(function (element){
-            images.push(element);
-            console.log(element);
-        });
-    },
+        'click .view': function () {
+            home.set("");
+            view.set(true);
+            speciesObj = this;
+            let locs = speciesObj.date_range;
+            let img = speciesObj.images;
 
-    'click .delete': function () {
-        speciesObj = this;
-        let img = speciesObj.images;
-        img.forEach(function (element) {
-            console.log(element.name);
-            deleteImage("species/species/" + element.name);
-        });
+            locs.forEach(function (element) {
+                locations.push(element);
+            });
 
-        Meteor.call('deleteSpecies', this._id);
-        updateMessage.set("Deleted " + this.species);
-        
-    }
-});
+            img.forEach(function (element) {
+                images.push(element);
+                console.log(element);
+            });
+        },
 
-Template.view.events({
-    'click .return': function () {
-        home.set(true);
-        view.set("");
-    },
+        'click .delete': function () {
+            speciesObj = this;
+            let img = speciesObj.images;
+            img.forEach(function (element) {
+                console.log(element.name);
+                deleteImage(element.name);
+            });
 
-    'click .update': function () {
-        Modal.show('updateModal');
-    }
-});
+            Meteor.call('deleteSpecies', this._id);
+            updateMessage.set("Deleted " + this.species);
+
+        }
+    });
+
+    Template.view.events({
+        'click .return': function () {
+            home.set(true);
+            view.set("");
+        },
+
+        'click .update': function () {
+            Modal.show('updateModal');
+        }
+    });
+}

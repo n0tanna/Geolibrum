@@ -32,7 +32,6 @@ session@1.2.0
 peppelg:bootstrap-3-modal
 dburles:google-maps
 mdg:geolocation
-autopublish@1.0.7
 peerlibrary:aws-sdk
 edgee:slingshot
 meteorhacks:npm

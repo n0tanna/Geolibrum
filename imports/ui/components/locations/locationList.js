@@ -15,6 +15,10 @@ let longError = new ReactiveVar();
 let currentDate = formatDate();
 
 if (Meteor.isClient) {
+    Tracker.autorun(() => {
+        Meteor.subscribe('location');
+    });
+    
     Template.locationList.helpers({
         statusDisplay: function () {
             return status.get();
