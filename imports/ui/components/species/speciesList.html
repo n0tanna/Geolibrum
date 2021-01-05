@@ -66,14 +66,21 @@
         <img id="images" src="{{this.link}}" width="100" height="100">
     {{/each}}
     <br>
-    <label for="extinct">Date Range:</label>
+    <div id="map" style="width: 600px; height: 300px;"></div>
+    <br>
+    <label for="extinct">Locations:</label>
     {{#each locationDisplay}}
+        <p>{{this}}</p>
+    {{/each}}
+    <br>
+    <label for="extinct">Date Range:</label>
+    {{#each timeDisplay}}
         <br>
         <label for="time">Time Period</label>
         <p>{{this.time}}</p>
         <label for="time">Era</label>
         <p>{{this.era}}</p>
-        <label for="time">eon</label>
+        <label for="time">Eon</label>
         <p>{{this.eon}}</p>
     {{/each}}
     <br>
@@ -96,7 +103,13 @@
                     <h4 class="modal-title">Update {{speciesValue.species}}</h4>
                 </div>
                 <div class="modal-body">
-                    
+                    <label for="species"></label>
+                    <label for="genus"></label>
+                    <label for="family"></label>
+                    <label for="order"></label>
+                    <label for=""></label>
+                    <label for=""></label>
+                    <label for=""></label>
                 </div>
                 <div class="modal-footer">
                     <button class="btn save" data-dismiss="modal">Close</button>

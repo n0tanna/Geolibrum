@@ -261,13 +261,21 @@
         <label for="location">Add Location:</label>
         <br>
         <select id="country" name="country">
-            <option id="N/A" value="N/A">N/A</option>
+            {{#each countryDrop}}
+                <option id="{{this.CountryName}}" value="{{this.CountryName}}">{{this.CountryName}}</option>
+            {{/each}}
         </select>
         <select id="region" name="region">
             <option id="N/A" value="N/A">N/A</option>
+            {{#each stateDrop}}
+                <option id="{{this.StateName}}" value="{{this.StateName}}">{{this.StateName}}</option>
+            {{/each}}
         </select>
         <select id="city" name="city">
             <option id="city" value="N/A">N/A</option>
+            {{#each cityDrop}}
+                <option id="{{this}}" value="{{this}}">{{this}}</option>
+            {{/each}}
         </select>
         <br>
         <button type="button" class="btn area">Add Location</button>

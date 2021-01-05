@@ -2,6 +2,7 @@ import './species.html';
 import { Template } from 'meteor/templating';
 import { Taxonomy } from '/imports/api/taxonomy.js';
 import { GeologicalTime } from '/imports/api/geological-time.js';
+import { Countries } from '/imports/api/countries.js';
 import { uploadImage } from '../util.js';
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -38,26 +39,34 @@ let genusHolder = new ReactiveVar();
 let error = new ReactiveVar();
 let update = new ReactiveVar();
 
+let chosenCountry = "";
+let chosenState = "";
+let chosenCity = "";
+
 let displayEons = new ReactiveVar("yes");
 let displayEras = new ReactiveVar();
 let displayTime = new ReactiveVar();
 
 let dbHolder = new ReactiveArray();
 let geoTimeHolder = new ReactiveArray();
+let locHolder = new ReactiveArray();
 let timeHolder = new ReactiveArray();
+let stateHolder = new ReactiveArray();
+let cityHolder = new ReactiveArray();
+let locations = new ReactiveArray();
 
 if (Meteor.isClient) {
 
     Tracker.autorun(() => {
         Meteor.subscribe('taxonomy');
         Meteor.subscribe('geo-time');
+        Meteor.subscribe('countries');
     });
 
     function loadInfo(info, info2, taxLevel, pluralInfo) {
         if (info === "") {
             dbHolder.clear();
             let tempHolderStart = Taxonomy.find().fetch();
-            console.log(tempHolderStart);
             let tempHolderDoms = new Array();
 
             tempHolderStart.forEach(element => tempHolderDoms.push(element.domains));
@@ -258,6 +267,22 @@ if (Meteor.isClient) {
 
             timePerChosen: function () {
                 return geoTimeHolder.list();
+            },
+
+            countryDrop: function () {
+                return locHolder.list();
+            },
+
+            stateDrop: function () {
+                return stateHolder.list();
+            },
+
+            cityDrop: function () {
+                return cityHolder.list();
+            },
+
+            locationPerChosen: function () {
+                return locations.list();
             }
         });
 
@@ -287,12 +312,55 @@ if (Meteor.isClient) {
             }
         });
 
-        Template.species.onCreated(function nice() {
+        Template.species.onCreated(function () {
+            let tempHolderStart = Countries.find().fetch();
+            let tempHolderCont = new Array();
+
+            tempHolderStart.forEach(element => tempHolderCont.push(element.Countries));
+
+            tempHolderCont.forEach(function (contValue) {
+                contValue.forEach(function (country) {
+                    locHolder.push(country);
+                });
+            });
+
             loadInfo("");
             loadTime("");
         });
 
         Template.speciesArea.events({
+            "change #country": function (event, template) {
+                chosenCountry = template.$("#country").val();
+                locHolder.forEach(function (values) {
+                    if (values.CountryName === chosenCountry) {
+                        let tempHolder = values.States;
+                        stateHolder.clear();
+                        tempHolder.forEach(function (innerValues) {
+                            stateHolder.push(innerValues);
+                        });
+                    }
+                });
+            },
+
+            "change #region": function (event, template) {
+                chosenState = template.$("#region").val();
+                stateHolder.forEach(function (values) {
+                    if (values.StateName === chosenState) {
+                        let tempHolder = values.Cities;
+                        cityHolder.clear();
+                        console.log(tempHolder);
+                        tempHolder.forEach(function (innerValues) {
+                            cityHolder.push(innerValues);
+                        });
+                    }
+                });
+                
+            },
+
+            "change #city": function (event, template) {
+                chosenCity = template.$("#city").val();
+            },
+
             'submit #formEntry': function (e) {
                 e.preventDefault();
                 update.set("");
@@ -339,6 +407,7 @@ if (Meteor.isClient) {
 
                     let newSpecies = {
                         createdBy: Meteor.userId(),
+                        locations: locations,
                         domain: domain,
                         kingdom: kingdom,
                         phylum: phylum,
@@ -364,6 +433,9 @@ if (Meteor.isClient) {
 
                     e.target.reset();
                     geoTimeHolder.clear();
+                    locations.clear();
+                    stateHolder.clear();
+                    cityHolder.clear();
 
                     displayDomain.set(true);
                     domainHolder.set("");
@@ -404,6 +476,28 @@ if (Meteor.isClient) {
 
             'click .delete': function () {
                 geoTimeHolder.remove(this);
+            },
+
+            'click .area': function () {
+                let location = {
+                    country: chosenCountry,
+                    region: chosenState,
+                    city: chosenCity
+                }
+                console.log(location);
+
+                country = "";
+                region = "";
+                city = "";
+
+                stateHolder.clear();
+                cityHolder.clear();
+
+                locations.push(location);
+            },
+
+            'click .deleteLoc': function () {
+                locations.remove(this);
             }
         });
 

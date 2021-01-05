@@ -9,6 +9,7 @@ Meteor.methods({
             kingdom: newSp.kingdom,
             phylum: newSp.phylum,
             order: newSp.order,
+            class: newSp.class,
             family: newSp.family,
             genus: newSp.genus,
             species: newSp.species,
@@ -16,7 +17,9 @@ Meteor.methods({
             extinct: newSp.extinct,
             description: newSp.description,
             date_range: newSp.date_range,
-            count: newSp.count
+            count: newSp.count,
+            locations: newSp.locations
+
         });
     },
 

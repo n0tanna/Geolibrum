@@ -5,6 +5,7 @@ import { LogData } from "/imports/api/log-data/log-data";
 import { Location } from "/imports/api/location/location";
 import { Species } from "/imports/api/species/species";
 import { Taxonomy } from "/imports/api/taxonomy.js";
+import { Countries } from "/imports/api/countries.js";
 import '/imports/api/location/methods.js';
 import '/imports/api/log-data/methods.js';
 import '/imports/api/species/methods.js';
@@ -31,6 +32,10 @@ if (Meteor.isServer) {
 
     Meteor.publish('geo-time', function() {
         return GeologicalTime.find({});
+    });
+
+    Meteor.publish('countries', function() {
+        return Countries.find({});
     });
 }
 
