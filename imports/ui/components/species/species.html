@@ -244,7 +244,7 @@
             <div id="error">Please enter a species name.</div>
         {{/if}}
         <br>
-        <label for="timePeriod">Time Period:</label>
+        <label for="timePeriod">Time Period(s):</label>
         <br>
         {{#each timePerChosen}}
             <p>{{this.time}}</p>
@@ -257,6 +257,32 @@
         {{/each}}
         <br>
         <button type="button" class="btn time">Choose Geological Time Period</button>
+        <br>
+        <label for="location">Add Location:</label>
+        <br>
+        <select id="country" name="country">
+            <option id="N/A" value="N/A">N/A</option>
+        </select>
+        <select id="region" name="region">
+            <option id="N/A" value="N/A">N/A</option>
+        </select>
+        <select id="city" name="city">
+            <option id="city" value="N/A">N/A</option>
+        </select>
+        <br>
+        <button type="button" class="btn area">Add Location</button>
+        <br>
+        <label for="location">Location(s):</label>
+        <br>
+        {{#each locationPerChosen}}
+            <p>{{this.city}}</p>
+            <br>
+            <p>{{this.region}}</p>
+            <br>
+            <p>{{this.country}}</p>
+            <br>
+            <button type="button" class="btn deleteLoc">X</button>
+        {{/each}}
         <br>
         <label for="extinct">Extinct:</label>
         <br>

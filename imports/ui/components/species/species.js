@@ -350,7 +350,8 @@ if (Meteor.isClient) {
                         images: imgArray,
                         extinct: ext,
                         description: desc,
-                        date_range: geoTimeHolder
+                        date_range: geoTimeHolder,
+                        count: 0
                     }
 
                     try {
