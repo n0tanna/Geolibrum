@@ -11,7 +11,7 @@
 
 <template name="speciesDisplay">
     <button class="btn addSpecies">Add New Species</button>
-    <input type="text" id="search" size="30" placeholder="Search"/>
+    <input type="text" id="search" size="30" placeholder="Search" />
     <button class="btn search">Search</button>
     <br>
     {{#if displayMessage}}
@@ -19,49 +19,50 @@
     {{/if}}
     <ul>
         {{#each displaySpecies}}
-            <li>
-                <label for="species">Species</label>
-                <br>
-                <h5>{{this.species}}</h5>
-                <br>
-                <label for="genus">Genus</label>
-                <br>
-                <h5>{{this.genus}}</h5>
-                <br>
-                <label for="family">Family</label>
-                <br>
-                <h5>{{this.family}}</h5>
-                <br>
-                <label for="order">Order</label>
-                <br>
-                <h5>{{this.order}}</h5>
-                <br>
-                <label for="phylum">Phylum</label>
-                <br>
-                <h5>{{this.phylum}}</h5>
-                <br>
-                <label for="class">Class</label>
-                <br>
-                <h5>{{this.class}}</h5>
-                <br>
-                <label for="kingdom">Kingdom</label>
-                <br>
-                <h5>{{this.kingdom}}</h5>
-                <br>
-                <label for="domain">Domain</label>
-                <br>
-                <h5>{{this.domain}}</h5>
-                <br>
-                <button class="btn view">View</button>
-                <button class="btn delete">X</button>
-            </li>
+        <li>
+            <label for="species">Species</label>
+            <br>
+            <h5>{{this.species}}</h5>
+            <br>
+            <label for="genus">Genus</label>
+            <br>
+            <h5>{{this.genus}}</h5>
+            <br>
+            <label for="family">Family</label>
+            <br>
+            <h5>{{this.family}}</h5>
+            <br>
+            <label for="order">Order</label>
+            <br>
+            <h5>{{this.order}}</h5>
+            <br>
+            <label for="phylum">Phylum</label>
+            <br>
+            <h5>{{this.phylum}}</h5>
+            <br>
+            <label for="class">Class</label>
+            <br>
+            <h5>{{this.class}}</h5>
+            <br>
+            <label for="kingdom">Kingdom</label>
+            <br>
+            <h5>{{this.kingdom}}</h5>
+            <br>
+            <label for="domain">Domain</label>
+            <br>
+            <h5>{{this.domain}}</h5>
+            <br>
+            <button class="btn view">View</button>
+            <button class="btn delete">X</button>
+        </li>
         {{/each}}
     </ul>
 </template>
 
 <template name="view">
     <h3>{{speciesValue.species}}</h3>
-    <p>{{speciesValue.genus}} || {{speciesValue.family}} || {{speciesValue.class}} || {{speciesValue.order}} || {{speciesValue.phylum}} || {{speciesValue.kingdom}} || {{speciesValue.domain}}</p>
+    <p>{{speciesValue.genus}} || {{speciesValue.family}} || {{speciesValue.class}} || {{speciesValue.order}} ||
+        {{speciesValue.phylum}} || {{speciesValue.kingdom}} || {{speciesValue.domain}}</p>
     {{#each imageDisplay}}
         <img id="images" src="{{this.link}}" width="100" height="100">
     {{/each}}
@@ -74,8 +75,8 @@
     {{/each}}
     <br>
     <label for="extinct">Date Range:</label>
+    <br>
     {{#each timeDisplay}}
-        <br>
         <label for="time">Time Period</label>
         <p>{{this.time}}</p>
         <label for="time">Era</label>
@@ -103,16 +104,40 @@
                     <h4 class="modal-title">Update {{speciesValue.species}}</h4>
                 </div>
                 <div class="modal-body">
-                    <label for="species"></label>
-                    <label for="genus"></label>
-                    <label for="family"></label>
-                    <label for="order"></label>
-                    <label for=""></label>
-                    <label for=""></label>
-                    <label for=""></label>
+                    <label for="images">Image(s):</label>
+                    <br>
+                    {{#each imageDisplay}}
+                        <img id="images" src="{{this.link}}" width="50" height="50">
+                        <button class="btn deleteImg">X</button>
+                        <br>
+                    {{/each}}
+                    <br>
+                    <label for="location">Location(s):</label>
+                    <br>
+                    {{#each locationDisplay}}
+                        <p>{{this}}</p>
+                        <button class="btn deleteLoc">X</button>
+                    {{/each}}
+                    <br>
+                    <label for="time">Date Range:</label>
+                    <br>
+                    {{#each timeDisplay}}
+                        <label for="time">Time Period</label>
+                        <p>{{this.time}}</p>
+                        <label for="time">Era</label>
+                        <p>{{this.era}}</p>
+                        <label for="time">Eon</label>
+                        <p>{{this.eon}}</p>
+                        <br>
+                        <button class="btn deleteTime">X</button>
+                        <br>
+                    {{/each}}
+                    <br>
+                    <label for="description">Description:</label>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn save" data-dismiss="modal">Close</button>
+                    <button class="btn update" data-dismiss="modal">Update</button>
+                    <button class="btn remove" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

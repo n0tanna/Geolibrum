@@ -63,6 +63,18 @@ if (Meteor.isClient) {
     Template.updateModal.helpers({
         speciesValue: function () {
             return speciesObj;
+        },
+
+        locationDisplay: function () {
+            return locations.list();
+        },
+
+        imageDisplay: function () {
+            return images.list();
+        },
+
+        timeDisplay: function () {
+            return times.list();
         }
     });
 
@@ -84,7 +96,6 @@ if (Meteor.isClient) {
 
             img.forEach(function (element) {
                 images.push(element);
-                console.log(element);
             });
         },
 
@@ -103,7 +114,8 @@ if (Meteor.isClient) {
     });
 
     Template.view.onRendered(function () {
-        // The map, centered at Uluru
+        locations.clear();
+
         const map = new google.maps.Map(document.getElementById("map"), {
             zoom: 1,
             center: { lat: 0, lng: 0 }
@@ -133,19 +145,19 @@ if (Meteor.isClient) {
             fullName = "";
 
             let geocoder = new google.maps.Geocoder();
-            geocoder.geocode( { 'address': fullLoc}, function(results, status) {
+            geocoder.geocode({ 'address': fullLoc }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
-                  let cor = {
-                      lat: results[0].geometry.location.lat(),
-                      lng: results[0].geometry.location.lng()
-                  }
-                  let marker = new google.maps.Marker({
-                    position: cor,
-                    map: map
+                    let cor = {
+                        lat: results[0].geometry.location.lat(),
+                        lng: results[0].geometry.location.lng()
+                    }
+                    let marker = new google.maps.Marker({
+                        position: cor,
+                        map: map
                     });
-                } 
+                }
                 else {
-                  console.log("Something went wrong " + status);
+                    console.log("Something went wrong " + status);
                 }
             });
         });
@@ -155,6 +167,8 @@ if (Meteor.isClient) {
         'click .return': function () {
             home.set(true);
             view.set("");
+            images.clear();
+            times.clear();
         },
 
         'click .update': function () {
