@@ -2,8 +2,10 @@ import './species.html';
 import { Template } from 'meteor/templating';
 import { Taxonomy } from '/imports/api/taxonomy.js';
 import { GeologicalTime } from '/imports/api/geological-time.js';
-import { Countries } from '/imports/api/countries.js';
 import { uploadImage } from '../util.js';
+import { loadCountries } from '../util.js';
+import { loadStates } from '../util.js';
+import { loadCities } from '../util.js';
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 
@@ -60,7 +62,6 @@ if (Meteor.isClient) {
     Tracker.autorun(() => {
         Meteor.subscribe('taxonomy');
         Meteor.subscribe('geo-time');
-        Meteor.subscribe('countries');
     });
 
     function loadInfo(info, info2, taxLevel, pluralInfo) {
@@ -313,16 +314,7 @@ if (Meteor.isClient) {
         });
 
         Template.species.onCreated(function () {
-            let tempHolderStart = Countries.find().fetch();
-            let tempHolderCont = new Array();
-
-            tempHolderStart.forEach(element => tempHolderCont.push(element.Countries));
-
-            tempHolderCont.forEach(function (contValue) {
-                contValue.forEach(function (country) {
-                    locHolder.push(country);
-                });
-            });
+           loadCountries(locHolder);
 
             loadInfo("");
             loadTime("");
@@ -331,29 +323,12 @@ if (Meteor.isClient) {
         Template.speciesArea.events({
             "change #country": function (event, template) {
                 chosenCountry = template.$("#country").val();
-                locHolder.forEach(function (values) {
-                    if (values.CountryName === chosenCountry) {
-                        let tempHolder = values.States;
-                        stateHolder.clear();
-                        tempHolder.forEach(function (innerValues) {
-                            stateHolder.push(innerValues);
-                        });
-                    }
-                });
+                loadStates(locHolder, chosenCountry, stateHolder);
             },
 
             "change #region": function (event, template) {
                 chosenState = template.$("#region").val();
-                stateHolder.forEach(function (values) {
-                    if (values.StateName === chosenState) {
-                        let tempHolder = values.Cities;
-                        cityHolder.clear();
-                        console.log(tempHolder);
-                        tempHolder.forEach(function (innerValues) {
-                            cityHolder.push(innerValues);
-                        });
-                    }
-                });
+                loadCities(stateHolder, chosenState, cityHolder);
                 
             },
 

@@ -10,9 +10,8 @@ let view = new ReactiveVar();
 let times = new ReactiveArray();
 let locations = new ReactiveArray();
 let images = new ReactiveArray();
-let gps = new ReactiveArray();
 
-import { deleteImage } from '../util.js';
+import { deleteImage, loadMap } from '../util.js';
 
 let speciesObj = '';
 
@@ -75,6 +74,10 @@ if (Meteor.isClient) {
 
         timeDisplay: function () {
             return times.list();
+        },
+
+        obj: function () {
+            return speciesObj;
         }
     });
 
@@ -115,52 +118,8 @@ if (Meteor.isClient) {
 
     Template.view.onRendered(function () {
         locations.clear();
-
-        const map = new google.maps.Map(document.getElementById("map"), {
-            zoom: 1,
-            center: { lat: 0, lng: 0 }
-        });
-
         let loc = speciesObj.locations;
-        let fullName = "";
-
-        console.log(loc);
-
-        loc.forEach(function (element) {
-            let fullLoc = "";
-            if (element.city === "") {
-                fullLoc = element.region + ", " + element.country;
-                fullName = fullLoc;
-            }
-            else if (element.region == "") {
-                fullLoc = element.country;
-                fullName = fullLoc;
-            }
-            else {
-                fullLoc = element.city + ", " + element.region + ", " + element.country;
-                fullName = fullLoc;
-            }
-
-            locations.push(fullName);
-            fullName = "";
-
-            let geocoder = new google.maps.Geocoder();
-            geocoder.geocode({ 'address': fullLoc }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    let cor = {
-                        lat: results[0].geometry.location.lat(),
-                        lng: results[0].geometry.location.lng()
-                    }
-                    let marker = new google.maps.Marker({
-                        position: cor,
-                        map: map
-                    });
-                }
-                else {
-                    console.log("Something went wrong " + status);
-                }
-            });
-        });
+        loadMap(loc, locations);        
     });
 
     Template.view.events({
@@ -174,5 +133,9 @@ if (Meteor.isClient) {
         'click .update': function () {
             Modal.show('updateModal');
         }
+    });
+
+    Template.updateModal.events({
+
     });
 }
