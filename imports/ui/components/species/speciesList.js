@@ -1,7 +1,7 @@
 import './speciesList.html';
 import { Template } from 'meteor/templating';
 import { Species } from '/imports/api/species/species.js';
-import '/imports/ui/components/util.js';
+import { deleteImage, loadMap } from '../util.js';
 
 let updateMessage = new ReactiveVar();
 let home = new ReactiveVar(true);
@@ -10,8 +10,6 @@ let view = new ReactiveVar();
 let times = new ReactiveArray();
 let locations = new ReactiveArray();
 let images = new ReactiveArray();
-
-import { deleteImage, loadMap } from '../util.js';
 
 let speciesObj = '';
 
@@ -128,6 +126,7 @@ if (Meteor.isClient) {
             view.set("");
             images.clear();
             times.clear();
+            locations.clear();
         },
 
         'click .update': function () {
@@ -136,6 +135,16 @@ if (Meteor.isClient) {
     });
 
     Template.updateModal.events({
+        'click .deleteImg': function () {
+            images.remove(this);
+        },
 
+        'click .deleteLoc': function () {
+            locations.remove(this);
+        },
+
+        'click .deleteTime': function () {
+            times.remove(this);
+        }
     });
 }
