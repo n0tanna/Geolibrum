@@ -148,7 +148,7 @@ if (Meteor.isClient) {
         },
 
         'click .deleteTime': function () {
-            times.remove(this);
+            times.remove(this);         
         }
     });
 }
