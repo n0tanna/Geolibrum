@@ -1,5 +1,6 @@
 import { Template } from 'meteor/templating';
 import { Countries } from '/imports/api/countries.js';
+import { GeologicalTime } from '/imports/api/geological-time.js';
 
 
 import popper from 'popper.js'
@@ -17,6 +18,7 @@ Meteor.startup(function () {
     GoogleMaps.load({ key: Meteor.settings.public.googleAPI });
     Tracker.autorun(() => {
         Meteor.subscribe('countries');
+        Meteor.subscribe('geo-time');
     });
 });
 
@@ -145,10 +147,35 @@ export function loadCities(stateHolder, chosenState, cityHolder) {
         if (values.StateName === chosenState) {
             let tempHolder = values.Cities;
             cityHolder.clear();
-            console.log(tempHolder);
             tempHolder.forEach(function (innerValues) {
                 cityHolder.push(innerValues);
             });
         }
     });
+}
+
+export function loadTime(timeHolder, timeTitle, timeName, pluralInfo, newHolder) {
+    if (timeTitle === "") {
+        let tempHolderStart = GeologicalTime.find().fetch();
+        let tempHolderTime = new Array();
+        tempHolderStart.forEach(element => tempHolderTime.push(element.eons));
+
+        tempHolderTime.forEach(function (timeValue) {
+            timeValue.forEach(function (time) {
+                timeHolder.push(time);
+            });
+        });
+
+    }
+    else {
+        timeHolder.forEach(function (values) {
+            if (values[timeTitle] === timeName) {
+                let tempHolder = values[pluralInfo];
+                tempHolder.forEach(function (innerValues) {
+                    newHolder.push(innerValues);
+                });
+                console.log(newHolder);
+            }
+        });
+    }
 }

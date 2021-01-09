@@ -1,11 +1,11 @@
 import './species.html';
 import { Template } from 'meteor/templating';
 import { Taxonomy } from '/imports/api/taxonomy.js';
-import { GeologicalTime } from '/imports/api/geological-time.js';
 import { uploadImage } from '../util.js';
 import { loadCountries } from '../util.js';
 import { loadStates } from '../util.js';
 import { loadCities } from '../util.js';
+import { loadTime } from '../util.js';
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 
@@ -16,10 +16,6 @@ let classes = "";
 let order = "";
 let family = "";
 let genus = "";
-
-let eon = "";
-let era = "";
-let time = "";
 
 let kButton = new ReactiveVar();
 let dButton = new ReactiveVar();
@@ -44,14 +40,15 @@ let update = new ReactiveVar();
 let chosenCountry = "";
 let chosenState = "";
 let chosenCity = "";
-
-let displayEons = new ReactiveVar("yes");
-let displayEras = new ReactiveVar();
-let displayTime = new ReactiveVar();
+let chosenEon = "";
+let chosenEra = "";
+let chosenTime = "";
 
 let dbHolder = new ReactiveArray();
 let geoTimeHolder = new ReactiveArray();
 let locHolder = new ReactiveArray();
+let eonHolder = new ReactiveArray();
+let eraHolder = new ReactiveArray();
 let timeHolder = new ReactiveArray();
 let stateHolder = new ReactiveArray();
 let cityHolder = new ReactiveArray();
@@ -61,7 +58,6 @@ if (Meteor.isClient) {
 
     Tracker.autorun(() => {
         Meteor.subscribe('taxonomy');
-        Meteor.subscribe('geo-time');
     });
 
     function loadInfo(info, info2, taxLevel, pluralInfo) {
@@ -99,33 +95,6 @@ if (Meteor.isClient) {
                 genusHolder.set("");
             }
         });
-    }
-
-    function loadTime(timeTitle, timeName, pluralInfo) {
-        if (timeTitle === "") {
-            timeHolder.clear();
-            let tempHolderStart = GeologicalTime.find().fetch();
-            let tempHolderTime = new Array();
-            tempHolderStart.forEach(element => tempHolderTime.push(element.eons));
-
-            tempHolderTime.forEach(function (timeValue) {
-                timeValue.forEach(function (time) {
-                    timeHolder.push(time);
-                });
-            });
-
-        }
-        else {
-            timeHolder.forEach(function (values) {
-                if (values[timeTitle] === timeName) {
-                    let tempHolder = values[pluralInfo];
-                    timeHolder.clear();
-                    tempHolder.forEach(function (innerValues) {
-                        timeHolder.push(innerValues);
-                    });
-                }
-            });
-        }
     }
 
     if (Meteor.isClient) {
@@ -282,34 +251,20 @@ if (Meteor.isClient) {
                 return cityHolder.list();
             },
 
-            locationPerChosen: function () {
-                return locations.list();
-            }
-        });
+            eonDrop: function () {
+                return eonHolder.list();
+            },
 
-        Template.timeModal.helpers({
-            timePeriods: function () {
+            eraDrop: function () {
+                return eraHolder.list();
+            },
+
+            timeDrop: function () {
                 return timeHolder.list();
             },
 
-            eonDisplay: function () {
-                return displayEons.get();
-            },
-
-            eraDisplay: function () {
-                return displayEras.get();
-            },
-
-            timeDisplay: function () {
-                return displayTime.get();
-            },
-
-            eonName: function () {
-                return eon;
-            },
-
-            eraName: function () {
-                return era;
+            locationPerChosen: function () {
+                return locations.list();
             }
         });
 
@@ -317,7 +272,7 @@ if (Meteor.isClient) {
            loadCountries(locHolder);
 
             loadInfo("");
-            loadTime("");
+            loadTime(eonHolder, "", "", "");
         });
 
         Template.speciesArea.events({
@@ -334,6 +289,24 @@ if (Meteor.isClient) {
 
             "change #city": function (event, template) {
                 chosenCity = template.$("#city").val();
+            },
+
+            "change #eon": function (event, template) {
+                eraHolder.clear();
+                chosenEon = template.$("#eon").val();
+                loadTime(eonHolder, "eon", chosenEon, "eras", eraHolder);
+                console.log(eraHolder);
+            },
+
+            "change #era": function (event, template) {
+                timeHolder.clear();
+                chosenEra = template.$("#era").val();
+                loadTime(eraHolder, "era", chosenEra, "time_periods", timeHolder);
+                
+            },
+
+            "change #timePeriod": function (event, template) {
+                chosenTime = template.$("#timePeriod").val();
             },
 
             'submit #formEntry': function (e) {
@@ -444,15 +417,6 @@ if (Meteor.isClient) {
 
             },
 
-            'click .time': function () {
-                Modal.show('timeModal');
-                textTimeArea = document.getElementById('timePeriod');
-            },
-
-            'click .delete': function () {
-                geoTimeHolder.remove(this);
-            },
-
             'click .area': function () {
                 let location = {
                     country: chosenCountry,
@@ -473,63 +437,6 @@ if (Meteor.isClient) {
 
             'click .deleteLoc': function () {
                 locations.remove(this);
-            }
-        });
-
-        Template.timeModal.events({
-            'click .eon': function () {
-                displayEras.set("");
-                displayEons.set(true);
-
-                eon = "";
-
-                loadTime("");
-            },
-
-            'click .era': function () {
-                displayEras.set(true);
-                displayTime.set("");
-
-                era = "";
-
-                loadTime("");
-                loadTime("eon", eon, "eras");
-            },
-
-            'click .select': function (e) {
-                if (eon === "") {
-                    eon = this.eon;
-                    displayEons.set("");
-                    displayEras.set(true);
-
-                    loadTime("eon", eon, "eras");
-                }
-                else if (era === "") {
-                    era = e.currentTarget.getAttribute("id");
-                    displayEras.set("");
-                    displayTime.set(true);
-
-                    loadTime("era", era, "time_periods");
-                }
-                else if (time === "") {
-                    time = e.currentTarget.getAttribute("id");
-
-                    let timeChosen = {
-                        time: time,
-                        era: era,
-                        eon: eon
-                    }
-
-                    geoTimeHolder.push(timeChosen);
-
-                    loadTime("");
-                    eon = "";
-                    era = "";
-                    time = "";
-                    displayEons.set(true);
-                    displayEras.set("");
-                    displayTime.set("");
-                }
             }
         });
 

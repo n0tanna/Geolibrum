@@ -244,8 +244,29 @@
             <div id="error">Please enter a species name.</div>
         {{/if}}
         <br>
-        <label for="timePeriod">Time Period(s):</label>
+        <label for="timePeriod">Add Time Period(s):</label>
         <br>
+        <select id="eon" name="eon">
+            {{#each eonDrop}}
+                <option id="{{this.eon}}" value="{{this.eon}}">{{this.eon}}</option>
+            {{/each}}
+        </select>
+        <select id="era" name="era">
+            <option id="N/A" value="N/A">N/A</option>
+            {{#each eraDrop}}
+                <option id="{{this.era}}" value="{{this.era}}">{{this.era}}</option>
+            {{/each}}
+        </select>
+        <select id="timePeriod" name="timePeriod">
+            <option id="N/A" value="N/A">N/A</option>
+            {{#each timeDrop}}
+                <option id="{{this.time_period}}" value="{{this.time_period}}">{{this.time_period}}</option>
+            {{/each}}
+        </select>
+        <br>
+        <button type="button" class="btn addTime">Add</button>
+        <br>
+        <label for="timePeriodChosen">Time Period(s) Chosen:</label>
         {{#each timePerChosen}}
             <p>{{this.time}}</p>
             <br>
@@ -255,8 +276,6 @@
             <br>
             <button type="button" class="btn delete">X</button>
         {{/each}}
-        <br>
-        <button type="button" class="btn time">Choose Geological Time Period</button>
         <br>
         <label for="location">Add Location:</label>
         <br>
@@ -278,7 +297,7 @@
             {{/each}}
         </select>
         <br>
-        <button type="button" class="btn area">Add Location</button>
+        <button type="button" class="btn area">Add</button>
         <br>
         <label for="location">Location(s):</label>
         <br>
@@ -305,74 +324,4 @@
         <br>
         <input type="submit" id="submit" value="Create Species">
     </form>    
-</template>
-
-<template name="timeModal">
-    <div class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Pick Geological Time Period</h4>
-                </div>
-                <div class="modal-body">
-                    {{#if eonDisplay}}
-                    <h4>Eons</h4>
-                        {{#each timePeriods}}
-                            <li>
-                                <label for="name">Name:</label>
-                                <br>
-                                {{this.eon}}
-                                <br>
-                                <label for="description">Time Frame:</label>
-                                <br>
-                                {{this.time_frame}}
-                                <br>
-                                <button class="btn select" id="{{this.eon}}">Select</button>
-                            </li>
-                        {{/each}}
-                    {{/if}}
-
-                    {{#if eraDisplay}}
-                        <h4>Eras within {{eonName}}</h4>
-                        <button class="btn eon" id="eonButton">Eons</button>
-                        {{#each timePeriods}}
-                            <li>
-                                <label for="name">Name:</label>
-                                <br>
-                                {{this.era}}
-                                <br>
-                                <label for="description">Time Frame:</label>
-                                <br>
-                                {{this.time_frame}}
-                                <br>
-                                <button class="btn select" id="{{this.era}}">Select</button>
-                            </li>
-                        {{/each}}
-                    {{/if}}
-
-                    {{#if timeDisplay}}
-                    <h4>Time Periods within {{eraName}}</h4>
-                    <h6>Choose one </h6>
-                        <button class="btn era" id="eraButton">Eras</button>
-                        {{#each timePeriods}}
-                            <li>
-                                <label for="name">Name:</label>
-                                <br>
-                                {{this.time_period}}
-                                <br>
-                                <label for="time">Time Frame:</label>
-                                <br>
-                                {{this.time_frame}}
-                                <br>
-                                <button class="btn select" id="{{this.time_period}}" data-dismiss="modal">Select</button>
-                            </li>
-                        {{/each}}
-                    {{/if}}
-                </div>
-                <div class="modal-footer">
-                    <button class="btn save" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
 </template>
