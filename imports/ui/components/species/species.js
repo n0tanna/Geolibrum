@@ -53,6 +53,7 @@ let timeHolder = new ReactiveArray();
 let stateHolder = new ReactiveArray();
 let cityHolder = new ReactiveArray();
 let locations = new ReactiveArray();
+let timeChosen = new ReactiveArray();
 
 if (Meteor.isClient) {
 
@@ -265,6 +266,10 @@ if (Meteor.isClient) {
 
             locationPerChosen: function () {
                 return locations.list();
+            },
+
+            timePerChosen: function () {
+                return timeChosen.list();
             }
         });
 
@@ -295,7 +300,6 @@ if (Meteor.isClient) {
                 eraHolder.clear();
                 chosenEon = template.$("#eon").val();
                 loadTime(eonHolder, "eon", chosenEon, "eras", eraHolder);
-                console.log(eraHolder);
             },
 
             "change #era": function (event, template) {
@@ -367,7 +371,7 @@ if (Meteor.isClient) {
                         images: imgArray,
                         extinct: ext,
                         description: desc,
-                        date_range: geoTimeHolder,
+                        date_range: timeChosen,
                         count: 0
                     }
 
@@ -417,13 +421,28 @@ if (Meteor.isClient) {
 
             },
 
-            'click .area': function () {
+            'click .addTime': function () {
+                let time = {
+                    eon: chosenEon,
+                    era: chosenEra,
+                    time: chosenTime
+                }
+
+                chosenEon = "";
+                chosenEra = "";
+                chosenTime = "";
+
+                timeHolder.clear();
+                eraHolder.clear();
+                timeChosen.push(time);
+            },
+
+            'click .addLocation': function () {
                 let location = {
                     country: chosenCountry,
                     region: chosenState,
                     city: chosenCity
                 }
-                console.log(location);
 
                 country = "";
                 region = "";
@@ -433,6 +452,10 @@ if (Meteor.isClient) {
                 cityHolder.clear();
 
                 locations.push(location);
+            },
+
+            'click .deleteTime': function () {
+                timeChosen.remove(this);
             },
 
             'click .deleteLoc': function () {
