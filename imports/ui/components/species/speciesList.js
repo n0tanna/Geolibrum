@@ -232,11 +232,7 @@ if (Meteor.isClient) {
         },
 
         'click .addLocation': function () {
-            let location = {
-                CountryName: chosenCountry,
-                StateName: chosenState,
-                CityName: chosenCity
-            }
+            let location = chosenCity + ", " + chosenState + ", " + chosenCountry;
 
             country = "";
             region = "";
@@ -246,6 +242,7 @@ if (Meteor.isClient) {
             cityHolder.clear();
 
             locations.push(location);
+            console.log(locations);
         },
 
         'click .deleteLoc': function () {
