@@ -174,7 +174,6 @@ export function loadTime(timeHolder, timeTitle, timeName, pluralInfo, newHolder)
                 tempHolder.forEach(function (innerValues) {
                     newHolder.push(innerValues);
                 });
-                console.log(newHolder);
             }
         });
     }

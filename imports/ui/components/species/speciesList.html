@@ -15,7 +15,7 @@
     <button class="btn search">Search</button>
     <br>
     {{#if displayMessage}}
-        <div id="message">{{displayMessage}}</div>
+    <div id="message">{{displayMessage}}</div>
     {{/if}}
     <ul>
         {{#each displaySpecies}}
@@ -123,6 +123,28 @@
                         <button class="btn deleteLoc">X</button>
                     {{/each}}
                     <br>
+                    <label for="location">Add Location(s):</label>
+                    <br>
+                    <select id="country" name="country">
+                        {{#each countryDrop}}
+                            <option id="{{this.CountryName}}" value="{{this.CountryName}}">{{this.CountryName}}</option>
+                        {{/each}}
+                    </select>
+                    <select id="region" name="region">
+                        <option id="N/A" value="N/A">N/A</option>
+                        {{#each stateDrop}}
+                            <option id="{{this.StateName}}" value="{{this.StateName}}">{{this.StateName}}</option>
+                        {{/each}}
+                    </select>
+                    <select id="city" name="city">
+                        <option id="city" value="N/A">N/A</option>
+                        {{#each cityDrop}}
+                            <option id="{{this}}" value="{{this}}">{{this}}</option>
+                        {{/each}}
+                    </select>
+                    <br>
+                    <button type="button" class="btn addLocation">Add</button>
+                    <br>
                     <label for="time">Date Range:</label>
                     <br>
                     {{#each timeDisplay}}
@@ -136,6 +158,28 @@
                         <button class="btn deleteTime">X</button>
                         <br>
                     {{/each}}
+                    <br>
+                    <label for="timePeriod">Add Time Period(s):</label>
+                    <br>
+                    <select id="eon" name="eon">
+                        {{#each eonDrop}}
+                            <option id="{{this.eon}}" value="{{this.eon}}">{{this.eon}}</option>
+                        {{/each}}
+                    </select>
+                    <select id="era" name="era">
+                        <option id="N/A" value="N/A">N/A</option>
+                        {{#each eraDrop}}
+                            <option id="{{this.era}}" value="{{this.era}}">{{this.era}}</option>
+                        {{/each}}
+                    </select>
+                    <select id="timePeriod" name="timePeriod">
+                        <option id="N/A" value="N/A">N/A</option>
+                        {{#each timeDrop}}
+                            <option id="{{this.time_period}}" value="{{this.time_period}}">{{this.time_period}}</option>
+                        {{/each}}
+                    </select>
+                    <br>
+                    <button type="button" class="btn addTime">Add</button>
                     <br>
                     <label for="description">Description:</label>
                     <p>{{obj.description}}</p>

@@ -434,6 +434,7 @@ if (Meteor.isClient) {
 
                 timeHolder.clear();
                 eraHolder.clear();
+                
                 timeChosen.push(time);
             },
 
