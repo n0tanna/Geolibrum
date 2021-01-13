@@ -26,4 +26,8 @@ Meteor.methods({
     deleteSpecies: function(_id) {
         Species.remove(_id);
     },
+
+    updateSpecies: function(newSp) {
+        Species.update({_id: newSp.id}, {$set:{species: newSp.species, images: newSp.images, description: newSp.description, date_range: newSp.date_range, locations: newSp.locations}});
+    }
 });

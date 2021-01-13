@@ -11,8 +11,6 @@
 
 <template name="speciesDisplay">
     <button class="btn addSpecies">Add New Species</button>
-    <input type="text" id="search" size="30" placeholder="Search" />
-    <button class="btn search">Search</button>
     <br>
     {{#if displayMessage}}
     <div id="message">{{displayMessage}}</div>
@@ -105,7 +103,9 @@
                 </div>
                 <div class="modal-body">
                     <label for="speciesName">Species:</label>
-                    <p>{{obj.species}}</p>
+                    <br>
+                    <textarea name="speciesName" id="speciesName" rows="1" cols="30">{{obj.species}}</textarea>
+                    <br>
                     <label for="extinct">Extinct:</label>
                     <p>{{obj.extinct}}</p>
                     <label for="images">Image(s):</label>
@@ -182,7 +182,9 @@
                     <button type="button" class="btn addTime">Add</button>
                     <br>
                     <label for="description">Description:</label>
-                    <p>{{obj.description}}</p>
+                    <br>
+                    <textarea name="description" id="description" rows="4" cols="50">{{obj.description}}</textarea>
+                    <br>
                 </div>
                 <div class="modal-footer">
                     <button class="btn update" data-dismiss="modal">Update</button>

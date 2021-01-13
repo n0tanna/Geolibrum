@@ -28,6 +28,8 @@ let timeHolder = new ReactiveArray();
 let stateHolder = new ReactiveArray();
 let cityHolder = new ReactiveArray();
 
+let specId = new ReactiveArray();
+
 let speciesObj = '';
 
 if (Meteor.isClient) {
@@ -174,6 +176,7 @@ if (Meteor.isClient) {
         },
 
         'click .update': function () {
+            specId = this._id;
             Modal.show('updateModal');
         }
     });
@@ -252,6 +255,19 @@ if (Meteor.isClient) {
 
         'click .deleteTime': function () {
             times.remove(this);         
+        },
+
+        'click .update': function () {
+            let updated = {
+                id: specId,
+                species: document.getElementById('speciesName').value,
+                images: images,
+                description: document.getElementById('description').value,
+                date_range: times,
+                locations: locations
+            }
+
+            console.log(updated);
         }
     });
 }
