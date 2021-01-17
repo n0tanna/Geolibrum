@@ -9,6 +9,7 @@ import { loadCities } from '../util.js';
 let updateMessage = new ReactiveVar();
 let home = new ReactiveVar(true);
 let view = new ReactiveVar();
+let status = new ReactiveVar();
 
 let times = new ReactiveArray();
 let locations = new ReactiveArray();
@@ -73,6 +74,10 @@ if (Meteor.isClient) {
 
         timeDisplay: function () {
             return times.list();
+        },
+
+        status: function () {
+            return status.get();
         }
     });
 
@@ -131,6 +136,10 @@ if (Meteor.isClient) {
             home.set("");
             view.set(true);
             speciesObj = this;
+            specId = speciesObj._id;
+            locations.clear();
+            timeHolder.clear();
+            
             let time = speciesObj.date_range;
             let img = speciesObj.images;
 
@@ -147,7 +156,6 @@ if (Meteor.isClient) {
             speciesObj = this;
             let img = speciesObj.images;
             img.forEach(function (element) {
-                console.log(element.name);
                 deleteImage(element.name);
             });
 
@@ -160,10 +168,11 @@ if (Meteor.isClient) {
     Template.view.onRendered(function () {
         locations.clear();
         let loc = speciesObj.locations;
-        loadMap(loc, locations);    
-        loadTime(eonHolder, "", "", "");
-        loadCountries(locHolder);
-        console.log(eonHolder);    
+        loadMap(loc); 
+
+        loc.forEach(function (element) {
+            locations.push(element);
+        });
     });
 
     Template.view.events({
@@ -173,11 +182,13 @@ if (Meteor.isClient) {
             images.clear();
             times.clear();
             locations.clear();
+            timeHolder.clear();
         },
 
         'click .update': function () {
-            specId = this._id;
             Modal.show('updateModal');
+            loadTime(eonHolder, "", "", "");
+            loadCountries(locHolder); 
         }
     });
 
@@ -214,7 +225,6 @@ if (Meteor.isClient) {
         },
 
         'click .deleteImg': function () {
-            console.log(this);
             images.remove(this);
         },
 
@@ -235,17 +245,26 @@ if (Meteor.isClient) {
         },
 
         'click .addLocation': function () {
-            let location = chosenCity + ", " + chosenState + ", " + chosenCountry;
+            let location = "";
 
-            country = "";
-            region = "";
-            city = "";
+            if (chosenCity === "" && chosenState === "") {
+                location = `${chosenCountry}`;
+            }
+            else if (chosenCity === "") {
+                location = `${chosenState}, ${chosenCountry}`;
+            }
+            else {
+                location = `${chosenCity}, ${chosenState}, ${chosenCountry}`;
+            }
+
+            chosenCountry = "";
+            chosenState = "";
+            chosenCity = "";
 
             stateHolder.clear();
             cityHolder.clear();
 
             locations.push(location);
-            console.log(locations);
         },
 
         'click .deleteLoc': function () {
@@ -258,6 +277,7 @@ if (Meteor.isClient) {
         },
 
         'click .update': function () {
+            console.log(locations);
             let updated = {
                 id: specId,
                 species: document.getElementById('speciesName').value,
@@ -267,7 +287,18 @@ if (Meteor.isClient) {
                 locations: locations
             }
 
-            console.log(updated);
+            timeHolder.clear();
+            eraHolder.clear();
+            eonHolder.clear();
+
+            Meteor.call("updateSpecies", updated, function (error) {
+                if (error) {
+                    console.log("Error: " + error.reason)
+                }
+                else {
+                    status.set("Updated species: " + updated.species);
+                }
+            });
         }
     });
 }

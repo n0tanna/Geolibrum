@@ -388,6 +388,7 @@ if (Meteor.isClient) {
                     locations.clear();
                     stateHolder.clear();
                     cityHolder.clear();
+                    timeChosen.clear();
 
                     displayDomain.set(true);
                     domainHolder.set("");
@@ -440,9 +441,9 @@ if (Meteor.isClient) {
 
             'click .addLocation': function () {
                 let location = {
-                    country: chosenCountry,
                     region: chosenState,
-                    city: chosenCity
+                    city: chosenCity,
+                    country: chosenCountry
                 }
 
                 country = "";

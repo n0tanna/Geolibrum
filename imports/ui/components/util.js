@@ -73,30 +73,23 @@ export function formatDate() {
     }
 }
 
-export function loadMap(list, locations) {
+export function loadMap(list) {
     const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 1,
         center: { lat: 0, lng: 0 }
     });
 
-    let fullName = "";
     list.forEach(function (element) {
         let fullLoc = "";
         if (element.city === "") {
             fullLoc = element.region + ", " + element.country;
-            fullName = fullLoc;
         }
         else if (element.region == "") {
             fullLoc = element.country;
-            fullName = fullLoc;
         }
         else {
             fullLoc = element.city + ", " + element.region + ", " + element.country;
-            fullName = fullLoc;
         }
-
-        locations.push(fullName);
-        fullName = "";
 
         let geocoder = new google.maps.Geocoder();
         geocoder.geocode({ 'address': fullLoc }, function (results, status) {
