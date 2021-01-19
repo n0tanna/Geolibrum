@@ -325,7 +325,7 @@ if (Meteor.isClient) {
                 let imgArray = new Array();
 
                 if (name === "") {
-                    error.set("yes");
+                    error.set(true);
                 }
                 else {
                     error.set();

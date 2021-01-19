@@ -5,6 +5,7 @@ import '/imports/ui/components/util.js';
 import { deleteImage, loadCountries, loadMap, loadTime } from '../util.js';
 import { loadStates } from '../util.js';
 import { loadCities } from '../util.js';
+import { uploadImage } from '../util.js';
 
 let updateMessage = new ReactiveVar();
 let home = new ReactiveVar(true);
@@ -276,15 +277,35 @@ if (Meteor.isClient) {
             times.remove(this);         
         },
 
-        'click .update': function () {
+        'click .update': function (e) {
             console.log(locations);
+            let img = document.getElementById('imageUpload').files;
+            let imgArray = images;
+            for (i = 0; i < img.length; i++) {
+                let imageLink = "https://geolibrum-assets.s3.amazonaws.com/species/species/" + img[i].name;
+                let imageName = img[i].name;
+                let imageObject = {
+                    name: imageName,
+                    link: imageLink
+                }
+
+                imgArray.push(imageObject);
+                images.push(imageObject);
+                uploadImage(img[i], "species/species/" + img[i].name);
+            }
+
+            if(imgArray.length === 0) {
+                imgArray.push("s3://geolibrum-assets/species/species/default.png");
+            }
+
             let updated = {
                 id: specId,
                 species: document.getElementById('speciesName').value,
                 images: images,
                 description: document.getElementById('description').value,
                 date_range: times,
-                locations: locations
+                locations: locations,
+                images: imgArray
             }
 
             timeHolder.clear();
